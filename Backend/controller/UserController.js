@@ -90,11 +90,14 @@ export const loginUser = HandleAsyncError(async (req, res, next) => {
 
 // Logout
 export const logout = HandleAsyncError(async (req, res, next) => {
+    const isProduction = process.env.NODE_ENV === "production";
 
     res.cookie("token", null, {
 
         expires: new Date(Date.now()),
-        httpOnly: true
+        httpOnly: true,
+        sameSite: isProduction ? "none" : "lax",
+        secure: isProduction
 
     });
     res.status(200).json({
@@ -129,7 +132,8 @@ export const reqestPasswordReset = HandleAsyncError(async (req, res, next) => {
         return next(new HandelError("Could not save reset token , Please try again later", 500));
 
     }
-    const resetPasswordURL = `${req.protocol}://${req.get("host")}/reset/${resetToken}`;
+    const clientUrl = process.env.FRONTEND_URL || `${req.protocol}://${req.get("host")}`;
+    const resetPasswordURL = `${clientUrl.replace(/\/$/, "")}/reset/${resetToken}`;
     const message = `Use the following link to reset your password : ${resetPasswordURL}. \n \n This link will expire in 30 minutes. \n \n If you didn't request a password reset, please ignore this message.`;
     try {
 

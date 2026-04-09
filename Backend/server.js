@@ -23,9 +23,9 @@ process.on("uncaughtException", (err) => {
 
 const port = process.env.PORT || 8000;
 
-const server = app.listen(port, () => {
+const server = app.listen(port, "0.0.0.0", () => {
     console.log(`Server is running on PORT ${port}`);
-})
+});
 
 
 process.on('unhandledRejection', (err) => {

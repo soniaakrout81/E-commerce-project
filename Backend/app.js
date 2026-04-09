@@ -5,14 +5,25 @@ import user from "./routes/UserRoutes.js";
 import order from "./routes/OrderRoutes.js";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import cors from "cors";
 
 const app = express();
+const allowedOrigins = [process.env.FRONTEND_URL, process.env.FRONTEND_PREVIEW_URL].filter(Boolean);
 
 
 app.use(express.json({ limit: "5mb" })); 
 app.use(express.urlencoded({ limit: "5mb", extended: true }));
 
 app.use(express.json());
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true
+}));
 app.use(cookieParser());
 app.use(fileUpload());
 
