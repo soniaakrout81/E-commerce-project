@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import Loader from "../components/Loader.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import Product from "../components/product";
+import Product from "../components/Product";
 import { getProduct, removeErrors } from "../features/products/productSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import Pagination from "../components/Pagination.jsx";

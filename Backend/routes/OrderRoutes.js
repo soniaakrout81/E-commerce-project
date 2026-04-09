@@ -1,6 +1,6 @@
 import express from "express";
 import { roleBasedAccess, verifyUserAuth } from "../middleware/userAuth.js";
-import { allMyOrders, createNewOrder, deleteOrder, getAllOrders, getSingleOrder, updateOrderStatus } from "../controller/orderController.js";
+import { allMyOrders, createNewOrder, deleteOrder, getAllOrders, getSingleOrder, updateOrderStatus } from "../controller/OrderController.js";
 
 
 
