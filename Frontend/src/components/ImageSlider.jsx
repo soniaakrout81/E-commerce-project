@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import "../componentStyles/imageSlider.css";
+import "../componentStyles/ImageSlider.css";
 
 const images = [
   "/images/image1.png",
