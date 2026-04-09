@@ -1,0 +1,81 @@
+import React, { useEffect, useState } from "react";
+import "../pageStyles/Products.css";
+import PageTitle from "../components/PageTitle";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Loader from "../components/Loader.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import Product from "../components/product";
+import { getProduct, removeErrors } from "../features/products/productSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import Pagination from "../components/Pagination.jsx";
+
+function Products() {
+  const { loading, error, products } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const keyword = searchParams.get("keyword") || "";
+  const pageFromURL = parseInt(searchParams.get("page"), 10) || 1;
+  const [currentPage, setCurrentPage] = useState(pageFromURL);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch({ type: "product/clearProducts" });
+    dispatch(getProduct({ keyword, page: currentPage, limit: 8 }));
+  }, [dispatch, keyword, currentPage]);
+
+  useEffect(() => {
+    if (error) {
+      dispatch(removeErrors());
+    }
+  }, [dispatch, error]);
+
+  const handlePageChange = (page) => {
+    if (page !== currentPage) {
+      setCurrentPage(page);
+      const newSearchParams = new URLSearchParams(location.search);
+      if (page === 1) {
+        newSearchParams.delete("page");
+      } else {
+        newSearchParams.set("page", page);
+      }
+
+      newSearchParams.set("limit", 8);
+      navigate(`?${newSearchParams.toString()}`);
+    }
+  };
+
+  return (
+    <>
+      <PageTitle title={t("products.pageTitle")} />
+      <Navbar />
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="products-layout">
+          <div className="products-section">
+            <div className="products-product-container">
+              {Array.isArray(products) && products.length > 0 ? (
+                products.map((product) => <Product key={product._id} product={product} />)
+              ) : (
+                <p className="no-products">
+                  <span className="no-products-big">!</span>{" "}
+                  <span className="no-products-bold">{t("products.noProducts")}</span>{" "}
+                  <span className="no-products-small">{t("products.noProductsDesc", { keyword })}</span>
+                </p>
+              )}
+            </div>
+
+            <Pagination currentPage={currentPage} onPageChange={handlePageChange} />
+          </div>
+        </div>
+      )}
+      {products && products.length > 0 && <Footer />}
+    </>
+  );
+}
+
+export default Products;

@@ -1,0 +1,163 @@
+.confirm-container {
+    max-width: 1200px;
+    margin: 88px auto 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.confirm-header {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.confirm-table-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.confirm-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.confirm-table caption {
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 10px;
+    color: #555;
+}
+
+.confirm-table th,
+.confirm-table td {
+    text-align: left;
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+.confirm-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.confirm-table td {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.order-product-image {
+    width: 56px;
+    height: 56px;
+    max-width: 56px;
+    max-height: 56px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
+.proceed-button {
+    display: block;
+    width: fit-content;
+    min-width: 220px;
+    margin: 28px auto 8px;
+    padding: 14px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: var(--bg-primary);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    box-shadow: 0 18px 34px color-mix(in srgb, var(--bg-primary) 46%, transparent);
+    position: relative;
+    overflow: hidden;
+    animation: proceedGlow 2.8s ease-in-out infinite;
+}
+
+.proceed-button:hover {
+    background-color: var(--bg-secondary);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 26px 44px color-mix(in srgb, var(--bg-secondary) 56%, transparent);
+}
+
+.proceed-button:active {
+    transform: scale(0.97);
+}
+
+@keyframes proceedGlow {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-5px) scale(1.04);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .confirm-table-container {
+        gap: 15px;
+    }
+
+    .confirm-table caption {
+        font-size: 1rem;
+    }
+
+    .confirm-table th,
+    .confirm-table td {
+        font-size: 0.8rem;
+    }
+
+    .proceed-button {
+        min-width: 210px;
+        padding: 12px 26px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 450px) {
+    .confirm-container {
+        margin: 76px auto 10px;
+        padding: 10px;
+    }
+
+    .confirm-header {
+        font-size: 1.25rem;
+    }
+
+    .confirm-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .confirm-table caption {
+        font-size: 0.95rem;
+    }
+
+    .confirm-table th,
+    .confirm-table td {
+        padding: 8px;
+        font-size: 0.75rem;
+    }
+
+    .order-product-image {
+        width: 46px;
+        height: 46px;
+        max-width: 46px;
+        max-height: 46px;
+    }
+
+    .proceed-button {
+        width: min(100%, 260px);
+    }
+}
