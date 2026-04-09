@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-import path from "path";
-dotenv.config({ path: path.resolve('./Backend/config/config.env') });
+dotenv.config();
+dotenv.config({ path: new URL("./config/config.env", import.meta.url) });
 import app from "./app.js";
 import { connectMongoDataBase } from "./config/db.js";
 import { v2 as cloudinary } from "cloudinary";
