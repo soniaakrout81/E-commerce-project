@@ -1,5 +1,5 @@
 ﻿import { createRoot } from "react-dom/client";
-import { HashRouter } from "react-router-dom";  // <-- تغيير من BrowserRouter إلى HashRouter
+import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import "./index.css";
 import "./i18n";
@@ -8,8 +8,8 @@ import { store } from "./app/store";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>
+    </BrowserRouter>
   </Provider>
 );
