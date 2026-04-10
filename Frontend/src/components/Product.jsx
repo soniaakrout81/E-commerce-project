@@ -21,45 +21,37 @@ function Product({product}) {
     <Link to={`/product/${product._id}`} className = "product_id">
     <div className="product-card">
 
+        <Link to={`/product/${product._id}`} className="product_id">
         <img src={product.image[0]?.url || "/images/default.jpg"} alt={product.name} />
 
         <div className="product-details">
+        <h3 className="product-title">{product.name}</h3>
 
-            <h3 className="product-title">
-                
-                { product.name }
+        <p className="product-price">
+            <strong>{t("product.price")}: {product.price}</strong>
+        </p>
 
-                </h3>
-            <p className="product-price">
-                
-                <strong>
-
-                    {t("product.price")}: {product.price}
-                    
-                </strong>
-            
-            </p>
-            <div className="rating-container">
-
-                <Rating
-                
-                    value = {product.ratings}
-                    onRatingChange = {handleRatingChange}
-                    disabled = {true}
-                
-                />
-
-            </div>
-
-            <span className="productCardSpan">
-
-                ({product.numOfReviews}) {product.numOfReviews == 1 ? t("product.review") : t("product.reviews")}
-
-            </span>
-
-            <button className="add-to-cart">{t("product.addToCart")}</button>
-
+        <div className="rating-container">
+            <Rating
+            value={product.ratings}
+            onRatingChange={handleRatingChange}
+            disabled={true}
+            />
         </div>
+
+        <span className="productCardSpan">
+            ({product.numOfReviews}){" "}
+            {product.numOfReviews == 1
+            ? t("product.review")
+            : t("product.reviews")}
+        </span>
+        </div>
+        </Link>
+
+        {/* الزر برا الرابط */}
+        <button className="add-to-cart">
+            {t("product.addToCart")}
+        </button>
 
     </div>
     </Link>
