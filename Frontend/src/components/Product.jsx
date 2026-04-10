@@ -48,7 +48,7 @@ function Product({product}) {
         </div>
         </Link>
 
-        {/* الزر برا الرابط */}
+
         <button className="add-to-cart">
             {t("product.addToCart")}
         </button>
