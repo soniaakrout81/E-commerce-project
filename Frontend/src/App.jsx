@@ -33,7 +33,7 @@ import UpdateOrderStatus from "./Admin/UpdateOrderStatus.jsx";
 import UsersList from "./Admin/UsersList.jsx";
 import Reviews from "./Admin/ReviewsList.jsx";
 import { SearchProvider } from "./context/SearchContext.jsx";
-import { CONFIG } from "../src/config/config.js";
+
 
 function App() {
   const { isAuthenticated, user } = useSelector(state => state.user);
@@ -45,11 +45,7 @@ function App() {
       dispatch(loadUser());
       
   }, [dispatch]);
-  useEffect(() => {
 
-    document.title = CONFIG.appName;
-
-  })
 
   return (
     <SearchProvider>
