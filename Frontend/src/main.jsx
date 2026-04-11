@@ -10,6 +10,11 @@ import { store } from "./app/store";
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || "";
 axios.defaults.withCredentials = true;
 
+document.documentElement.style.setProperty(
+  "--primary-main",
+  CONFIG.primaryColor
+);
+
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <BrowserRouter>
