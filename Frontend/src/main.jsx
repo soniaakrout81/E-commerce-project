@@ -6,6 +6,7 @@ import "./index.css";
 import "./i18n";
 import App from "./App.jsx";
 import { store } from "./app/store";
+import { CONFIG } from "../src/config/config.js";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || "";
 axios.defaults.withCredentials = true;
