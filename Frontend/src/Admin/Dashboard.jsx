@@ -46,35 +46,38 @@ function Dashboard() {
   }, []);
 
   /* ===================== */
-  /* 🧠 REAL STATS */
+  /* 🧠 STATS */
   /* ===================== */
 
   const stats = useMemo(() => {
-    const totalProducts = products.length;
-
-    const totalReviews = products.reduce(
-      (acc, p) => acc + (p.reviews?.length || 0),
-      0
-    );
-
-    const inStock = products.filter((p) => p.stock > 0).length;
-    const outOfStock = products.filter((p) => p.stock <= 0).length;
-
-    const totalRevenue = orders
-      .filter((o) => o.orderStatus === "Delivered")
-      .reduce((acc, o) => acc + o.totalPrice, 0);
-
     return {
-      totalProducts,
-      totalReviews,
-      inStock,
-      outOfStock,
-      totalRevenue,
+      totalProducts: products.length,
+      totalReviews: products.reduce(
+        (acc, p) => acc + (p.reviews?.length || 0),
+        0
+      ),
+      inStock: products.filter((p) => p.stock > 0).length,
+      outOfStock: products.filter((p) => p.stock <= 0).length,
+      totalRevenue: orders
+        .filter((o) => o.orderStatus === "Delivered")
+        .reduce((acc, o) => acc + o.totalPrice, 0),
     };
   }, [products, orders]);
 
   /* ===================== */
-  /* 📊 TIME RANGE (7 DAYS) */
+  /* 📦 ORDERS BREAKDOWN */
+  /* ===================== */
+
+  const orderStats = useMemo(() => {
+    return {
+      delivered: orders.filter((o) => o.orderStatus === "Delivered").length,
+      processing: orders.filter((o) => o.orderStatus === "Processing").length,
+      pending: orders.filter((o) => o.orderStatus === "Pending").length,
+    };
+  }, [orders]);
+
+  /* ===================== */
+  /* 📈 GROWTH */
   /* ===================== */
 
   const now = new Date();
@@ -83,10 +86,6 @@ function Dashboard() {
 
   const last14Days = new Date();
   last14Days.setDate(now.getDate() - 14);
-
-  /* ===================== */
-  /* 📈 GROWTH CALCULATION */
-  /* ===================== */
 
   const productGrowth = useMemo(() => {
     const thisWeek = products.filter(
@@ -103,7 +102,7 @@ function Dashboard() {
   }, [products]);
 
   const revenueGrowth = useMemo(() => {
-    const thisWeekRevenue = orders
+    const thisWeek = orders
       .filter(
         (o) =>
           o.orderStatus === "Delivered" &&
@@ -111,7 +110,7 @@ function Dashboard() {
       )
       .reduce((acc, o) => acc + o.totalPrice, 0);
 
-    const lastWeekRevenue = orders
+    const lastWeek = orders
       .filter(
         (o) =>
           o.orderStatus === "Delivered" &&
@@ -119,25 +118,9 @@ function Dashboard() {
       )
       .reduce((acc, o) => acc + o.totalPrice, 0);
 
-    if (lastWeekRevenue === 0) return 100;
-    return ((thisWeekRevenue - lastWeekRevenue) / lastWeekRevenue) * 100;
-  }, [orders]);
-
-  const reviewGrowth = useMemo(() => {
-    const thisWeek = products
-      .flatMap((p) => p.reviews || [])
-      .filter((r) => new Date(r.createdAt) > last7Days).length;
-
-    const lastWeek = products
-      .flatMap((p) => p.reviews || [])
-      .filter((r) => {
-        const d = new Date(r.createdAt);
-        return d < last7Days && d > last14Days;
-      }).length;
-
     if (lastWeek === 0) return 100;
     return ((thisWeek - lastWeek) / lastWeek) * 100;
-  }, [products]);
+  }, [orders]);
 
   return (
     <>
@@ -151,9 +134,8 @@ function Dashboard() {
       >
         {isTinyScreen && (
           <button
-            type="button"
             className={`sidebar-toggle ${isSidebarOpen ? "open" : "closed"}`}
-            onClick={() => setIsSidebarOpen((prev) => !prev)}
+            onClick={() => setIsSidebarOpen((p) => !p)}
           >
             {isSidebarOpen ? (
               <KeyboardArrowLeft />
@@ -170,43 +152,38 @@ function Dashboard() {
           }`}
         >
           <div className="logo">
-            <DashboardIcon /> {t("admin.dashboard.title")}
+            <DashboardIcon /> Dashboard
           </div>
 
           <nav className="nav-menu">
             <div className="nav-section">
-              <h3>{t("admin.products.section")}</h3>
+              <h3>Products</h3>
               <Link to="/admin/products">
-                <Inventory className="nav-icon" />
-                {t("admin.products.allProducts")}
+                <Inventory /> All Products
               </Link>
               <Link to="/admin/create/product">
-                <Inventory className="nav-icon" />
-                {t("admin.products.createProduct")}
+                <Inventory /> Create Product
               </Link>
             </div>
 
             <div className="nav-section">
-              <h3>{t("admin.users.section")}</h3>
+              <h3>Users</h3>
               <Link to="/admin/usersList">
-                <People className="nav-icon" />
-                {t("admin.users.allUsers")}
+                <People /> Users
               </Link>
             </div>
 
             <div className="nav-section">
-              <h3>{t("admin.orders.section")}</h3>
+              <h3>Orders</h3>
               <Link to="/admin/orders">
-                <ShoppingCart className="nav-icon" />
-                {t("admin.orders.allOrders")}
+                <ShoppingCart /> Orders
               </Link>
             </div>
 
             <div className="nav-section">
-              <h3>{t("admin.reviews.section")}</h3>
+              <h3>Reviews</h3>
               <Link to="/admin/reviews">
-                <Star className="nav-icon" />
-                {t("admin.reviews.allReviews")}
+                <Star /> Reviews
               </Link>
             </div>
           </nav>
@@ -220,45 +197,52 @@ function Dashboard() {
               : "sidebar-expanded"
           }`}
         >
-          {/* TOPBAR */}
+          {/* TOP */}
           <div className="dashboard-topbar">
-            <h2>Welcome back 👋 Admin</h2>
-            <p>Here’s what’s happening with your store today</p>
+            <h2>Admin Dashboard</h2>
+            <p>Live business analytics</p>
           </div>
 
           {/* STATS */}
           <div className="stats-grid">
             <div className="stat-box">
               <Inventory className="icon" />
-              <h3>Total Products</h3>
+              <h3>Products</h3>
               <p>{stats.totalProducts}</p>
-              <span className={`trend ${productGrowth >= 0 ? "up" : "down"}`}>
-                {productGrowth.toFixed(1)}%
-              </span>
+              <span className="trend up">{productGrowth.toFixed(1)}%</span>
             </div>
 
             <div className="stat-box">
               <Star className="icon" />
-              <h3>Total Reviews</h3>
+              <h3>Reviews</h3>
               <p>{stats.totalReviews}</p>
-              <span className={`trend ${reviewGrowth >= 0 ? "up" : "down"}`}>
-                {reviewGrowth.toFixed(1)}%
-              </span>
             </div>
 
             <div className="stat-box">
               <AttachMoney className="icon" />
-              <h3>Total Revenue</h3>
+              <h3>Revenue</h3>
               <p>{stats.totalRevenue.toLocaleString()} TND</p>
-              <span className={`trend ${revenueGrowth >= 0 ? "up" : "down"}`}>
+              <span className="trend up">
                 {revenueGrowth.toFixed(1)}%
               </span>
             </div>
 
             <div className="stat-box">
+              <CheckCircle className="icon" />
+              <h3>Delivered Orders</h3>
+              <p>{orderStats.delivered}</p>
+            </div>
+
+            <div className="stat-box">
+              <ShoppingCart className="icon" />
+              <h3>Processing</h3>
+              <p>{orderStats.processing}</p>
+            </div>
+
+            <div className="stat-box">
               <Error className="icon" />
-              <h3>Out of Stock</h3>
-              <p>{stats.outOfStock}</p>
+              <h3>Pending</h3>
+              <p>{orderStats.pending}</p>
             </div>
 
             <div className="stat-box">
@@ -266,16 +250,20 @@ function Dashboard() {
               <h3>In Stock</h3>
               <p>{stats.inStock}</p>
             </div>
+
+            <div className="stat-box">
+              <Error className="icon" />
+              <h3>Out of Stock</h3>
+              <p>{stats.outOfStock}</p>
+            </div>
           </div>
 
           {/* TABLE */}
           <div className="products-section">
-            <h2 className="products-title">
-              {t("admin.dashboard.latestProducts")}
-            </h2>
+            <h2>Latest Products</h2>
 
             {loadingAdmin ? (
-              <p>{t("common.loading")}...</p>
+              <p>Loading...</p>
             ) : (
               <table className="product-table">
                 <thead>
@@ -288,20 +276,12 @@ function Dashboard() {
                 </thead>
 
                 <tbody>
-                  {products.slice(0, 10).map((product, index) => (
-                    <tr key={product._id} className="table-row">
-                      <td>{index + 1}</td>
-                      <td>{product.name}</td>
-                      <td>${product.price}</td>
-                      <td>
-                        <span
-                          className={
-                            product.stock > 0 ? "stock-good" : "stock-bad"
-                          }
-                        >
-                          {product.stock}
-                        </span>
-                      </td>
+                  {products.slice(0, 10).map((p, i) => (
+                    <tr key={p._id}>
+                      <td>{i + 1}</td>
+                      <td>{p.name}</td>
+                      <td>{p.price} TND</td>
+                      <td>{p.stock}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -1,51 +1,54 @@
 .dashboard-container {
   display: flex;
-  background-color: #f5f7fb;
-  overflow-y: auto;
-  position: relative;
+  background: #f5f7fb;
+  min-height: 100vh;
 }
 
 /* ================= SIDEBAR ================= */
 
 .sidebar {
-  width: 270px;
+  width: 260px;
   background: #111827;
   color: white;
-  padding: 20px;
   position: fixed;
   top: 60px;
+  left: 0;
   height: calc(100vh - 60px);
+  padding: 20px;
   overflow-y: auto;
-  transition: all 0.3s ease;
-  z-index: 999;
+  transition: transform 0.3s ease;
+  z-index: 1000;
 }
 
 .sidebar.closed {
   transform: translateX(-100%);
 }
 
+/* LOGO */
 .logo {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 1.4rem;
+  font-size: 18px;
   font-weight: bold;
-  margin-bottom: 25px;
   padding-bottom: 15px;
   border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 20px;
 }
 
+/* NAV */
 .nav-menu {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 18px;
 }
 
 .nav-section h3 {
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(255,255,255,0.6);
   margin-bottom: 8px;
   text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .nav-section a {
@@ -56,7 +59,8 @@
   border-radius: 10px;
   color: white;
   text-decoration: none;
-  transition: 0.2s;
+  transition: 0.2s ease;
+  font-size: 14px;
 }
 
 .nav-section a:hover {
@@ -68,27 +72,24 @@
 
 .main-content {
   flex: 1;
+  margin-left: 260px;
   padding: 30px;
-  margin-left: 280px;
-  margin-top: 60px;
   transition: 0.3s ease;
-  background: #f5f7fb;
 }
 
 .main-content.sidebar-collapsed {
   margin-left: 0;
 }
 
-/* ================= TOPBAR ================= */
-
+/* TOPBAR */
 .dashboard-topbar {
   margin-bottom: 20px;
 }
 
 .dashboard-topbar h2 {
-  font-size: 24px;
+  font-size: 22px;
   margin: 0;
-  color: #111;
+  color: #111827;
 }
 
 .dashboard-topbar p {
@@ -100,17 +101,17 @@
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 18px;
   margin-bottom: 25px;
 }
 
 .stat-box {
   background: white;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-  transition: all 0.25s ease;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+  transition: 0.25s ease;
   position: relative;
 }
 
@@ -126,21 +127,23 @@
 }
 
 .stat-box h3 {
-  font-size: 13px;
+  font-size: 12px;
   color: #6b7280;
-  margin: 5px 0;
+  margin-bottom: 6px;
 }
 
 .stat-box p {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   color: #111827;
 }
 
+/* TREND */
 .trend {
   font-size: 12px;
-  margin-top: 8px;
+  margin-top: 6px;
   display: inline-block;
+  font-weight: 500;
 }
 
 .trend.up {
@@ -151,31 +154,17 @@
   color: #ef4444;
 }
 
-/* ================= CHART ================= */
-
-.chart-placeholder {
-  height: 220px;
-  background: white;
-  border-radius: 16px;
-  margin-bottom: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-
 /* ================= TABLE ================= */
 
 .products-section {
   background: white;
   padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
 }
 
 .products-title {
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 15px;
   color: #111827;
 }
@@ -187,7 +176,7 @@
 
 .product-table th {
   text-align: left;
-  font-size: 13px;
+  font-size: 12px;
   color: #6b7280;
   padding: 12px;
   border-bottom: 1px solid #e5e7eb;
@@ -203,6 +192,7 @@
   background: #f9fafb;
 }
 
+/* STOCK */
 .stock-good {
   color: #22c55e;
   font-weight: bold;
@@ -213,24 +203,24 @@
   font-weight: bold;
 }
 
-/* ================= SIDEBAR TOGGLE ================= */
+/* ================= TOGGLE BUTTON ================= */
 
 .sidebar-toggle {
   position: fixed;
   top: 70px;
   left: 260px;
-  z-index: 999;
-  background: #111827;
-  color: white;
-  border: none;
   width: 35px;
   height: 40px;
+  border: none;
+  background: #111827;
+  color: white;
   border-radius: 0 8px 8px 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: 0.3s;
+  z-index: 1100;
+  transition: 0.3s ease;
 }
 
 .sidebar-toggle.closed {
