@@ -45,18 +45,99 @@ function Dashboard() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const totalRevenue = useMemo(() => {
-    return orders
-      .filter((order) => order.orderStatus === "Delivered")
-      .reduce((acc, order) => acc + order.totalPrice, 0);
-  }, [orders]);
+  /* ===================== */
+  /* 🧠 REAL STATS */
+  /* ===================== */
 
-  const totalReviews = useMemo(() => {
-    return products.reduce((acc, p) => acc + (p.reviews?.length || 0), 0);
+  const stats = useMemo(() => {
+    const totalProducts = products.length;
+
+    const totalReviews = products.reduce(
+      (acc, p) => acc + (p.reviews?.length || 0),
+      0
+    );
+
+    const inStock = products.filter((p) => p.stock > 0).length;
+    const outOfStock = products.filter((p) => p.stock <= 0).length;
+
+    const totalRevenue = orders
+      .filter((o) => o.orderStatus === "Delivered")
+      .reduce((acc, o) => acc + o.totalPrice, 0);
+
+    return {
+      totalProducts,
+      totalReviews,
+      inStock,
+      outOfStock,
+      totalRevenue,
+    };
+  }, [products, orders]);
+
+  /* ===================== */
+  /* 📊 TIME RANGE (7 DAYS) */
+  /* ===================== */
+
+  const now = new Date();
+  const last7Days = new Date();
+  last7Days.setDate(now.getDate() - 7);
+
+  const last14Days = new Date();
+  last14Days.setDate(now.getDate() - 14);
+
+  /* ===================== */
+  /* 📈 GROWTH CALCULATION */
+  /* ===================== */
+
+  const productGrowth = useMemo(() => {
+    const thisWeek = products.filter(
+      (p) => new Date(p.createdAt) > last7Days
+    ).length;
+
+    const lastWeek = products.filter((p) => {
+      const d = new Date(p.createdAt);
+      return d < last7Days && d > last14Days;
+    }).length;
+
+    if (lastWeek === 0) return 100;
+    return ((thisWeek - lastWeek) / lastWeek) * 100;
   }, [products]);
 
-  const outOfStock = products.filter((p) => p.stock <= 0).length;
-  const inStock = products.filter((p) => p.stock > 0).length;
+  const revenueGrowth = useMemo(() => {
+    const thisWeekRevenue = orders
+      .filter(
+        (o) =>
+          o.orderStatus === "Delivered" &&
+          new Date(o.createdAt) > last7Days
+      )
+      .reduce((acc, o) => acc + o.totalPrice, 0);
+
+    const lastWeekRevenue = orders
+      .filter(
+        (o) =>
+          o.orderStatus === "Delivered" &&
+          new Date(o.createdAt) <= last7Days
+      )
+      .reduce((acc, o) => acc + o.totalPrice, 0);
+
+    if (lastWeekRevenue === 0) return 100;
+    return ((thisWeekRevenue - lastWeekRevenue) / lastWeekRevenue) * 100;
+  }, [orders]);
+
+  const reviewGrowth = useMemo(() => {
+    const thisWeek = products
+      .flatMap((p) => p.reviews || [])
+      .filter((r) => new Date(r.createdAt) > last7Days).length;
+
+    const lastWeek = products
+      .flatMap((p) => p.reviews || [])
+      .filter((r) => {
+        const d = new Date(r.createdAt);
+        return d < last7Days && d > last14Days;
+      }).length;
+
+    if (lastWeek === 0) return 100;
+    return ((thisWeek - lastWeek) / lastWeek) * 100;
+  }, [products]);
 
   return (
     <>
@@ -150,42 +231,41 @@ function Dashboard() {
             <div className="stat-box">
               <Inventory className="icon" />
               <h3>Total Products</h3>
-              <p>{products.length}</p>
-              <span className="trend up">+5% this week</span>
+              <p>{stats.totalProducts}</p>
+              <span className={`trend ${productGrowth >= 0 ? "up" : "down"}`}>
+                {productGrowth.toFixed(1)}%
+              </span>
             </div>
 
             <div className="stat-box">
               <Star className="icon" />
               <h3>Total Reviews</h3>
-              <p>{totalReviews}</p>
-              <span className="trend up">+2% this week</span>
+              <p>{stats.totalReviews}</p>
+              <span className={`trend ${reviewGrowth >= 0 ? "up" : "down"}`}>
+                {reviewGrowth.toFixed(1)}%
+              </span>
             </div>
 
-            <div className="stat-box revenue">
+            <div className="stat-box">
               <AttachMoney className="icon" />
               <h3>Total Revenue</h3>
-              <p>{totalRevenue.toLocaleString()} TND</p>
-              <span className="trend up">+12% this month</span>
+              <p>{stats.totalRevenue.toLocaleString()} TND</p>
+              <span className={`trend ${revenueGrowth >= 0 ? "up" : "down"}`}>
+                {revenueGrowth.toFixed(1)}%
+              </span>
             </div>
 
             <div className="stat-box">
               <Error className="icon" />
               <h3>Out of Stock</h3>
-              <p>{outOfStock}</p>
-              <span className="trend down">-1%</span>
+              <p>{stats.outOfStock}</p>
             </div>
 
             <div className="stat-box">
               <CheckCircle className="icon" />
               <h3>In Stock</h3>
-              <p>{inStock}</p>
-              <span className="trend up">+3%</span>
+              <p>{stats.inStock}</p>
             </div>
-          </div>
-
-          {/* CHART PLACEHOLDER */}
-          <div className="chart-placeholder">
-            📊 Revenue Overview (Chart coming soon)
           </div>
 
           {/* TABLE */}
