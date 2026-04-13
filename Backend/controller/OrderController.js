@@ -96,20 +96,35 @@ export const updateOrderStatus = HandleAsyncError(async (req, res, next) => {
         return next(new HandelError("No order found", 404));
 
     };
-    if (order.orderStatus === "Delivered") {
 
-        return next(new HandelError("This order is already been delivered", 404));
+    const { status } = req.body;
+    const allowedStatuses = ["Processing", "Delivered"];
+
+    if (!status || !allowedStatuses.includes(status)) {
+
+        return next(new HandelError("Invalid order status", 400));
 
     };
-    await Promise.all(order.orderItems.map(item => updateQuantity(item.product, item.quantity)));
-    order.orderStatus = req.body.status;
+
     if (order.orderStatus === "Delivered") {
 
+        return next(new HandelError("This order has already been delivered", 400));
+
+    };
+
+    if (order.orderStatus === status) {
+
+        return next(new HandelError("Order status is already up to date", 400));
+
+    };
+
+    if (status === "Delivered") {
+
+        await Promise.all(order.orderItems.map(item => updateQuantity(item.product, item.quantity)));
         order.deliveredAt = Date.now();
 
     };
-    console.log("Order before save:", order);
-    console.log("Request body:", req.body);
+    order.orderStatus = status;
 
     await order.save({ validateBeforeSave: false });
     res.status(200).json({
