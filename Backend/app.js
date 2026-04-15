@@ -13,8 +13,10 @@ const allowedOrigins = [process.env.FRONTEND_URL, process.env.FRONTEND_PREVIEW_U
 
 app.use(express.json({ limit: "5mb" })); 
 app.use(express.urlencoded({ limit: "5mb", extended: true }));
-
-app.use(express.json());
+app.use((req, res, next) => {
+    console.log("REQUEST:", req.method, req.originalUrl);
+    next();
+});
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
@@ -32,11 +34,13 @@ app.use("/api/v1",product);
 app.use("/api/v1",user);
 app.use("/api/v1",order);
 
-app.use(errorHandelMiddleware);
-
 app.use((req, res, next) => {
-    console.log("REQUEST:", req.method, req.url);
-    next();
+    res.status(404).json({
+        success: false,
+        message: `Route not found: ${req.method} ${req.originalUrl}`
+    });
 });
+
+app.use(errorHandelMiddleware);
 
 export default app;

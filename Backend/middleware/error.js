@@ -23,6 +23,14 @@ export default ( err, req, res, next ) => {
 
     }
 
+    console.error("[ERROR_MIDDLEWARE]", {
+        method: req.method,
+        path: req.originalUrl,
+        statusCode: err.statusCode,
+        message: err.message,
+        stack: err.stack
+    });
+
     res.status(err.statusCode).json({
 
         success: false,
