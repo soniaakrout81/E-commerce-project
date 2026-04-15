@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { AddPhotoAlternate, Add, DeleteOutline, Save, ViewCarousel } from "@mui/icons-material";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 import PageTitle from "../components/PageTitle";
+import AdminSidebar from "../components/AdminSidebar";
 import { clearSettingsError, fetchSiteSettings, updateSiteSettings } from "../features/settings/siteSettingsSlice";
 import "../AdminStyles/BannerManager.css";
 
@@ -88,16 +88,7 @@ function BannerManager() {
       <PageTitle title="Banner Management" />
 
       <div className="banner-manager-shell">
-        <aside className="banner-manager-sidebar">
-          <div className="banner-manager-brand">Store Admin</div>
-          <nav className="banner-manager-nav">
-            <Link to="/admin/dashboard">Dashboard</Link>
-            <Link to="/admin/settings">Settings</Link>
-            <Link to="/admin/banners" className="active">Banners</Link>
-            <Link to="/admin/products">Products</Link>
-            <Link to="/admin/orders">Orders</Link>
-          </nav>
-        </aside>
+        <AdminSidebar />
 
         <main className="banner-manager-main">
           <div className="banner-manager-header">

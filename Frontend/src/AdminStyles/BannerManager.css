@@ -5,43 +5,9 @@
   padding-top: 5rem;
 }
 
-.banner-manager-sidebar {
-  width: 240px;
-  background: #111827;
-  color: #fff;
-  padding: 2rem 1.25rem;
-  position: sticky;
-  top: 5rem;
-  height: calc(100vh - 5rem);
-}
-
-.banner-manager-brand {
-  font-size: 1.1rem;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-}
-
-.banner-manager-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-}
-
-.banner-manager-nav a {
-  color: rgba(255, 255, 255, 0.82);
-  text-decoration: none;
-  padding: 0.9rem 1rem;
-  border-radius: 0.9rem;
-}
-
-.banner-manager-nav a.active,
-.banner-manager-nav a:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-}
-
 .banner-manager-main {
   flex: 1;
+  margin-left: 260px;
   padding: 2rem;
 }
 
@@ -196,12 +162,6 @@
     flex-direction: column;
   }
 
-  .banner-manager-sidebar {
-    width: 100%;
-    height: auto;
-    position: static;
-  }
-
   .banner-manager-grid {
     grid-template-columns: 1fr;
   }
@@ -209,6 +169,7 @@
 
 @media (max-width: 768px) {
   .banner-manager-main {
+    margin-left: 0;
     padding: 1rem;
   }
 

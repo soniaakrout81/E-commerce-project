@@ -15,44 +15,9 @@
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
 }
 
-.admin-settings-sidebar {
-  width: 240px;
-  background: #111827;
-  color: #fff;
-  padding: 2rem 1.25rem;
-  position: sticky;
-  top: 5rem;
-  height: calc(100vh - 5rem);
-}
-
-.admin-settings-brand {
-  font-size: 1.1rem;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-}
-
-.admin-settings-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-}
-
-.admin-settings-nav a {
-  color: rgba(255, 255, 255, 0.82);
-  text-decoration: none;
-  padding: 0.9rem 1rem;
-  border-radius: 0.9rem;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.admin-settings-nav a.active,
-.admin-settings-nav a:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-}
-
 .admin-settings-main {
   flex: 1;
+  margin-left: 260px;
   padding: 2rem;
 }
 
@@ -202,16 +167,11 @@
   .admin-settings-shell {
     flex-direction: column;
   }
-
-  .admin-settings-sidebar {
-    width: 100%;
-    height: auto;
-    position: static;
-  }
 }
 
 @media (max-width: 768px) {
   .admin-settings-main {
+    margin-left: 0;
     padding: 1rem;
   }
 

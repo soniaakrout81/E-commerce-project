@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Palette, Storefront, ContactMail, ViewCarousel, Save } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Palette, Storefront, ContactMail, Save } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 import PageTitle from "../components/PageTitle";
+import AdminSidebar from "../components/AdminSidebar";
 import { clearSettingsError, fetchSiteSettings, updateSiteSettings } from "../features/settings/siteSettingsSlice";
 import "../AdminStyles/AdminSettings.css";
 
@@ -146,16 +146,7 @@ function AdminSettings() {
       <PageTitle title="Admin Settings" />
 
       <div className="admin-settings-shell">
-        <aside className="admin-settings-sidebar">
-          <div className="admin-settings-brand">Template Control</div>
-          <nav className="admin-settings-nav">
-            <Link to="/admin/dashboard">Dashboard</Link>
-            <Link to="/admin/products">Products</Link>
-            <Link to="/admin/orders">Orders</Link>
-            <Link to="/admin/reviews">Reviews</Link>
-            <Link to="/admin/settings" className="active">Settings</Link>
-          </nav>
-        </aside>
+        <AdminSidebar />
 
         <main className="admin-settings-main">
           <div className="admin-settings-header">
@@ -295,47 +286,6 @@ function AdminSettings() {
               </div>
             </section>
 
-            <section className="admin-settings-card">
-              <div className="admin-settings-section-title">
-                <ViewCarousel />
-                <div>
-                  <h2>Hero Slides</h2>
-                  <p>Prepare up to two premium homepage slides with CTA buttons.</p>
-                </div>
-              </div>
-
-              <div className="admin-settings-slides">
-                {formData.heroSlides.map((slide, index) => (
-                  <div className="admin-settings-slide-card" key={index}>
-                    <h3>Slide {index + 1}</h3>
-                    <label>
-                      Slide Image URL
-                      <input value={slide.image} onChange={(e) => handleSlideChange(index, "image", e.target.value)} placeholder="https://..." />
-                    </label>
-                    <label>
-                      Upload Slide Image
-                      <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, null, index)} />
-                    </label>
-                    <label>
-                      Title
-                      <input value={slide.title} onChange={(e) => handleSlideChange(index, "title", e.target.value)} />
-                    </label>
-                    <label>
-                      Subtitle
-                      <textarea rows="3" value={slide.subtitle} onChange={(e) => handleSlideChange(index, "subtitle", e.target.value)} />
-                    </label>
-                    <label>
-                      CTA Label
-                      <input value={slide.ctaLabel} onChange={(e) => handleSlideChange(index, "ctaLabel", e.target.value)} />
-                    </label>
-                    <label>
-                      CTA Link
-                      <input value={slide.ctaLink} onChange={(e) => handleSlideChange(index, "ctaLink", e.target.value)} />
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </section>
           </form>
         </main>
       </div>

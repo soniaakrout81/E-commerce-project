@@ -8,9 +8,7 @@ import {
   AttachMoney,
   Error,
   CheckCircle,
-  Dashboard as DashboardIcon,
   ShoppingCart,
-  People,
   Settings,
   ViewCarousel,
   KeyboardArrowLeft,
@@ -20,6 +18,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { fetchAdminProducts, fetchAllOrders } from "../features/admin/adminSlice";
+import AdminSidebar from "../components/AdminSidebar";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -148,57 +147,8 @@ function Dashboard() {
         )}
 
         {/* SIDEBAR */}
-        <div
-          className={`sidebar ${
-            isTinyScreen && !isSidebarOpen ? "closed" : "open"
-          }`}
-        >
-          <div className="logo">
-            <DashboardIcon /> Dashboard
-          </div>
-
-          <nav className="nav-menu">
-            <div className="nav-section">
-              <h3>Products</h3>
-              <Link to="/admin/products">
-                <Inventory /> All Products
-              </Link>
-              <Link to="/admin/create/product">
-                <Inventory /> Create Product
-              </Link>
-            </div>
-
-            <div className="nav-section">
-              <h3>Users</h3>
-              <Link to="/admin/usersList">
-                <People /> Users
-              </Link>
-            </div>
-
-            <div className="nav-section">
-              <h3>Orders</h3>
-              <Link to="/admin/orders">
-                <ShoppingCart /> Orders
-              </Link>
-            </div>
-
-            <div className="nav-section">
-              <h3>Reviews</h3>
-              <Link to="/admin/reviews">
-                <Star /> Reviews
-              </Link>
-            </div>
-
-            <div className="nav-section">
-              <h3>Store</h3>
-              <Link to="/admin/settings">
-                <Settings /> Settings
-              </Link>
-              <Link to="/admin/banners">
-                <ViewCarousel /> Banners
-              </Link>
-            </div>
-          </nav>
+        <div className={`${isTinyScreen && !isSidebarOpen ? "sidebar closed" : ""}`}>
+          <AdminSidebar />
         </div>
 
         {/* MAIN */}
