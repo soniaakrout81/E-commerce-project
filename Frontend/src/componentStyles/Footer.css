@@ -1,5 +1,5 @@
 .footer {
-  background: linear-gradient(180deg, rgba(108, 91, 123, 0.05), rgba(31, 41, 55, 0.03));
+  background-color: var(--bg-primary);
   color: var(--text-primary);
   padding: 2.5rem 0;
   border-top: 1px solid var(--border-color);

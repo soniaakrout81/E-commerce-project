@@ -56,14 +56,34 @@ export const fetchSiteSettings = createAsyncThunk(
   }
 );
 
+export const updateSiteSettings = createAsyncThunk(
+  "settings/updateSiteSettings",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.put("/api/v1/admin/settings", payload, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      return data.settings;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Failed to update site settings");
+    }
+  }
+);
+
 const siteSettingsSlice = createSlice({
   name: "settings",
   initialState: {
     loading: false,
+    saving: false,
     error: null,
     settings: defaultSettings,
   },
-  reducers: {},
+  reducers: {
+    clearSettingsError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchSiteSettings.pending, (state) => {
@@ -85,8 +105,29 @@ const siteSettingsSlice = createSlice({
       .addCase(fetchSiteSettings.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Failed to load site settings";
+      })
+      .addCase(updateSiteSettings.pending, (state) => {
+        state.saving = true;
+        state.error = null;
+      })
+      .addCase(updateSiteSettings.fulfilled, (state, action) => {
+        state.saving = false;
+        state.settings = {
+          ...defaultSettings,
+          ...action.payload,
+          socialLinks: {
+            ...defaultSettings.socialLinks,
+            ...(action.payload?.socialLinks || {}),
+          },
+          heroSlides: action.payload?.heroSlides?.length ? action.payload.heroSlides : defaultSettings.heroSlides,
+        };
+      })
+      .addCase(updateSiteSettings.rejected, (state, action) => {
+        state.saving = false;
+        state.error = action.payload || "Failed to update site settings";
       });
   },
 });
 
+export const { clearSettingsError } = siteSettingsSlice.actions;
 export default siteSettingsSlice.reducer;

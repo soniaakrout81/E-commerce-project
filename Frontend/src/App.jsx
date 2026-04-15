@@ -32,6 +32,7 @@ import OrdersList from "./Admin/OrdersList.jsx";
 import UpdateOrderStatus from "./Admin/UpdateOrderStatus.jsx";
 import UsersList from "./Admin/UsersList.jsx";
 import Reviews from "./Admin/ReviewsList.jsx";
+import AdminSettings from "./Admin/AdminSettings.jsx";
 import { SearchProvider } from "./context/SearchContext.jsx";
 import { CONFIG } from "../src/config/config.js";
 import { fetchSiteSettings } from "./features/settings/siteSettingsSlice.js";
@@ -95,6 +96,7 @@ function App() {
         <Route path="/admin/orders" element={<ProtectedRoute element={<OrdersList />} adminOnly />} />
         <Route path="/admin/orderUpdate/:id" element={<ProtectedRoute element={<UpdateOrderStatus />} adminOnly />} />
         <Route path="/admin/reviews" element={<ProtectedRoute element={<Reviews />} adminOnly />} />
+        <Route path="/admin/settings" element={<ProtectedRoute element={<AdminSettings />} adminOnly />} />
       </Routes>
 
       {isAuthenticated && <UserDashboard user={user} />}

@@ -11,6 +11,7 @@ import {
   Dashboard as DashboardIcon,
   ShoppingCart,
   People,
+  Settings,
   KeyboardArrowLeft,
   KeyboardArrowRight,
 } from "@mui/icons-material";
@@ -184,6 +185,13 @@ function Dashboard() {
               <h3>Reviews</h3>
               <Link to="/admin/reviews">
                 <Star /> Reviews
+              </Link>
+            </div>
+
+            <div className="nav-section">
+              <h3>Store</h3>
+              <Link to="/admin/settings">
+                <Settings /> Settings
               </Link>
             </div>
           </nav>
