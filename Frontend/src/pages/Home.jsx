@@ -58,6 +58,56 @@ function Home() {
             <p>Launch on Vercel, Railway, and MongoDB Atlas with minimal project edits.</p>
           </article>
         </section>
+
+        <section className="home-featured-strip">
+          <div>
+            <span>Premium positioning</span>
+            <h3>Built to feel like a high-end client delivery, not a generic starter.</h3>
+          </div>
+          <div className="home-featured-metrics">
+            <strong>Fast branding</strong>
+            <strong>Reusable admin</strong>
+            <strong>Easy handoff</strong>
+          </div>
+        </section>
+
+        <section className="home-testimonials-grid">
+          <article className="home-testimonial-card">
+            <p>"The storefront looked custom from day one and gave us a polished launch presence."</p>
+            <strong>Fashion Boutique Client</strong>
+          </article>
+          <article className="home-testimonial-card">
+            <p>"We were able to update products, banners, and messaging without touching core code."</p>
+            <strong>Electronics Store Owner</strong>
+          </article>
+          <article className="home-testimonial-card">
+            <p>"Exactly the kind of premium reusable setup that makes freelance delivery faster."</p>
+            <strong>Furniture Brand Team</strong>
+          </article>
+        </section>
+
+        <section className="home-newsletter-card">
+          <div>
+            <p className="home-kicker">Newsletter</p>
+            <h3>Capture leads before your client adds advanced email tools.</h3>
+            <p className="home-supporting-copy">{settings?.newsletterText}</p>
+          </div>
+          <form className="home-newsletter-form">
+            <input type="email" placeholder="Enter your email address" />
+            <button type="button">Subscribe</button>
+          </form>
+        </section>
+
+        <section className="home-contact-strip">
+          <div>
+            <p className="home-kicker">Contact</p>
+            <h3>{settings?.contactEmail || "hello@example.com"}</h3>
+          </div>
+          <div className="home-contact-meta">
+            <span>{settings?.contactPhone || "+000 000 000"}</span>
+            <span>{settings?.address || "Your branded store address"}</span>
+          </div>
+        </section>
       </div>
 
       <Footer />

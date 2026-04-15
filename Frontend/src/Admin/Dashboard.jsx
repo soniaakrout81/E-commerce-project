@@ -12,6 +12,7 @@ import {
   ShoppingCart,
   People,
   Settings,
+  ViewCarousel,
   KeyboardArrowLeft,
   KeyboardArrowRight,
 } from "@mui/icons-material";
@@ -192,6 +193,9 @@ function Dashboard() {
               <h3>Store</h3>
               <Link to="/admin/settings">
                 <Settings /> Settings
+              </Link>
+              <Link to="/admin/banners">
+                <ViewCarousel /> Banners
               </Link>
             </div>
           </nav>

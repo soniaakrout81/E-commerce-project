@@ -23,6 +23,7 @@ import Shipping from "./Cart/Shipping.jsx";
 import OrderConfirm from "./Cart/OrderConfirm.jsx";
 import MyOrders from "./Orders/MyOrders.jsx";
 import OrderDetails from "./Orders/OrderDetails.jsx";
+import OrderTracking from "./Orders/OrderTracking.jsx";
 import Dashboard from "./Admin/Dashboard.jsx";
 import ProductsList from "./Admin/ProductsList.jsx";
 import CreateProduct from "./Admin/CreateProduct.jsx";
@@ -33,6 +34,7 @@ import UpdateOrderStatus from "./Admin/UpdateOrderStatus.jsx";
 import UsersList from "./Admin/UsersList.jsx";
 import Reviews from "./Admin/ReviewsList.jsx";
 import AdminSettings from "./Admin/AdminSettings.jsx";
+import BannerManager from "./Admin/BannerManager.jsx";
 import { SearchProvider } from "./context/SearchContext.jsx";
 import { CONFIG } from "../src/config/config.js";
 import { fetchSiteSettings } from "./features/settings/siteSettingsSlice.js";
@@ -85,6 +87,7 @@ function App() {
         <Route path="/order/confirm" element={<ProtectedRoute element={<OrderConfirm />} />} />
         <Route path="/orders/user" element={<ProtectedRoute element={<MyOrders />} />} />
         <Route path="/order/:id" element={<ProtectedRoute element={<OrderDetails />} />} />
+        <Route path="/track-order" element={<ProtectedRoute element={<OrderTracking />} />} />
 
         {/* Admin */}
         <Route path="/admin/dashboard" element={<ProtectedRoute element={<Dashboard />} adminOnly />} />
@@ -97,6 +100,7 @@ function App() {
         <Route path="/admin/orderUpdate/:id" element={<ProtectedRoute element={<UpdateOrderStatus />} adminOnly />} />
         <Route path="/admin/reviews" element={<ProtectedRoute element={<Reviews />} adminOnly />} />
         <Route path="/admin/settings" element={<ProtectedRoute element={<AdminSettings />} adminOnly />} />
+        <Route path="/admin/banners" element={<ProtectedRoute element={<BannerManager />} adminOnly />} />
       </Routes>
 
       {isAuthenticated && <UserDashboard user={user} />}

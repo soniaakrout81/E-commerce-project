@@ -30,6 +30,7 @@ function UserDashboard({ user }) {
     }
 
     function orders() { navigate("/orders/user"); }
+    function trackOrder() { navigate("/track-order"); }
     function profile() { navigate("/profile"); }
     function myCart() { navigate("/cart"); }
     function logoutUser() {
@@ -47,6 +48,7 @@ function UserDashboard({ user }) {
 
     const options = [
         { name: t("navbar.orders"), funcName: orders },
+        { name: "Track Order", funcName: trackOrder },
         { name: t("navbar.account"), funcName: profile },
         { name: t("user.dashboard.cartCompact", { count: cartItems.length }), funcName: myCart, isCart:true },
         { name: t("navbar.logout"), funcName: logoutUser },

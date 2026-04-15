@@ -88,6 +88,110 @@
   line-height: 1.7;
 }
 
+.home-featured-strip,
+.home-newsletter-card,
+.home-contact-strip {
+  width: 100%;
+  max-width: 1200px;
+  border-radius: 1.6rem;
+  padding: 1.6rem 1.8rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.home-featured-strip {
+  background: #111827;
+  color: #fff;
+}
+
+.home-featured-strip h3,
+.home-newsletter-card h3,
+.home-contact-strip h3 {
+  margin: 0.35rem 0 0;
+  font-size: 1.7rem;
+  font-family: var(--font-heading);
+}
+
+.home-featured-metrics,
+.home-contact-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.home-featured-metrics strong,
+.home-contact-meta span {
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.home-testimonials-grid {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.home-testimonial-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.05);
+}
+
+.home-testimonial-card p {
+  margin: 0 0 1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.home-testimonial-card strong {
+  color: var(--primary-dark);
+}
+
+.home-newsletter-card {
+  background: linear-gradient(135deg, rgba(244, 162, 97, 0.16), rgba(108, 91, 123, 0.1));
+  align-items: center;
+}
+
+.home-newsletter-form {
+  display: flex;
+  gap: 0.8rem;
+  min-width: 360px;
+}
+
+.home-newsletter-form input {
+  flex: 1;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  border-radius: 999px;
+  padding: 0.95rem 1rem;
+  font: inherit;
+}
+
+.home-newsletter-form button {
+  border: none;
+  border-radius: 999px;
+  padding: 0 1.3rem;
+  background: var(--primary-dark);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.home-contact-strip {
+  background: #fff;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.05);
+  align-items: center;
+}
+
+.home-contact-meta span {
+  color: var(--text-secondary);
+}
+
 @media (max-width: 900px) {
   .home-product-container {
     display: flex;
@@ -97,6 +201,21 @@
 
   .home-promo-grid {
     grid-template-columns: 1fr;
+  }
+
+  .home-featured-strip,
+  .home-newsletter-card,
+  .home-contact-strip {
+    flex-direction: column;
+  }
+
+  .home-testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-newsletter-form {
+    min-width: 0;
+    width: 100%;
   }
 }
 
@@ -132,6 +251,22 @@
 
   .home-promo-card {
     padding: 1.2rem;
+  }
+
+  .home-featured-strip,
+  .home-newsletter-card,
+  .home-contact-strip {
+    padding: 1.2rem;
+  }
+
+  .home-featured-strip h3,
+  .home-newsletter-card h3,
+  .home-contact-strip h3 {
+    font-size: 1.3rem;
+  }
+
+  .home-newsletter-form {
+    display: grid;
   }
 }
 
