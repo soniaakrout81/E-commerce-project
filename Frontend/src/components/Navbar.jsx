@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { useSearch } from "../context/SearchContext";
 import { logout, removeSuccess } from "../features/user/userSlice";
 import { toast } from "react-toastify";
+import { CONFIG } from "../config/config";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,6 +25,7 @@ function Navbar() {
   const { t, i18n } = useTranslation();
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const { cartItems } = useSelector((state) => state.cart);
+  const { settings } = useSelector((state) => state.settings);
   const languageCycle = ["en", "ar", "fr"];
   const currentLanguage = i18n.resolvedLanguage || i18n.language || "en";
   const normalizedLanguage = currentLanguage.split("-")[0];
@@ -83,7 +85,16 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-logo">
-          <Link className="Navbar-button" to="/" onClick={() => setIsMenuOpen(false)}>{t("navbar.brand")}</Link>
+          <Link className="Navbar-button navbar-brand-link" to="/" onClick={() => setIsMenuOpen(false)}>
+            {settings?.logo ? (
+              <img
+                src={settings.logo}
+                alt={settings?.storeName || CONFIG.appName}
+                className="navbar-brand-logo"
+              />
+            ) : null}
+            <span>{settings?.storeName || t("navbar.brand")}</span>
+          </Link>
         </div>
 
         <div className={`navbar-links ${isMenuOpen ? "active" : ""}`}>

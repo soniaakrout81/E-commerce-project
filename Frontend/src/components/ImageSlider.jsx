@@ -1,29 +1,34 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import "../componentStyles/ImageSlider.css";
-
-const images = [
-  "/images/image1.png",
-  "/images/image2.png",
-  "/images/image3.png",
-  "/images/image4.png",
-];
 
 function ImageSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const sliderRef = useRef(null);
   const { t } = useTranslation();
+  const { settings } = useSelector((state) => state.settings);
+  const slides = settings?.heroSlides?.length ? settings.heroSlides : [];
 
   useEffect(() => {
+    if (slides.length <= 1) return undefined;
+
     const interval = setInterval(() => {
       setCurrentIndex((prev) => prev + 1);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [slides.length]);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [slides.length]);
 
   const handleTransitionEnd = () => {
-    if (currentIndex >= images.length) {
+    if (!slides.length) return;
+
+    if (currentIndex >= slides.length) {
       sliderRef.current.style.transition = "none";
       setCurrentIndex(0);
       sliderRef.current.style.transform = `translateX(0%)`;
@@ -44,22 +49,50 @@ function ImageSlider() {
         }}
         onTransitionEnd={handleTransitionEnd}
       >
-        {images.map((image, index) => (
+        {slides.map((slide, index) => (
           <div className="slider-item" key={index}>
-            <img src={image} alt={t("imageSlider.slideAlt", { index: index + 1 })} />
+            <img src={slide.image || settings?.heroImage} alt={slide.title || t("imageSlider.slideAlt", { index: index + 1 })} />
+            <div className="slider-overlay">
+              <p className="slider-eyebrow">{settings?.tagline}</p>
+              <h1>{slide.title || settings?.heroTitle}</h1>
+              <p>{slide.subtitle || settings?.heroSubtitle}</p>
+              <div className="slider-actions">
+                <Link to={slide.ctaLink || "/products"} className="slider-primary-btn">
+                  {slide.ctaLabel || "Explore now"}
+                </Link>
+                <Link to="/products" className="slider-secondary-btn">
+                  {t("navbar.products")}
+                </Link>
+              </div>
+            </div>
           </div>
         ))}
 
-        <div className="slider-item">
-          <img src={images[0]} alt={t("imageSlider.slideCloneAlt")} />
-        </div>
+        {slides.length > 0 ? (
+          <div className="slider-item">
+            <img src={slides[0].image || settings?.heroImage} alt={t("imageSlider.slideCloneAlt")} />
+            <div className="slider-overlay">
+              <p className="slider-eyebrow">{settings?.tagline}</p>
+              <h1>{slides[0].title || settings?.heroTitle}</h1>
+              <p>{slides[0].subtitle || settings?.heroSubtitle}</p>
+              <div className="slider-actions">
+                <Link to={slides[0].ctaLink || "/products"} className="slider-primary-btn">
+                  {slides[0].ctaLabel || "Explore now"}
+                </Link>
+                <Link to="/products" className="slider-secondary-btn">
+                  {t("navbar.products")}
+                </Link>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
 
       <div className="slider-dots">
-        {images.map((_, index) => (
+        {slides.map((_, index) => (
           <span
             key={index}
-            className={`dot ${index === (currentIndex % images.length) ? "active" : ""}`}
+            className={`dot ${index === (currentIndex % slides.length) ? "active" : ""}`}
             onClick={() => setCurrentIndex(index)}
           />
         ))}

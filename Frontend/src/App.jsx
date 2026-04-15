@@ -34,22 +34,34 @@ import UsersList from "./Admin/UsersList.jsx";
 import Reviews from "./Admin/ReviewsList.jsx";
 import { SearchProvider } from "./context/SearchContext.jsx";
 import { CONFIG } from "../src/config/config.js";
+import { fetchSiteSettings } from "./features/settings/siteSettingsSlice.js";
 
 function App() {
   const { isAuthenticated, user } = useSelector(state => state.user);
+  const { settings } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
   const { i18n } = useTranslation();
 
   useEffect(() => {
 
       dispatch(loadUser());
+      dispatch(fetchSiteSettings());
       
   }, [dispatch]);
   useEffect(() => {
 
-    document.title = CONFIG.appName;
+    document.title = settings?.storeName || CONFIG.appName;
 
-  })
+  }, [settings?.storeName])
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--primary-main", settings?.primaryColor || CONFIG.primaryColor);
+    document.documentElement.style.setProperty("--primary-light", settings?.secondaryColor || "#F4A261");
+    document.documentElement.style.setProperty("--primary-dark", settings?.accentColor || "#1F2937");
+    document.documentElement.style.setProperty("--font-heading", settings?.fontHeading || "'Poppins', sans-serif");
+    document.documentElement.style.setProperty("--font-body", settings?.fontBody || "'Inter', sans-serif");
+
+  }, [settings]);
 
   return (
     <SearchProvider>

@@ -3,6 +3,8 @@
     --primary-main: #6C5B7B; 
     --primary-dark: #4E4A59; 
     --primary-light: #F8B5B1; 
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
     
     --bg-primary: #111827; 
     --bg-secondary: #3B3B4F; 
@@ -21,6 +23,10 @@
     margin:0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
 }
 
 
@@ -101,14 +107,6 @@ svg {
 
     .footer-section {
         min-width: 0;
-    }
-
-    .image-slider-container {
-        height: 220px;
-    }
-
-    .slider-item img {
-        height: 220px;
     }
 
     .usersList-table,

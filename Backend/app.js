@@ -3,6 +3,7 @@ import product from "./routes/ProductsRoute.js";
 import errorHandelMiddleware from "./middleware/error.js";
 import user from "./routes/UserRoutes.js";
 import order from "./routes/OrderRoutes.js";
+import siteSettings from "./routes/SiteSettingsRoutes.js";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import cors from "cors";
@@ -33,6 +34,7 @@ app.use(fileUpload());
 app.use("/api/v1",product);
 app.use("/api/v1",user);
 app.use("/api/v1",order);
+app.use("/api/v1",siteSettings);
 
 app.use((req, res, next) => {
     res.status(404).json({

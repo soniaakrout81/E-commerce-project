@@ -1,88 +1,194 @@
 .image-slider-container {
-    position: relative;
-    width: 100%;
-    height: 450px; 
-    overflow: hidden;
-    margin-top: 6rem;
+  position: relative;
+  width: 100%;
+  height: 560px;
+  overflow: hidden;
+  margin-top: 5rem;
+  background: #0f172a;
+}
+
+.slider-images {
+  display: flex;
+  transition: transform 1s ease;
+}
+
+.slider-item {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.slider-item img {
+  width: 100%;
+  height: 560px;
+  object-fit: cover;
+  filter: brightness(0.62);
+}
+
+.slider-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem 7vw;
+  color: #fff;
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.36) 52%, rgba(15, 23, 42, 0.12) 100%);
+}
+
+.slider-overlay h1 {
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  line-height: 1.05;
+  max-width: 11ch;
+  margin: 0;
+  font-family: var(--font-heading);
+}
+
+.slider-overlay p {
+  max-width: 38rem;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.slider-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.slider-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.slider-primary-btn,
+.slider-secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+}
+
+.slider-primary-btn {
+  background: var(--primary-light);
+  color: #111827;
+}
+
+.slider-secondary-btn {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  backdrop-filter: blur(10px);
+}
+
+.slider-primary-btn:hover,
+.slider-secondary-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dot.active {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.dot:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+@media (max-width: 768px) {
+  .image-slider-container {
+    height: 380px;
   }
-  
-  .slider-images {
-    display: flex;
-    transition: transform 1s ease; 
-  }
-  
-  .slider-item {
-    min-width: 100%;
-    height: 100%;
-  }
-  
+
   .slider-item img {
-    width: 100%; 
-    height: 450px; 
-    object-fit: cover; 
+    width: 100%;
+    height: 380px;
   }
-  
+
+  .slider-overlay {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .slider-overlay p {
+    max-width: 28rem;
+  }
+}
+
+@media (max-width: 568px) {
+  .image-slider-container {
+    height: 330px;
+  }
+
+  .slider-item img {
+    height: 330px;
+  }
+
+  .slider-overlay h1 {
+    font-size: 2.1rem;
+  }
+
+  .slider-overlay p {
+    font-size: 0.92rem;
+  }
+
+  .slider-primary-btn,
+  .slider-secondary-btn {
+    min-height: 42px;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .image-slider-container {
+    height: 320px;
+    margin-top: 4.5rem;
+  }
+
+  .slider-item img {
+    height: 320px;
+  }
+
   .slider-dots {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 0.5rem;
+    bottom: 8px;
+    gap: 0.35rem;
   }
-  
+
   .dot {
-    width: 10px;
-    height: 10px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .dot.active {
-    background-color: rgba(255, 255, 255, 1);
-  }
-  
-  .dot:hover {
-    background-color: rgba(255, 255, 255, 1);
+    width: 8px;
+    height: 8px;
   }
 
-  @media (max-width: 768px) {
-    .image-slider-container {
-      height: 300px; 
-    }
-  
-    .slider-item img {
-      width:100%;
-      height: 300px; 
-    }
+  .slider-overlay {
+    padding: 1.5rem 1rem 2.5rem;
+    gap: 0.8rem;
   }
-  @media (max-width: 568px) {
-  
-    .slider-item img {
-      height: 250px; 
-    }
-  }
-
-  @media (max-width: 450px) {
-    .image-slider-container {
-      height: 210px;
-      margin-top: 4.5rem;
-    }
-
-    .slider-item img {
-      height: 210px;
-    }
-
-    .slider-dots {
-      bottom: 8px;
-      gap: 0.35rem;
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-    }
-  }
-  
+}

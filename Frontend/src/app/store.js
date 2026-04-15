@@ -4,6 +4,7 @@ import userReducer from "../features/user/userSlice";
 import cartReducer from "../features/cart/cartSlice";
 import orderReducer from "../features/Order/orderSlice";
 import adminReducer from "../features/admin/adminSlice";
+import settingsReducer from "../features/settings/siteSettingsSlice";
 
 
 export const store = configureStore({
@@ -12,7 +13,8 @@ export const store = configureStore({
     user: userReducer,
     cart: cartReducer,
     order: orderReducer,
-    admin: adminReducer
+    admin: adminReducer,
+    settings: settingsReducer
 
   }
 });
