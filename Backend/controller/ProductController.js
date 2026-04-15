@@ -1,4 +1,5 @@
 import Product from "../models/ProductModel.js";
+import Order from "../models/OrderModel.js";
 import HandelError from "../utils/handelError.js";
 import HandleAsyncError from "../middleware/HandleAsyncError.js";
 import APIFunctionality from "../utils/apiFunctionality.js";
@@ -175,11 +176,21 @@ export const deleteProduct = HandleAsyncError(async (req, res, next) => {
     }
   }
 
+  const deletedOrdersResult = await Order.deleteMany({
+    "orderItems.product": product._id,
+  });
+
+  console.log("[ADMIN_PRODUCT_DELETE] Related orders deleted", {
+    productId: product._id.toString(),
+    deletedOrdersCount: deletedOrdersResult.deletedCount || 0,
+  });
+
   await product.deleteOne();
 
   res.status(200).json({
     success: true,
     message: "the product has seccessfully deleted",
+    deletedOrdersCount: deletedOrdersResult.deletedCount || 0,
   });
 });
 

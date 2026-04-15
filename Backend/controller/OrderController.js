@@ -156,7 +156,17 @@ export const updateOrderStatus = HandleAsyncError(async (req, res, next) => {
             }))
         });
 
-        await Promise.all(order.orderItems.map(item => updateQuantity(item.product, item.quantity)));
+        const stockUpdates = await Promise.all(order.orderItems.map(item => updateQuantity(item.product, item.quantity)));
+        const missingProducts = stockUpdates
+            .filter((result) => result && result.skipped)
+            .map((result) => result.productId);
+
+        if (missingProducts.length > 0) {
+            console.warn("[ADMIN_ORDER_UPDATE] Some products were missing during delivery", {
+                orderId: order._id.toString(),
+                missingProducts
+            });
+        }
         order.deliveredAt = Date.now();
 
     };
@@ -185,10 +195,13 @@ async function updateQuantity(id, quantity) {
     });
     const product = await Product.findById(id);
     if (!product) {
-        console.log("[ADMIN_ORDER_UPDATE] Product not found while updating stock", {
+        console.warn("[ADMIN_ORDER_UPDATE] Product not found while updating stock, skipping stock update", {
             productId: id?.toString?.() || id
         });
-        throw new HandelError("Product not found", 404);
+        return {
+            productId: id?.toString?.() || id,
+            skipped: true
+        };
     }
     const previousStock = product.stock;
     product.stock -= quantity;
@@ -198,6 +211,10 @@ async function updateQuantity(id, quantity) {
         previousStock,
         newStock: product.stock
     });
+    return {
+        productId: product._id.toString(),
+        skipped: false
+    };
 }
 
 
