@@ -5,9 +5,14 @@
   background-color: var(--bg-primary);
   box-shadow: var(--shadow-sm);
   z-index: 1000;
+
+  /* ✨ الجديد */
+  display: flex;
+  flex-direction: column;
 }
 
-.navbar-container {
+/* ✨ الصف الأول الجديد */
+.navbar-top {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
@@ -15,6 +20,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+/* ✨ حذف اعتمادنا على القديم */
+.navbar-container {
+  display: none;
 }
 
 .navbar-logo a {
@@ -43,31 +53,70 @@
   color: var(--primary-main);
 }
 
+/* ❌ القديم (خليه موجود بس ما يعتمد عليه) */
 .navbar-links {
   flex: 1;
   margin-left: 2rem;
   transition: all 0.3s ease;
 }
 
-.navbar-links ul {
+/* ✨ الجديد (الصف الثاني) */
+.navbar-links-bottom {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--border-color);
+}
+
+.navbar-links-bottom ul {
   display: flex;
   list-style: none;
   gap: 2.5rem;
   margin: 0;
-  padding: 0;
+  padding: 0.7rem 0;
 }
 
-.navbar-links li a {
+.navbar-links-bottom li a {
   color: var(--text-primary);
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.2s ease;
 }
 
-.navbar-links li a:hover {
+.navbar-links-bottom li a:hover {
   color: var(--primary-light);
 }
 
+/* 🔍 السيرش الجديد */
+.navbar-search-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-form {
+  width: 100%;
+  max-width: 550px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  padding: 0.3rem 0.8rem;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.search-button2 {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* الباقي 그대로 */
 .search-item {
   display: flex;
   align-items: center;
@@ -191,31 +240,11 @@
   border-color: var(--primary-light);
 }
 
+/* 📱 موبايل */
 @media (max-width: 768px) {
-  .navbar-links {
+
+  .navbar-links-bottom {
     display: none;
-    position: absolute;
-    top: 4rem;
-    left: 0;
-    right: 0;
-    background-color: var(--bg-primary);
-    padding: 1rem;
-    border-top: 1px solid var(--border-color);
-    box-shadow: var(--shadow-md);
-  }
-
-  .navbar-links.active {
-    display: block;
-  }
-
-  .navbar-links ul {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .navbar-icons {
-    gap: 1.25rem;
-    width: auto;
   }
 
   .navbar-hamburger {
@@ -223,18 +252,18 @@
     margin-left: 1rem;
   }
 
-  .navbar-links.active li {
-    padding: 0.5rem 0;
+  .navbar-icons {
+    gap: 1.25rem;
   }
 
-  .search-item {
-    width: 100%;
-    justify-content: flex-start;
+  .search-form {
+    max-width: 100%;
   }
 }
 
 @media (max-width: 450px) {
-  .navbar-container {
+
+  .navbar-top {
     height: 3.5rem;
     padding: 0 0.6rem;
   }
@@ -243,18 +272,10 @@
     font-size: 1.15rem;
   }
 
-  .navbar-brand-link {
-    gap: 0.45rem;
-  }
-
   .navbar-brand-logo {
     width: 32px;
     height: 32px;
     border-radius: 0.7rem;
-  }
-
-  .navbar-links {
-    top: 3.5rem;
   }
 
   .navbar-icons {
