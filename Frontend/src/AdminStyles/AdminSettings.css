@@ -186,3 +186,42 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 450px) {
+  .admin-settings-shell {
+    padding-top: 4.6rem;
+  }
+
+  .admin-settings-main {
+    padding: 0.75rem;
+  }
+
+  .admin-settings-loading,
+  .admin-settings-card {
+    padding: 1rem;
+    border-radius: 1.1rem;
+  }
+
+  .admin-settings-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .admin-settings-header p,
+  .admin-settings-section-title p {
+    font-size: 0.88rem;
+  }
+
+  .admin-settings-grid label {
+    font-size: 0.88rem;
+  }
+
+  .admin-settings-grid input,
+  .admin-settings-grid textarea {
+    padding: 0.8rem 0.85rem;
+  }
+
+  .admin-settings-save-btn {
+    justify-content: center;
+    width: 100%;
+  }
+}

@@ -4,6 +4,7 @@ import errorHandelMiddleware from "./middleware/error.js";
 import user from "./routes/UserRoutes.js";
 import order from "./routes/OrderRoutes.js";
 import siteSettings from "./routes/SiteSettingsRoutes.js";
+import coupon from "./routes/CouponRoutes.js";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import cors from "cors";
@@ -35,6 +36,7 @@ app.use("/api/v1",product);
 app.use("/api/v1",user);
 app.use("/api/v1",order);
 app.use("/api/v1",siteSettings);
+app.use("/api/v1",coupon);
 
 app.use((req, res, next) => {
     res.status(404).json({

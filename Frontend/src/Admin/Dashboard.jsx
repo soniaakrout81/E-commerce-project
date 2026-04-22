@@ -9,8 +9,6 @@ import {
   Error,
   CheckCircle,
   ShoppingCart,
-  Settings,
-  ViewCarousel,
   KeyboardArrowLeft,
   KeyboardArrowRight,
 } from "@mui/icons-material";
@@ -161,28 +159,43 @@ function Dashboard() {
         >
           {/* TOP */}
           <div className="dashboard-topbar">
-            <h2>Admin Dashboard</h2>
-            <p>Live business analytics</p>
+            <h2>{t("template.dashboard.title")}</h2>
+            <p>{t("template.dashboard.subtitle")}</p>
+          </div>
+
+          <div className="quick-actions-grid">
+            <Link to="/admin/create/product" className="quick-action-card">
+              <strong>{t("template.dashboard.quickCreateProduct")}</strong>
+              <span>{t("template.dashboard.quickCreateProductDesc")}</span>
+            </Link>
+            <Link to="/admin/banners" className="quick-action-card">
+              <strong>{t("template.dashboard.quickManageBanners")}</strong>
+              <span>{t("template.dashboard.quickManageBannersDesc")}</span>
+            </Link>
+            <Link to="/admin/coupons" className="quick-action-card">
+              <strong>{t("template.dashboard.quickCreateCoupon")}</strong>
+              <span>{t("template.dashboard.quickCreateCouponDesc")}</span>
+            </Link>
           </div>
 
           {/* STATS */}
           <div className="stats-grid">
             <div className="stat-box">
               <Inventory className="icon" />
-              <h3>Products</h3>
+              <h3>{t("template.dashboard.products")}</h3>
               <p>{stats.totalProducts}</p>
               <span className="trend up">{productGrowth.toFixed(1)}%</span>
             </div>
 
             <div className="stat-box">
               <Star className="icon" />
-              <h3>Reviews</h3>
+              <h3>{t("template.dashboard.reviews")}</h3>
               <p>{stats.totalReviews}</p>
             </div>
 
             <div className="stat-box">
               <AttachMoney className="icon" />
-              <h3>Revenue</h3>
+              <h3>{t("template.dashboard.revenue")}</h3>
               <p>{stats.totalRevenue.toLocaleString()} TND</p>
               <span className="trend up">
                 {revenueGrowth.toFixed(1)}%
@@ -191,38 +204,38 @@ function Dashboard() {
 
             <div className="stat-box">
               <CheckCircle className="icon" />
-              <h3>Delivered Orders</h3>
+              <h3>{t("template.dashboard.deliveredOrders")}</h3>
               <p>{orderStats.delivered}</p>
             </div>
 
             <div className="stat-box">
               <ShoppingCart className="icon" />
-              <h3>Processing</h3>
+              <h3>{t("template.dashboard.processing")}</h3>
               <p>{orderStats.processing}</p>
             </div>
 
             <div className="stat-box">
               <Error className="icon" />
-              <h3>Pending</h3>
+              <h3>{t("template.dashboard.pending")}</h3>
               <p>{orderStats.pending}</p>
             </div>
 
             <div className="stat-box">
               <CheckCircle className="icon" />
-              <h3>In Stock</h3>
+              <h3>{t("template.dashboard.inStock")}</h3>
               <p>{stats.inStock}</p>
             </div>
 
             <div className="stat-box">
               <Error className="icon" />
-              <h3>Out of Stock</h3>
+              <h3>{t("template.dashboard.outOfStock")}</h3>
               <p>{stats.outOfStock}</p>
             </div>
           </div>
 
           {/* TABLE */}
           <div className="products-section">
-            <h2>Latest Products</h2>
+            <h2>{t("template.dashboard.latestProducts")}</h2>
 
             {loadingAdmin ? (
               <p>Loading...</p>
@@ -244,6 +257,36 @@ function Dashboard() {
                       <td>{p.name}</td>
                       <td>{p.price} TND</td>
                       <td>{p.stock}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+
+          <div className="products-section">
+            <h2>{t("template.dashboard.recentOrders")}</h2>
+
+            {loadingAdmin ? (
+              <p>Loading...</p>
+            ) : (
+              <table className="product-table">
+                <thead>
+                  <tr>
+                    <th>{t("template.dashboard.order")}</th>
+                    <th>{t("orders.status")}</th>
+                    <th>{t("orders.items")}</th>
+                    <th>{t("cart.total")}</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {orders.slice(0, 8).map((order) => (
+                    <tr key={order._id}>
+                      <td>{order._id.slice(-8)}</td>
+                      <td>{order.orderStatus}</td>
+                      <td>{order.orderItems.length}</td>
+                      <td>{order.totalPrice} TND</td>
                     </tr>
                   ))}
                 </tbody>

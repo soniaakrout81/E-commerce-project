@@ -1,0 +1,74 @@
+.static-page-shell {
+  min-height: 100vh;
+  padding: 6.5rem 1rem 2rem;
+  background: linear-gradient(180deg, rgba(108, 91, 123, 0.08), rgba(255, 255, 255, 0));
+}
+
+.static-page-card {
+  max-width: 980px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 1.8rem;
+  padding: 2rem;
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
+}
+
+.static-kicker {
+  margin: 0 0 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--primary-main);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.static-page-card h1 {
+  margin: 0 0 1rem;
+  color: #111827;
+  font-family: var(--font-heading);
+}
+
+.static-page-card p {
+  color: #6b7280;
+  line-height: 1.8;
+}
+
+.static-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+.static-contact-grid article {
+  border: 1px solid #e5e7eb;
+  border-radius: 1.2rem;
+  padding: 1rem;
+}
+
+.static-contact-grid strong {
+  color: #111827;
+}
+
+@media (max-width: 450px) {
+  .static-page-shell {
+    padding: 5.7rem 0.7rem 1.2rem;
+  }
+
+  .static-page-card {
+    padding: 1.2rem;
+    border-radius: 1.2rem;
+  }
+
+  .static-page-card h1 {
+    font-size: 1.5rem;
+  }
+
+  .static-page-card p {
+    font-size: 0.9rem;
+  }
+
+  .static-contact-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -5,6 +5,14 @@ import HandleAsyncError from "../middleware/HandleAsyncError.js";
 import APIFunctionality from "../utils/apiFunctionality.js";
 import { v2 as cloudinary } from "cloudinary";
 
+const createSlug = (value = "") =>
+  value
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 /* =========================
    1️⃣ Creating Products
 ========================= */
@@ -35,6 +43,7 @@ export const createProducts = async (req, res, next) => {
 
     const product = await Product.create({
       name,
+      slug: createSlug(name),
       price,
       description,
       keywords: keywords || "",
@@ -105,6 +114,9 @@ export const getAllProducts = HandleAsyncError(async (req, res, next) => {
 ========================= */
 export const updateProduct = HandleAsyncError(async (req, res, next) => {
   const { id } = req.params;
+  if (req.body.name) {
+    req.body.slug = createSlug(req.body.name);
+  }
 
   let product = await Product.findById(id);
   if (!product) {

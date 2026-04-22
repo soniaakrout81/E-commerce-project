@@ -4,6 +4,7 @@ import PageTitle from "../components/PageTitle";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader.jsx";
+import MetaTags from "../components/MetaTags";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import Product from "../components/Product";
@@ -51,6 +52,11 @@ function Products() {
   return (
     <>
       <PageTitle title={t("products.pageTitle")} />
+      <MetaTags
+        title={`${t("products.pageTitle")} | Store`}
+        description={keyword ? `Browse products matching ${keyword}` : "Browse the full product catalog."}
+        keywords={keyword ? `${keyword}, products, catalog` : "products, catalog, ecommerce"}
+      />
       <Navbar />
       {loading ? (
         <Loader />

@@ -2,105 +2,91 @@
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: var(--bg-primary);
-  box-shadow: var(--shadow-sm);
+  background: rgba(17, 24, 39, 0.96);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
   z-index: 1000;
-
-  /* ✨ الجديد */
-  display: flex;
-  flex-direction: column;
 }
 
-/* ✨ الصف الأول الجديد */
-.navbar-top {
+.navbar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
-  height: 4rem;
-  display: flex;
+  min-height: 4.5rem;
+  padding: 0 1.25rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
-}
-
-/* ✨ حذف اعتمادنا على القديم */
-.navbar-container {
-  display: none;
+  gap: 1rem;
 }
 
 .navbar-logo a {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary-light);
+  color: var(--text-light);
   text-decoration: none;
-  transition: color 0.2s ease;
 }
 
 .navbar-brand-link {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
+  font-weight: 800;
+  font-size: 1.1rem;
 }
 
 .navbar-brand-logo {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   object-fit: cover;
   border-radius: 0.9rem;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
-.navbar-logo a:hover {
-  color: var(--primary-main);
-}
-
-/* ❌ القديم (خليه موجود بس ما يعتمد عليه) */
 .navbar-links {
-  flex: 1;
-  margin-left: 2rem;
-  transition: all 0.3s ease;
-}
-
-/* ✨ الجديد (الصف الثاني) */
-.navbar-links-bottom {
-  width: 100%;
   display: flex;
   justify-content: center;
-  border-top: 1px solid var(--border-color);
 }
 
-.navbar-links-bottom ul {
-  display: flex;
+.navbar-links ul {
   list-style: none;
-  gap: 2.5rem;
-  margin: 0;
-  padding: 0.7rem 0;
-}
-
-.navbar-links-bottom li a {
-  color: var(--text-primary);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.navbar-links-bottom li a:hover {
-  color: var(--primary-light);
-}
-
-/* 🔍 السيرش الجديد */
-.navbar-search-center {
-  flex: 1;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  gap: 1.7rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li a {
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  font-size: 0.96rem;
+  font-weight: 600;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.navbar-links li a:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.navbar-icons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.8rem;
+}
+
+.search-container {
+  display: flex;
 }
 
 .search-form {
-  width: 100%;
-  max-width: 550px;
   display: flex;
   align-items: center;
+  gap: 0.4rem;
+  width: min(100%, 300px);
+  padding: 0.3rem 0.4rem 0.3rem 0.9rem;
   border-radius: 999px;
-  border: 1px solid var(--border-color);
-  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .search-input {
@@ -108,67 +94,44 @@
   border: none;
   outline: none;
   background: transparent;
+  color: #fff;
+  min-width: 0;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search-button2,
+.lang-switch-btn,
+.navbar-hamburger {
+  border: none;
+  background: transparent;
 }
 
 .search-button2 {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-/* الباقي 그대로 */
-.search-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--primary-dark);
-}
-
-.navbar-icons {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  width: auto;
-  min-width: max-content;
-}
-
-.profile-link {
-  display: none;
-  align-items: center;
-  gap: 0.5rem;
-  text-decoration: none;
-  background: transparent;
-  padding: 0;
-  border: none;
-  box-shadow: none;
-}
-
-.navbar-profile-avatar {
   width: 34px;
   height: 34px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--border-color);
-}
-
-.navbar-profile-name {
-  color: var(--text-primary);
-  font-size: 0.9rem;
-  font-weight: 600;
-  max-width: 90px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.icon {
-  color: var(--text-primary);
-  transition: color 0.2s ease;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
   cursor: pointer;
 }
 
-.icon:hover {
-  color: var(--primary-light);
+.lang-switch-btn {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .cart-container {
@@ -177,118 +140,178 @@
   align-items: center;
 }
 
-.cart-badge {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: var(--primary-main);
-  color: var(--text-light);
-  font-size: 0.75rem;
-  font-weight: 600;
-  min-width: 1.25rem;
-  height: 1.25rem;
-  border-radius: 9999px;
-  display: flex;
+.cart-container a,
+.register-link,
+.profile-link {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 0.25rem;
-}
-
-.register-link {
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  border: none;
+  color: #fff;
 }
 
-.register-btn {
-  color: var(--text-light);
-  padding: 0.5rem 1.2rem;
-  border-radius: 0.5rem;
-  border: none;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  height: 36px;
-  display: flex;
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  padding: 0 0.2rem;
+  border-radius: 999px;
+  background: var(--primary-light);
+  color: #111827;
+  font-size: 0.68rem;
+  font-weight: 800;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+}
+
+.profile-link {
+  gap: 0.55rem;
+}
+
+.navbar-profile-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+}
+
+.navbar-profile-name {
+  max-width: 90px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.88rem;
+}
+
+.icon {
+  color: #fff;
+  cursor: pointer;
 }
 
 .navbar-hamburger {
   display: none;
+  color: #fff;
   cursor: pointer;
 }
 
-.lang-switch-btn {
-  border: 1px solid var(--border-color);
-  background-color: transparent;
-  color: var(--text-primary);
-  border-radius: 9999px;
-  width: 34px;
-  height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 700;
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.34);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+  z-index: 1001;
+}
+
+.overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.menu-options {
+  position: absolute;
+  top: calc(100% + 0.7rem);
+  right: 0;
+  min-width: 190px;
+  background: #fff;
+  border-radius: 1rem;
+  padding: 0.45rem;
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.18);
+  z-index: 1002;
+}
+
+.menu-option-btn {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0.8rem 0.9rem;
+  text-align: left;
+  border-radius: 0.8rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  color: #111827;
+  font-weight: 600;
 }
 
-.lang-switch-btn:hover {
-  color: var(--primary-light);
-  border-color: var(--primary-light);
+.menu-option-btn:hover {
+  background: #f3f4f6;
 }
 
-/* 📱 موبايل */
-@media (max-width: 768px) {
+.cart-not-empty {
+  color: var(--primary-main);
+}
 
-  .navbar-links-bottom {
+@media (max-width: 900px) {
+  .navbar-container {
+    grid-template-columns: auto auto;
+  }
+
+  .search-container {
+    grid-column: 1 / -1;
+    order: 3;
+    padding-bottom: 0.9rem;
+  }
+
+  .search-form {
+    width: 100%;
+    max-width: none;
+  }
+
+  .navbar-links {
     display: none;
   }
 
   .navbar-hamburger {
-    display: block;
-    margin-left: 1rem;
-  }
-
-  .navbar-icons {
-    gap: 1.25rem;
-  }
-
-  .search-form {
-    max-width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
 @media (max-width: 450px) {
-
-  .navbar-top {
-    height: 3.5rem;
-    padding: 0 0.6rem;
+  .navbar {
+    background: rgba(17, 24, 39, 0.98);
   }
 
-  .navbar-logo a {
-    font-size: 1.15rem;
+  .navbar-container {
+    min-height: 4rem;
+    padding: 0.45rem 0.75rem 0.8rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 0.7rem;
+  }
+
+  .navbar-brand-link {
+    gap: 0.5rem;
+    font-size: 0.96rem;
+    max-width: 100%;
+  }
+
+  .navbar-brand-link span {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .navbar-brand-logo {
-    width: 32px;
-    height: 32px;
-    border-radius: 0.7rem;
+    width: 34px;
+    height: 34px;
+    border-radius: 0.75rem;
   }
 
   .navbar-icons {
-    gap: 0.55rem;
-    min-width: unset;
+    gap: 0.35rem;
   }
 
-  .navbar-profile-name {
-    display: none;
-  }
-
-  .profile-link {
-    display: flex;
+  .lang-switch-btn,
+  .search-button2 {
+    width: 32px;
+    height: 32px;
   }
 
   .navbar-profile-avatar {
@@ -296,15 +319,70 @@
     height: 30px;
   }
 
-  .cart-badge {
-    min-width: 1rem;
-    height: 1rem;
-    font-size: 0.65rem;
-    top: -6px;
-    right: -6px;
+  .navbar-profile-name {
+    display: none;
   }
 
-  .navbar-hamburger {
-    margin-left: 0.15rem;
+  .search-container {
+    order: 3;
+    grid-column: 1 / -1;
+    width: 100%;
+    padding-bottom: 0;
+  }
+
+  .search-form {
+    width: 100%;
+    padding: 0.25rem 0.35rem 0.25rem 0.8rem;
+  }
+
+  .search-input {
+    font-size: 0.92rem;
+  }
+
+  .navbar-links {
+    display: none;
+    grid-column: 1 / -1;
+    width: 100%;
+    order: 4;
+  }
+
+  .navbar-links.active {
+    display: block;
+  }
+
+  .navbar-links ul {
+    flex-direction: column;
+    gap: 0.45rem;
+    align-items: stretch;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 1rem;
+    padding: 0.55rem;
+  }
+
+  .navbar-links li a {
+    display: block;
+    padding: 0.8rem 0.9rem;
+    border-radius: 0.8rem;
+    font-size: 0.92rem;
+  }
+
+  .navbar-links li a:hover {
+    background: rgba(255, 255, 255, 0.07);
+    transform: none;
+  }
+
+  .cart-badge {
+    min-width: 0.95rem;
+    height: 0.95rem;
+    font-size: 0.6rem;
+    top: -5px;
+    right: -5px;
+  }
+
+  .menu-options {
+    right: -0.2rem;
+    top: calc(100% + 0.55rem);
+    min-width: 170px;
   }
 }

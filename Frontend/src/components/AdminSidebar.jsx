@@ -7,55 +7,62 @@ import {
   Star,
   Settings,
   ViewCarousel,
+  Discount,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function AdminSidebar() {
+  const { t } = useTranslation();
+
   return (
     <div className="sidebar open">
       <div className="logo">
-        <DashboardIcon /> Dashboard
+        <DashboardIcon /> {t("template.sidebar.dashboard")}
       </div>
 
       <nav className="nav-menu">
         <div className="nav-section">
-          <h3>Products</h3>
+          <h3>{t("template.sidebar.products")}</h3>
           <Link to="/admin/products">
-            <Inventory /> All Products
+            <Inventory /> {t("template.sidebar.allProducts")}
           </Link>
           <Link to="/admin/create/product">
-            <Inventory /> Create Product
+            <Inventory /> {t("template.sidebar.createProduct")}
           </Link>
         </div>
 
         <div className="nav-section">
-          <h3>Users</h3>
+          <h3>{t("template.sidebar.users")}</h3>
           <Link to="/admin/usersList">
-            <People /> Users
+            <People /> {t("template.sidebar.users")}
           </Link>
         </div>
 
         <div className="nav-section">
-          <h3>Orders</h3>
+          <h3>{t("template.sidebar.orders")}</h3>
           <Link to="/admin/orders">
-            <ShoppingCart /> Orders
+            <ShoppingCart /> {t("template.sidebar.orders")}
           </Link>
         </div>
 
         <div className="nav-section">
-          <h3>Reviews</h3>
+          <h3>{t("template.sidebar.reviews")}</h3>
           <Link to="/admin/reviews">
-            <Star /> Reviews
+            <Star /> {t("template.sidebar.reviews")}
           </Link>
         </div>
 
         <div className="nav-section">
-          <h3>Store</h3>
+          <h3>{t("template.sidebar.store")}</h3>
           <Link to="/admin/settings">
-            <Settings /> Settings
+            <Settings /> {t("template.sidebar.settings")}
           </Link>
           <Link to="/admin/banners">
-            <ViewCarousel /> Banners
+            <ViewCarousel /> {t("template.sidebar.banners")}
+          </Link>
+          <Link to="/admin/coupons">
+            <Discount /> {t("template.sidebar.coupons")}
           </Link>
         </div>
       </nav>

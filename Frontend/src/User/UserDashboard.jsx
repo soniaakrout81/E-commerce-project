@@ -48,7 +48,7 @@ function UserDashboard({ user }) {
 
     const options = [
         { name: t("navbar.orders"), funcName: orders },
-        { name: "Track Order", funcName: trackOrder },
+        { name: t("template.tracking.button"), funcName: trackOrder },
         { name: t("navbar.account"), funcName: profile },
         { name: t("user.dashboard.cartCompact", { count: cartItems.length }), funcName: myCart, isCart:true },
         { name: t("navbar.logout"), funcName: logoutUser },

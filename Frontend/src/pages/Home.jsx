@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Product from "../components/Product";
 import ImageSlider from "../components/ImageSlider";
 import PageTitle from "../components/PageTitle";
+import MetaTags from "../components/MetaTags";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { getProduct } from "../features/products/productSlice";
@@ -24,6 +25,11 @@ function Home() {
     <>
       <Navbar />
       <PageTitle title={t("home.pageTitle")} />
+      <MetaTags
+        title={settings?.storeName || t("home.pageTitle")}
+        description={settings?.heroSubtitle || settings?.tagline}
+        keywords="ecommerce, online store, premium storefront, white label template"
+      />
       <ImageSlider />
 
       <div className="home-container">
@@ -44,63 +50,63 @@ function Home() {
         <section className="home-promo-grid">
           <article className="home-promo-card">
             <span>01</span>
-            <h3>Brand-ready storefront</h3>
-            <p>Swap logos, colors, and homepage copy to fit each new client quickly.</p>
+            <h3>{t("template.home.brandReadyTitle")}</h3>
+            <p>{t("template.home.brandReadyDesc")}</p>
           </article>
           <article className="home-promo-card">
             <span>02</span>
-            <h3>Admin workflows included</h3>
-            <p>Products, orders, customers, and store operations are already wired in.</p>
+            <h3>{t("template.home.workflowsTitle")}</h3>
+            <p>{t("template.home.workflowsDesc")}</p>
           </article>
           <article className="home-promo-card">
             <span>03</span>
-            <h3>Deployment-friendly stack</h3>
-            <p>Launch on Vercel, Railway, and MongoDB Atlas with minimal project edits.</p>
+            <h3>{t("template.home.deploymentTitle")}</h3>
+            <p>{t("template.home.deploymentDesc")}</p>
           </article>
         </section>
 
         <section className="home-featured-strip">
           <div>
-            <span>Premium positioning</span>
-            <h3>Built to feel like a high-end client delivery, not a generic starter.</h3>
+            <span>{t("template.home.premiumLabel")}</span>
+            <h3>{t("template.home.premiumTitle")}</h3>
           </div>
           <div className="home-featured-metrics">
-            <strong>Fast branding</strong>
-            <strong>Reusable admin</strong>
-            <strong>Easy handoff</strong>
+            <strong>{t("template.home.metricBranding")}</strong>
+            <strong>{t("template.home.metricAdmin")}</strong>
+            <strong>{t("template.home.metricHandoff")}</strong>
           </div>
         </section>
 
         <section className="home-testimonials-grid">
           <article className="home-testimonial-card">
-            <p>"The storefront looked custom from day one and gave us a polished launch presence."</p>
-            <strong>Fashion Boutique Client</strong>
+            <p>{t("template.home.testimonialOneQuote")}</p>
+            <strong>{t("template.home.testimonialOneAuthor")}</strong>
           </article>
           <article className="home-testimonial-card">
-            <p>"We were able to update products, banners, and messaging without touching core code."</p>
-            <strong>Electronics Store Owner</strong>
+            <p>{t("template.home.testimonialTwoQuote")}</p>
+            <strong>{t("template.home.testimonialTwoAuthor")}</strong>
           </article>
           <article className="home-testimonial-card">
-            <p>"Exactly the kind of premium reusable setup that makes freelance delivery faster."</p>
-            <strong>Furniture Brand Team</strong>
+            <p>{t("template.home.testimonialThreeQuote")}</p>
+            <strong>{t("template.home.testimonialThreeAuthor")}</strong>
           </article>
         </section>
 
         <section className="home-newsletter-card">
           <div>
-            <p className="home-kicker">Newsletter</p>
-            <h3>Capture leads before your client adds advanced email tools.</h3>
+            <p className="home-kicker">{t("template.home.newsletterLabel")}</p>
+            <h3>{t("template.home.newsletterTitle")}</h3>
             <p className="home-supporting-copy">{settings?.newsletterText}</p>
           </div>
           <form className="home-newsletter-form">
-            <input type="email" placeholder="Enter your email address" />
-            <button type="button">Subscribe</button>
+            <input type="email" placeholder={t("template.home.newsletterPlaceholder")} />
+            <button type="button">{t("template.home.subscribe")}</button>
           </form>
         </section>
 
         <section className="home-contact-strip">
           <div>
-            <p className="home-kicker">Contact</p>
+            <p className="home-kicker">{t("template.home.contactLabel")}</p>
             <h3>{settings?.contactEmail || "hello@example.com"}</h3>
           </div>
           <div className="home-contact-meta">

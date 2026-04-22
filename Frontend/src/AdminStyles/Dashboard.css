@@ -97,6 +97,32 @@
   margin-top: 5px;
 }
 
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.quick-action-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1rem 1.1rem;
+  text-decoration: none;
+  color: #111827;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+}
+
+.quick-action-card strong {
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+.quick-action-card span {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
 /* ================= STATS ================= */
 
 .stats-grid {
@@ -242,11 +268,51 @@
   .stats-grid {
     grid-template-columns: 1fr;
   }
+
+  .quick-actions-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 450px) {
+  .dashboard-container {
+    padding-top: 0;
+  }
+
   .sidebar {
     width: 220px;
+  }
+
+  .main-content {
+    padding: 0.8rem;
+  }
+
+  .dashboard-topbar h2 {
+    font-size: 1.35rem;
+  }
+
+  .dashboard-topbar p {
+    font-size: 0.88rem;
+  }
+
+  .stat-box {
+    padding: 0.95rem;
+    border-radius: 1rem;
+  }
+
+  .stat-box p {
+    font-size: 1.2rem;
+  }
+
+  .products-section {
+    padding: 0.9rem;
+    border-radius: 1rem;
+  }
+
+  .product-table th,
+  .product-table td {
+    padding: 0.55rem;
+    font-size: 0.76rem;
   }
 
   .sidebar-toggle {

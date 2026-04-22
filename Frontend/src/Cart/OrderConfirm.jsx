@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import shippingRates from "../utils/shippingRates";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 import { createOrder, removeSuccess } from "../features/Order/orderSlice";
 import { clearCart } from "../features/cart/cartSlice";
 
@@ -19,10 +20,35 @@ function OrderConfirm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [couponCode, setCouponCode] = React.useState("");
+  const [discount, setDiscount] = React.useState(0);
+  const [appliedCoupon, setAppliedCoupon] = React.useState(null);
+  const [couponLoading, setCouponLoading] = React.useState(false);
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const shipping = (shippingInfo && shippingRates[shippingInfo.selectedState]) || 0;
-  const total = subtotal + shipping;
+  const total = subtotal + shipping - discount;
+
+  const applyCoupon = async () => {
+    if (!couponCode.trim()) {
+      toast.error(t("template.coupons.enterCode"), { position: "top-center", autoClose: 2500 });
+      return;
+    }
+
+    try {
+      setCouponLoading(true);
+      const { data } = await axios.get(`/api/v1/coupon/${couponCode.trim()}?orderAmount=${subtotal + shipping}`);
+      setDiscount(data.discountAmount || 0);
+      setAppliedCoupon(data.coupon);
+      toast.success(t("template.coupons.applied"), { position: "top-center", autoClose: 2500 });
+    } catch (error) {
+      setDiscount(0);
+      setAppliedCoupon(null);
+      toast.error(error.response?.data?.message || t("template.coupons.applyFailed"), { position: "top-center", autoClose: 2500 });
+    } finally {
+      setCouponLoading(false);
+    }
+  };
 
   const confirmOrder = () => {
     try {
@@ -42,7 +68,9 @@ function OrderConfirm() {
         })),
         itemPrice: subtotal,
         shippingPrice: shipping,
+        discountPrice: discount,
         totalPrice: total,
+        couponCode: appliedCoupon?.code || "",
       };
 
       dispatch(createOrder(orderData))
@@ -121,6 +149,7 @@ function OrderConfirm() {
                   <tr>
                     <th>{t("cart.subtotal")}</th>
                     <th>{t("orderConfirm.shippingCharges")}</th>
+                    <th>{t("template.coupons.discount")}</th>
                     <th>{t("cart.total")}</th>
                   </tr>
                 </thead>
@@ -128,10 +157,23 @@ function OrderConfirm() {
                   <tr>
                     <td>{subtotal}</td>
                     <td>{shipping}</td>
+                    <td>{discount}</td>
                     <td>{total}</td>
                   </tr>
                 </tbody>
               </table>
+
+              <div className="coupon-box">
+                <input
+                  type="text"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                  placeholder={t("template.coupons.enterCode")}
+                />
+                <button type="button" className="proceed-button" onClick={applyCoupon}>
+                  {couponLoading ? t("template.coupons.applying") : t("template.coupons.apply")}
+                </button>
+              </div>
             </div>
 
             <button className="proceed-button" onClick={confirmOrder}>{t("orderConfirm.confirmOrder")}</button>

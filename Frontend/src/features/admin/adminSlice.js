@@ -163,6 +163,44 @@ export const fetchProductReviews = createAsyncThunk(
   }
 );
 
+export const fetchCoupons = createAsyncThunk(
+  "admin/fetchCoupons",
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get("/api/v1/admin/coupons");
+      return data;
+    } catch (error) {
+      return rejectWithValue({ message: error.response?.data?.message || "Failed to fetch coupons" });
+    }
+  }
+);
+
+export const createCoupon = createAsyncThunk(
+  "admin/createCoupon",
+  async (couponData, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post("/api/v1/admin/coupons", couponData, {
+        headers: { "Content-Type": "application/json" },
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue({ message: error.response?.data?.message || "Failed to create coupon" });
+    }
+  }
+);
+
+export const deleteCoupon = createAsyncThunk(
+  "admin/deleteCoupon",
+  async (id, { rejectWithValue }) => {
+    try {
+      await axios.delete(`/api/v1/admin/coupon/${id}`);
+      return id;
+    } catch (error) {
+      return rejectWithValue({ message: error.response?.data?.message || "Failed to delete coupon" });
+    }
+  }
+);
+
 export const deleteReview = createAsyncThunk(
   "admin/deleteReview",
   async ({ productId, reviewId }, { rejectWithValue }) => {
@@ -198,6 +236,7 @@ const adminSlice = createSlice({
     totalAmount: 0,
     order: [],
     reviews: [],
+    coupons: [],
   },
   reducers: {
     removeErrors: (state) => {
@@ -390,6 +429,46 @@ const adminSlice = createSlice({
       .addCase(deleteReview.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || tMessage("api.admin.deleteReviewFailed");
+      })
+      .addCase(fetchCoupons.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchCoupons.fulfilled, (state, action) => {
+        state.loading = false;
+        state.coupons = action.payload.coupons || [];
+      })
+      .addCase(fetchCoupons.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to fetch coupons";
+      })
+      .addCase(createCoupon.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createCoupon.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        if (action.payload.coupon) {
+          state.coupons = [action.payload.coupon, ...state.coupons];
+        }
+      })
+      .addCase(createCoupon.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to create coupon";
+      })
+      .addCase(deleteCoupon.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteCoupon.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.coupons = state.coupons.filter((coupon) => coupon._id !== action.payload);
+      })
+      .addCase(deleteCoupon.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to delete coupon";
       });
   },
 });

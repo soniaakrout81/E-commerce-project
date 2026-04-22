@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { LocalShipping, Search, Inventory2, CheckCircle } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PageTitle from "../components/PageTitle";
@@ -10,6 +11,7 @@ import "../OrderStyles/OrderTracking.css";
 
 function OrderTracking() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { order, loading, error } = useSelector((state) => state.order);
   const [orderId, setOrderId] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
@@ -33,7 +35,7 @@ function OrderTracking() {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!orderId.trim()) {
-      toast.error("Enter an order id first.", { position: "top-center", autoClose: 2500 });
+      toast.error(t("template.tracking.enterOrderId"), { position: "top-center", autoClose: 2500 });
       return;
     }
 
@@ -44,24 +46,24 @@ function OrderTracking() {
   return (
     <>
       <Navbar />
-      <PageTitle title="Track Order" />
+      <PageTitle title={t("template.tracking.pageTitle")} />
 
       <div className="order-tracking-page">
         <section className="tracking-hero-card">
-          <p className="tracking-kicker">Order Tracking</p>
-          <h1>Track your order in one place</h1>
-          <p>Paste your order id to check the current fulfillment status and shipping details.</p>
+          <p className="tracking-kicker">{t("template.tracking.kicker")}</p>
+          <h1>{t("template.tracking.title")}</h1>
+          <p>{t("template.tracking.subtitle")}</p>
 
           <form className="tracking-search-form" onSubmit={handleSubmit}>
             <input
               type="text"
               value={orderId}
               onChange={(event) => setOrderId(event.target.value)}
-              placeholder="Enter your order id"
+              placeholder={t("template.tracking.placeholder")}
             />
             <button type="submit" disabled={loading}>
               <Search fontSize="small" />
-              {loading ? "Checking..." : "Track order"}
+              {loading ? t("template.tracking.checking") : t("template.tracking.button")}
             </button>
           </form>
         </section>
@@ -70,7 +72,7 @@ function OrderTracking() {
           <section className="tracking-result-card">
             <div className="tracking-top">
               <div>
-                <span className="tracking-label">Order ID</span>
+                <span className="tracking-label">{t("orders.orderId")}</span>
                 <h2>{order._id}</h2>
               </div>
               <div className={`tracking-badge ${order.orderStatus === "Delivered" ? "delivered" : "processing"}`}>
@@ -91,13 +93,13 @@ function OrderTracking() {
 
             <div className="tracking-summary-grid">
               <article>
-                <h3>Shipping</h3>
-                <p>{order?.shippingInfo?.address || "No address provided"}</p>
-                <p>{order?.shippingInfo?.phoneNumber || "No phone number provided"}</p>
+                <h3>{t("orders.shippingInfo")}</h3>
+                <p>{order?.shippingInfo?.address || t("template.tracking.noAddress")}</p>
+                <p>{order?.shippingInfo?.phoneNumber || t("template.tracking.noPhone")}</p>
               </article>
               <article>
-                <h3>Order summary</h3>
-                <p>{order?.orderItems?.length || 0} items</p>
+                <h3>{t("orders.orderSummary")}</h3>
+                <p>{order?.orderItems?.length || 0} {t("orders.items")}</p>
                 <p>Total: {order?.totalPrice}</p>
                 <p>Shipping: {order?.shippingPrice}</p>
               </article>

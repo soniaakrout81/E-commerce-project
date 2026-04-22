@@ -8,7 +8,7 @@ import HandleAsyncError from "../middleware/HandleAsyncError.js";
 // craete new order
 export const createNewOrder = HandleAsyncError(async (req, res, next) => {
 
-    const { shippingInfo, orderItems, itemPrice, taxPrice, shippingPrice, totalPrice } = req.body;
+    const { shippingInfo, orderItems, itemPrice, taxPrice, shippingPrice, discountPrice, totalPrice, couponCode } = req.body;
     const order = await Order.create({
 
         shippingInfo,
@@ -16,7 +16,9 @@ export const createNewOrder = HandleAsyncError(async (req, res, next) => {
         itemPrice,
         taxPrice,
         shippingPrice,
+        discountPrice,
         totalPrice,
+        couponCode,
         user: req.user._id
 
 

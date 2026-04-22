@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Palette, Storefront, ContactMail, Save } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import PageTitle from "../components/PageTitle";
 import AdminSidebar from "../components/AdminSidebar";
@@ -18,6 +19,7 @@ const toDataUrl = (file) =>
 
 function AdminSettings() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { settings, loading, saving, error } = useSelector((state) => state.settings);
   const [formData, setFormData] = useState(null);
 
@@ -66,13 +68,6 @@ function AdminSettings() {
     }
   }, [dispatch, error]);
 
-  const filledSlides = useMemo(() => {
-    if (!formData?.heroSlides?.length) return [];
-    return formData.heroSlides.filter(
-      (slide) => slide.image || slide.title || slide.subtitle || slide.ctaLabel
-    );
-  }, [formData]);
-
   const handleFieldChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -87,25 +82,11 @@ function AdminSettings() {
     }));
   };
 
-  const handleSlideChange = (index, field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      heroSlides: prev.heroSlides.map((slide, slideIndex) =>
-        slideIndex === index ? { ...slide, [field]: value } : slide
-      ),
-    }));
-  };
-
-  const handleFileChange = async (event, target, slideIndex = null) => {
+  const handleFileChange = async (event, target) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
     const dataUrl = await toDataUrl(file);
-
-    if (slideIndex !== null) {
-      handleSlideChange(slideIndex, "image", dataUrl);
-      return;
-    }
 
     handleFieldChange(target, dataUrl);
   };
@@ -113,15 +94,10 @@ function AdminSettings() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const payload = {
-      ...formData,
-      heroSlides: filledSlides,
-    };
-
-    dispatch(updateSiteSettings(payload))
+    dispatch(updateSiteSettings(formData))
       .unwrap()
       .then(() => {
-        toast.success("Store settings updated successfully", {
+        toast.success(t("template.settings.updated"), {
           position: "top-center",
           autoClose: 2500,
         });
@@ -132,9 +108,9 @@ function AdminSettings() {
     return (
       <>
         <Navbar />
-        <PageTitle title="Admin Settings" />
+        <PageTitle title={t("template.settings.pageTitle")} />
         <div className="admin-settings-shell">
-          <div className="admin-settings-loading">Loading store settings...</div>
+          <div className="admin-settings-loading">{t("template.common.loadingSettings")}</div>
         </div>
       </>
     );
@@ -143,7 +119,7 @@ function AdminSettings() {
   return (
     <>
       <Navbar />
-      <PageTitle title="Admin Settings" />
+      <PageTitle title={t("template.settings.pageTitle")} />
 
       <div className="admin-settings-shell">
         <AdminSidebar />
@@ -152,11 +128,11 @@ function AdminSettings() {
           <div className="admin-settings-header">
             <div>
               <h1>Store Settings</h1>
-              <p>Customize the brand, homepage content, and contact details from one place.</p>
+              <p>{t("template.settings.headerDesc")}</p>
             </div>
             <button type="submit" form="admin-settings-form" className="admin-settings-save-btn" disabled={saving}>
               <Save fontSize="small" />
-              {saving ? "Saving..." : "Save changes"}
+              {saving ? t("template.common.saving") : t("template.common.saveChanges")}
             </button>
           </div>
 
@@ -166,41 +142,41 @@ function AdminSettings() {
                 <Storefront />
                 <div>
                   <h2>Brand Identity</h2>
-                  <p>Update the store name, logo, tagline, and key messaging.</p>
+                  <p>{t("template.settings.brandDesc")}</p>
                 </div>
               </div>
 
               <div className="admin-settings-grid">
                 <label>
-                  Store Name
+                  {t("template.settings.storeName")}
                   <input value={formData.storeName} onChange={(e) => handleFieldChange("storeName", e.target.value)} />
                 </label>
                 <label>
-                  Tagline
+                  {t("template.settings.tagline")}
                   <input value={formData.tagline} onChange={(e) => handleFieldChange("tagline", e.target.value)} />
                 </label>
                 <label className="admin-settings-full">
-                  Hero Title
+                  {t("template.settings.heroTitle")}
                   <input value={formData.heroTitle} onChange={(e) => handleFieldChange("heroTitle", e.target.value)} />
                 </label>
                 <label className="admin-settings-full">
-                  Hero Subtitle
+                  {t("template.settings.heroSubtitle")}
                   <textarea rows="3" value={formData.heroSubtitle} onChange={(e) => handleFieldChange("heroSubtitle", e.target.value)} />
                 </label>
                 <label>
-                  Logo URL or Upload
+                  {t("template.settings.logoUrl")}
                   <input value={typeof formData.logo === "string" ? formData.logo : ""} onChange={(e) => handleFieldChange("logo", e.target.value)} placeholder="https://..." />
                 </label>
                 <label>
-                  Upload Logo
+                  {t("template.settings.uploadLogo")}
                   <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, "logo")} />
                 </label>
                 <label>
-                  Hero Image URL
+                  {t("template.settings.heroImageUrl")}
                   <input value={typeof formData.heroImage === "string" ? formData.heroImage : ""} onChange={(e) => handleFieldChange("heroImage", e.target.value)} placeholder="https://..." />
                 </label>
                 <label>
-                  Upload Hero Image
+                  {t("template.settings.uploadHeroImage")}
                   <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, "heroImage")} />
                 </label>
               </div>
@@ -211,21 +187,21 @@ function AdminSettings() {
                 <Palette />
                 <div>
                   <h2>Theme Colors</h2>
-                  <p>These values update the main storefront theme instantly.</p>
+                  <p>{t("template.settings.themeDesc")}</p>
                 </div>
               </div>
 
               <div className="admin-settings-grid admin-settings-colors">
                 <label>
-                  Primary Color
+                  {t("template.settings.primaryColor")}
                   <input type="color" value={formData.primaryColor} onChange={(e) => handleFieldChange("primaryColor", e.target.value)} />
                 </label>
                 <label>
-                  Secondary Color
+                  {t("template.settings.secondaryColor")}
                   <input type="color" value={formData.secondaryColor} onChange={(e) => handleFieldChange("secondaryColor", e.target.value)} />
                 </label>
                 <label>
-                  Accent Color
+                  {t("template.settings.accentColor")}
                   <input type="color" value={formData.accentColor} onChange={(e) => handleFieldChange("accentColor", e.target.value)} />
                 </label>
               </div>
@@ -242,29 +218,29 @@ function AdminSettings() {
                 <ContactMail />
                 <div>
                   <h2>Contact and Social</h2>
-                  <p>Control the footer, contact area, and social media links.</p>
+                  <p>{t("template.settings.contactDesc")}</p>
                 </div>
               </div>
 
               <div className="admin-settings-grid">
                 <label>
-                  Contact Email
+                  {t("template.settings.contactEmail")}
                   <input value={formData.contactEmail} onChange={(e) => handleFieldChange("contactEmail", e.target.value)} />
                 </label>
                 <label>
-                  Contact Phone
+                  {t("template.settings.contactPhone")}
                   <input value={formData.contactPhone} onChange={(e) => handleFieldChange("contactPhone", e.target.value)} />
                 </label>
                 <label className="admin-settings-full">
-                  Address
+                  {t("template.settings.address")}
                   <input value={formData.address} onChange={(e) => handleFieldChange("address", e.target.value)} />
                 </label>
                 <label className="admin-settings-full">
-                  Footer About
+                  {t("template.settings.footerAbout")}
                   <textarea rows="3" value={formData.footerAbout} onChange={(e) => handleFieldChange("footerAbout", e.target.value)} />
                 </label>
                 <label className="admin-settings-full">
-                  Newsletter Text
+                  {t("template.settings.newsletterText")}
                   <textarea rows="2" value={formData.newsletterText} onChange={(e) => handleFieldChange("newsletterText", e.target.value)} />
                 </label>
                 <label>

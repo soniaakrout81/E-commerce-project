@@ -187,3 +187,37 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 450px) {
+  .banner-manager-shell {
+    padding-top: 4.6rem;
+  }
+
+  .banner-manager-main {
+    padding: 0.75rem;
+  }
+
+  .banner-slide-card {
+    padding: 1rem;
+    border-radius: 1.1rem;
+  }
+
+  .banner-manager-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .banner-manager-header p,
+  .banner-slide-head p {
+    font-size: 0.86rem;
+  }
+
+  .banner-slide-card input,
+  .banner-slide-card textarea {
+    padding: 0.8rem 0.85rem;
+  }
+
+  .banner-remove-btn {
+    width: 34px;
+    height: 34px;
+  }
+}

@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { getProductDetails, createReview, removeSuccess, removeErrors } from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import MetaTags from "../components/MetaTags";
 import { addItemsToCart, removeMessage, removeErrors as removeCartErrors } from "../features/cart/cartSlice";
 
 function ProductDetails() {
@@ -116,6 +117,11 @@ function ProductDetails() {
   return (
     <>
       <PageTitle title={`${product?.name} - ${t("productDetails.pageSuffix")}`} />
+      <MetaTags
+        title={`${product?.name} | Store`}
+        description={product?.description}
+        keywords={product?.keywords || product?.name}
+      />
       <Navbar />
 
       <div className="product-details-container">

@@ -6,6 +6,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./pages/Home.jsx";
+import About from "./pages/About.jsx";
+import Contact from "./pages/Contact.jsx";
 import ProductDetails from "./pages/ProductDetails.jsx";
 import Products from "./pages/Products";
 import Register from "./User/Register.jsx";
@@ -35,6 +37,7 @@ import UsersList from "./Admin/UsersList.jsx";
 import Reviews from "./Admin/ReviewsList.jsx";
 import AdminSettings from "./Admin/AdminSettings.jsx";
 import BannerManager from "./Admin/BannerManager.jsx";
+import CouponsManager from "./Admin/CouponsManager.jsx";
 import { SearchProvider } from "./context/SearchContext.jsx";
 import { CONFIG } from "../src/config/config.js";
 import { fetchSiteSettings } from "./features/settings/siteSettingsSlice.js";
@@ -71,6 +74,8 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about-us" element={<About />} />
+        <Route path="/contact-us" element={<Contact />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/products" element={<Products />} />
         <Route path="/register" element={<Register />} />
@@ -101,6 +106,7 @@ function App() {
         <Route path="/admin/reviews" element={<ProtectedRoute element={<Reviews />} adminOnly />} />
         <Route path="/admin/settings" element={<ProtectedRoute element={<AdminSettings />} adminOnly />} />
         <Route path="/admin/banners" element={<ProtectedRoute element={<BannerManager />} adminOnly />} />
+        <Route path="/admin/coupons" element={<ProtectedRoute element={<CouponsManager />} adminOnly />} />
       </Routes>
 
       {isAuthenticated && <UserDashboard user={user} />}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AddPhotoAlternate, Add, DeleteOutline, Save, ViewCarousel } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import PageTitle from "../components/PageTitle";
 import AdminSidebar from "../components/AdminSidebar";
@@ -18,6 +19,7 @@ const toDataUrl = (file) =>
 
 function BannerManager() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { settings, loading, saving, error } = useSelector((state) => state.settings);
   const [slides, setSlides] = useState([
     { image: "", title: "", subtitle: "", ctaLabel: "", ctaLink: "/products" },
@@ -75,7 +77,7 @@ function BannerManager() {
     dispatch(updateSiteSettings({ heroSlides }))
       .unwrap()
       .then(() => {
-        toast.success("Homepage banners updated", {
+        toast.success(t("template.banners.updated"), {
           position: "top-center",
           autoClose: 2500,
         });
@@ -85,7 +87,7 @@ function BannerManager() {
   return (
     <>
       <Navbar />
-      <PageTitle title="Banner Management" />
+      <PageTitle title={t("template.banners.pageTitle")} />
 
       <div className="banner-manager-shell">
         <AdminSidebar />
@@ -94,16 +96,16 @@ function BannerManager() {
           <div className="banner-manager-header">
             <div>
               <h1>Banner Management</h1>
-              <p>Manage the homepage slides independently so every client storefront feels custom.</p>
+              <p>{t("template.banners.headerDesc")}</p>
             </div>
             <div className="banner-manager-actions">
               <button type="button" className="banner-manager-add" onClick={addSlide}>
                 <Add fontSize="small" />
-                Add slide
+                {t("template.banners.addSlide")}
               </button>
               <button type="submit" form="banner-manager-form" className="banner-manager-save" disabled={saving || loading}>
                 <Save fontSize="small" />
-                {saving ? "Saving..." : "Save banners"}
+                {saving ? t("template.common.saving") : t("template.banners.saveBanners")}
               </button>
             </div>
           </div>
@@ -115,8 +117,8 @@ function BannerManager() {
                   <div className="banner-slide-title-group">
                     <ViewCarousel />
                     <div>
-                      <h2>Slide {index + 1}</h2>
-                      <p>Hero image, copy, and call-to-action.</p>
+                      <h2>{t("template.banners.slide")} {index + 1}</h2>
+                      <p>{t("template.banners.slideDesc")}</p>
                     </div>
                   </div>
                   <button
@@ -130,7 +132,7 @@ function BannerManager() {
                 </div>
 
                 <label>
-                  Image URL
+                  {t("template.banners.imageUrl")}
                   <input value={slide.image} onChange={(e) => handleSlideChange(index, "image", e.target.value)} placeholder="https://..." />
                 </label>
 
@@ -143,29 +145,29 @@ function BannerManager() {
                   />
                   <label htmlFor={`banner-file-${index}`} className="file-input-label banner-file-input-label">
                     <AddPhotoAlternate fontSize="small" />
-                    Upload image
+                    {t("template.banners.uploadImage")}
                   </label>
                 </div>
 
                 {slide.image ? <img src={slide.image} alt={`Slide ${index + 1}`} className="banner-preview" /> : null}
 
                 <label>
-                  Title
+                  {t("template.banners.title")}
                   <input value={slide.title} onChange={(e) => handleSlideChange(index, "title", e.target.value)} />
                 </label>
 
                 <label>
-                  Subtitle
+                  {t("template.banners.subtitle")}
                   <textarea rows="3" value={slide.subtitle} onChange={(e) => handleSlideChange(index, "subtitle", e.target.value)} />
                 </label>
 
                 <div className="banner-inline-fields">
                   <label>
-                    CTA Label
+                    {t("template.banners.ctaLabel")}
                     <input value={slide.ctaLabel} onChange={(e) => handleSlideChange(index, "ctaLabel", e.target.value)} />
                   </label>
                   <label>
-                    CTA Link
+                    {t("template.banners.ctaLink")}
                     <input value={slide.ctaLink} onChange={(e) => handleSlideChange(index, "ctaLink", e.target.value)} />
                   </label>
                 </div>
