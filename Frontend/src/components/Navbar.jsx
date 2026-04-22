@@ -6,7 +6,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../pageStyles/Search.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -21,6 +21,7 @@ function Navbar() {
   const profileMenuRef = useRef(null);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -31,6 +32,7 @@ function Navbar() {
   const normalizedLanguage = currentLanguage.split("-")[0];
   const currentLanguageIndex = languageCycle.indexOf(normalizedLanguage);
   const nextLanguage = languageCycle[(currentLanguageIndex + 1 + languageCycle.length) % languageCycle.length];
+  const isAdminRoute = location.pathname.startsWith("/admin");
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -69,6 +71,14 @@ function Navbar() {
     window.addEventListener("resize", closeOnDesktop);
     return () => window.removeEventListener("resize", closeOnDesktop);
   }, []);
+
+  useEffect(() => {
+    document.body.style.paddingTop = isAdminRoute ? "88px" : "136px";
+
+    return () => {
+      document.body.style.paddingTop = "";
+    };
+  }, [isAdminRoute]);
 
   const closeMenus = () => {
     setIsMenuOpen(false);
@@ -189,20 +199,22 @@ function Navbar() {
           </div>
         </div>
 
-        <div className="navbar-search-row">
-          <form className="search-form navbar-search-form" onSubmit={handleSearchSubmit}>
-            <input
-              type="text"
-              className="search-input"
-              placeholder={t("navbar.searchPlaceholder")}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button type="submit" className="search-button2" aria-label="Search">
-              <SearchIcon focusable="false" className="search-icon" />
-            </button>
-          </form>
-        </div>
+        {!isAdminRoute && (
+          <div className="navbar-search-row">
+            <form className="search-form navbar-search-form" onSubmit={handleSearchSubmit}>
+              <input
+                type="text"
+                className="search-input"
+                placeholder={t("navbar.searchPlaceholder")}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button type="submit" className="search-button2" aria-label="Search">
+                <SearchIcon focusable="false" className="search-icon" />
+              </button>
+            </form>
+          </div>
+        )}
 
         <div ref={menuRef} className={`navbar-mobile-panel ${isMenuOpen ? "show" : ""}`}>
           <div className="navbar-links mobile-links">

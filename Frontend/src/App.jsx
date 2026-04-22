@@ -13,7 +13,6 @@ import Products from "./pages/Products";
 import Register from "./User/Register.jsx";
 import Login from "./User/Login.jsx";
 import { loadUser } from "./features/user/userSlice.js";
-import UserDashboard from "./User/UserDashboard.jsx";
 import Profile from "./User/Profile.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import UpdateProfile from "./User/UpdateProfile.jsx";
@@ -43,7 +42,7 @@ import { CONFIG } from "../src/config/config.js";
 import { fetchSiteSettings } from "./features/settings/siteSettingsSlice.js";
 
 function App() {
-  const { isAuthenticated, user } = useSelector(state => state.user);
+  const { isAuthenticated } = useSelector(state => state.user);
   const { settings } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
   const { i18n } = useTranslation();
@@ -108,8 +107,6 @@ function App() {
         <Route path="/admin/banners" element={<ProtectedRoute element={<BannerManager />} adminOnly />} />
         <Route path="/admin/coupons" element={<ProtectedRoute element={<CouponsManager />} adminOnly />} />
       </Routes>
-
-      {isAuthenticated && <UserDashboard user={user} />}
 
       <ToastContainer
         position="top-right"

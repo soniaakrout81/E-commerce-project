@@ -102,12 +102,14 @@
 
 .search-input {
   flex: 1;
+  width: 100%;
   border: none;
   outline: none;
   background: transparent;
   color: #fff;
   min-width: 0;
   font-size: 0.95rem;
+  opacity: 1;
 }
 
 .search-input::placeholder {
