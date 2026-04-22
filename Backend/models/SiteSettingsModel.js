@@ -106,6 +106,36 @@ const siteSettingsSchema = new mongoose.Schema(
       default: "A reusable white-label e-commerce template built for fast premium delivery.",
       trim: true,
     },
+    aboutTitle: {
+      type: String,
+      default: "Built for brands that want to feel premium from day one.",
+      trim: true,
+    },
+    aboutIntro: {
+      type: String,
+      default: "Use this page to introduce the store, explain the value behind the products, and build trust with new shoppers.",
+      trim: true,
+    },
+    aboutBody: {
+      type: String,
+      default: "This template helps you deliver a polished storefront with strong branding, smooth shopping flows, and a clean admin experience that clients can manage confidently.",
+      trim: true,
+    },
+    contactTitle: {
+      type: String,
+      default: "We are here to help before and after every order.",
+      trim: true,
+    },
+    contactIntro: {
+      type: String,
+      default: "Customize this section with your support tone, response expectations, and the best way for customers to reach you.",
+      trim: true,
+    },
+    contactSupportHours: {
+      type: String,
+      default: "Support hours: Monday to Saturday, 9:00 AM to 6:00 PM.",
+      trim: true,
+    },
     socialLinks: {
       type: socialLinksSchema,
       default: () => ({}),

@@ -67,6 +67,12 @@ export const updateSiteSettings = HandleAsyncError(async (req, res) => {
     "address",
     "newsletterText",
     "footerAbout",
+    "aboutTitle",
+    "aboutIntro",
+    "aboutBody",
+    "contactTitle",
+    "contactIntro",
+    "contactSupportHours",
   ];
 
   simpleFields.forEach((field) => {

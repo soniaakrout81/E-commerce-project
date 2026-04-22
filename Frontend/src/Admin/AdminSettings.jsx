@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Palette, Storefront, ContactMail, Save } from "@mui/icons-material";
+import { Palette, Storefront, ContactMail, Save, Description } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
@@ -42,6 +42,12 @@ function AdminSettings() {
         address: settings.address || "",
         footerAbout: settings.footerAbout || "",
         newsletterText: settings.newsletterText || "",
+        aboutTitle: settings.aboutTitle || "",
+        aboutIntro: settings.aboutIntro || "",
+        aboutBody: settings.aboutBody || "",
+        contactTitle: settings.contactTitle || "",
+        contactIntro: settings.contactIntro || "",
+        contactSupportHours: settings.contactSupportHours || "",
         logo: settings.logo || "",
         heroImage: settings.heroImage || "",
         socialLinks: {
@@ -50,13 +56,6 @@ function AdminSettings() {
           tiktok: settings.socialLinks?.tiktok || "",
           x: settings.socialLinks?.x || "",
         },
-        heroSlides: (settings.heroSlides || []).slice(0, 2).map((slide) => ({
-          image: slide.image || "",
-          title: slide.title || "",
-          subtitle: slide.subtitle || "",
-          ctaLabel: slide.ctaLabel || "",
-          ctaLink: slide.ctaLink || "/products",
-        })),
       });
     }
   }, [settings]);
@@ -87,7 +86,6 @@ function AdminSettings() {
     if (!file) return;
 
     const dataUrl = await toDataUrl(file);
-
     handleFieldChange(target, dataUrl);
   };
 
@@ -262,6 +260,42 @@ function AdminSettings() {
               </div>
             </section>
 
+            <section className="admin-settings-card">
+              <div className="admin-settings-section-title">
+                <Description />
+                <div>
+                  <h2>About and Contact Pages</h2>
+                  <p>Control the main copy shown in the public About Us and Contact Us pages.</p>
+                </div>
+              </div>
+
+              <div className="admin-settings-grid">
+                <label className="admin-settings-full">
+                  About page heading
+                  <input value={formData.aboutTitle} onChange={(e) => handleFieldChange("aboutTitle", e.target.value)} />
+                </label>
+                <label className="admin-settings-full">
+                  About page intro
+                  <textarea rows="3" value={formData.aboutIntro} onChange={(e) => handleFieldChange("aboutIntro", e.target.value)} />
+                </label>
+                <label className="admin-settings-full">
+                  About page body
+                  <textarea rows="5" value={formData.aboutBody} onChange={(e) => handleFieldChange("aboutBody", e.target.value)} />
+                </label>
+                <label className="admin-settings-full">
+                  Contact page heading
+                  <input value={formData.contactTitle} onChange={(e) => handleFieldChange("contactTitle", e.target.value)} />
+                </label>
+                <label className="admin-settings-full">
+                  Contact page intro
+                  <textarea rows="3" value={formData.contactIntro} onChange={(e) => handleFieldChange("contactIntro", e.target.value)} />
+                </label>
+                <label className="admin-settings-full">
+                  Contact support hours
+                  <textarea rows="2" value={formData.contactSupportHours} onChange={(e) => handleFieldChange("contactSupportHours", e.target.value)} />
+                </label>
+              </div>
+            </section>
           </form>
         </main>
       </div>

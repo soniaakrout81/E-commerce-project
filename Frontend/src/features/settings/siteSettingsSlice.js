@@ -20,6 +20,12 @@ const defaultSettings = {
   address: "Your city, your store, your brand.",
   newsletterText: "Subscribe for launches, limited offers, and product drops.",
   footerAbout: "A reusable white-label e-commerce template built for fast premium delivery.",
+  aboutTitle: "Built for brands that want to feel premium from day one.",
+  aboutIntro: "Use this page to introduce the store, explain the value behind the products, and build trust with new shoppers.",
+  aboutBody: "This template helps you deliver a polished storefront with strong branding, smooth shopping flows, and a clean admin experience that clients can manage confidently.",
+  contactTitle: "We are here to help before and after every order.",
+  contactIntro: "Customize this section with your support tone, response expectations, and the best way for customers to reach you.",
+  contactSupportHours: "Support hours: Monday to Saturday, 9:00 AM to 6:00 PM.",
   socialLinks: {
     instagram: "",
     facebook: "",

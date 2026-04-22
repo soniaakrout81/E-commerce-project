@@ -5,12 +5,12 @@ import PageTitle from "../components/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { removeErrors, removeSuccess, createProduct } from "../features/admin/adminSlice";
+import { removeErrors, createProduct } from "../features/admin/adminSlice";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 
 function CreateProduct() {
-  const { success, loading, error } = useSelector((state) => state.admin);
+  const { loading, error } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -22,12 +22,29 @@ function CreateProduct() {
   const [stock, setStock] = useState("");
   const [image, setImage] = useState([]);
   const [imagePreview, setImagePreview] = useState([]);
-  const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const createProductSubmit = (e) => {
+  const resetForm = () => {
+    setName("");
+    setPrice("");
+    setStock("");
+    setDescription("");
+    setKeywords("");
+    setImage([]);
+    setImagePreview([]);
+  };
+
+  const createProductSubmit = async (e) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    dispatch(createProduct({ name, price, description, keywords, stock, image }));
+
+    try {
+      await dispatch(createProduct({ name, price, description, keywords, stock, image })).unwrap();
+      toast.success(t("admin.products.created"), { position: "top-center", autoClose: 3000 });
+      resetForm();
+      navigate("/admin/products");
+    } catch (submitError) {
+      toast.error(submitError || t("admin.products.createFailed"), { position: "top-center", autoClose: 3000 });
+      dispatch(removeErrors());
+    }
   };
 
   const createProductImage = (e) => {
@@ -48,29 +65,10 @@ function CreateProduct() {
   };
 
   useEffect(() => {
-    dispatch(removeSuccess());
-  }, [dispatch]);
-
-  useEffect(() => {
     if (error) {
-      toast.error(t("admin.products.createFailed"), { position: "top-center", autoClose: 3000 });
       dispatch(removeErrors());
     }
-
-    if (success && formSubmitted) {
-      toast.success(t("admin.products.created"), { position: "top-center", autoClose: 3000 });
-      dispatch(removeSuccess());
-      setFormSubmitted(false);
-      setName("");
-      setPrice("");
-      setStock("");
-      setDescription("");
-      setKeywords("");
-      setImage([]);
-      setImagePreview([]);
-      navigate("/admin/products");
-    }
-  }, [dispatch, error, success, formSubmitted, navigate, t]);
+  }, [dispatch, error]);
 
   if (loading) return <Loader />;
 
@@ -100,7 +98,7 @@ function CreateProduct() {
             ))}
           </div>
 
-          <button type="submit" className="submit-btn">{t("common.create")}</button>
+          <button type="submit" className="submit-btn">{loading ? t("common.loading") : t("common.create")}</button>
         </form>
       </div>
     </>

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../componentStyles/Navbar.css";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link, useNavigate } from "react-router-dom";
 import "../pageStyles/Search.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useSearch } from "../context/SearchContext";
 import { logout, removeSuccess } from "../features/user/userSlice";
 import { toast } from "react-toastify";
 import { CONFIG } from "../config/config";
@@ -17,9 +17,9 @@ import { CONFIG } from "../config/config";
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [isTinyScreen, setIsTinyScreen] = useState(window.innerWidth <= 450);
-  const { isSearchOpen, setIsSearchOpen } = useSearch();
   const [searchQuery, setSearchQuery] = useState("");
+  const profileMenuRef = useRef(null);
+  const menuRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
@@ -32,27 +32,52 @@ function Navbar() {
   const currentLanguageIndex = languageCycle.indexOf(normalizedLanguage);
   const nextLanguage = languageCycle[(currentLanguageIndex + 1 + languageCycle.length) % languageCycle.length];
 
-  const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
-
   useEffect(() => {
-    const handleResize = () => {
-      const tiny = window.innerWidth <= 450;
-      setIsTinyScreen(tiny);
-      if (!tiny) {
+    const handleClickOutside = (event) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
         setIsProfileMenuOpen(false);
+      }
+
+      if (menuRef.current && !menuRef.current.contains(event.target) && !event.target.closest(".navbar-hamburger")) {
+        setIsMenuOpen(false);
       }
     };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const handleEscape = (event) => {
+      if (event.key === "Escape") {
+        setIsProfileMenuOpen(false);
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
   }, []);
+
+  useEffect(() => {
+    const closeOnDesktop = () => {
+      if (window.innerWidth > 900) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", closeOnDesktop);
+    return () => window.removeEventListener("resize", closeOnDesktop);
+  }, []);
+
+  const closeMenus = () => {
+    setIsMenuOpen(false);
+    setIsProfileMenuOpen(false);
+  };
 
   const goTo = (path) => {
     navigate(path);
-    setIsProfileMenuOpen(false);
-    setIsMenuOpen(false);
+    closeMenus();
   };
 
   const toggleLanguage = () => {
@@ -78,115 +103,115 @@ function Navbar() {
     if (query) {
       navigate(`/products?keyword=${encodeURIComponent(query)}`);
       setSearchQuery("");
-      if (isSearchOpen) toggleSearch();
+      setIsMenuOpen(false);
     }
   };
 
   return (
     <nav className="navbar">
-      <div className="navbar-container">
-        <div className="navbar-logo">
-          <Link className="Navbar-button navbar-brand-link" to="/" onClick={() => setIsMenuOpen(false)}>
-            {settings?.logo ? (
-              <img
-                src={settings.logo}
-                alt={settings?.storeName || CONFIG.appName}
-                className="navbar-brand-logo"
-              />
-            ) : null}
-            <span>{settings?.storeName || t("navbar.brand")}</span>
-          </Link>
-        </div>
-
-        <div className={`navbar-links ${isMenuOpen ? "active" : ""}`}>
-          <ul>
-            <li><Link to="/" className="Navbar-button" onClick={() => setIsMenuOpen(false)}>{t("navbar.home")}</Link></li>
-            <li><Link to="/products" className="Navbar-button" onClick={() => setIsMenuOpen(false)}>{t("navbar.products")}</Link></li>
-            <li><Link to="/about-us" className="Navbar-button" onClick={() => setIsMenuOpen(false)}>{t("navbar.aboutUs")}</Link></li>
-            <li><Link to="/contact-us" className="Navbar-button" onClick={() => setIsMenuOpen(false)}>{t("navbar.contactUs")}</Link></li>
-          </ul>
-        </div>
-
-        <div className="navbar-icons">
-          <button
-            type="button"
-            className="lang-switch-btn"
-            onClick={toggleLanguage}
-            aria-label={t("navbar.language")}
-            title={t("navbar.language")}
-          >
-            {nextLanguage.toUpperCase()}
-          </button>
-
-          <div className="search-container">
-            <form className={`search-form ${isSearchOpen ? "active" : ""}`} onSubmit={handleSearchSubmit}>
-              <input
-                type="text"
-                className="search-input"
-                placeholder={t("navbar.searchPlaceholder")}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button type="submit" className="search-button2" onClick={toggleSearch}>
-                <SearchIcon focusable="false" className="search-icon" />
-              </button>
-            </form>
-          </div>
-
-          <div className="cart-container">
-            <Link to="/cart">
-              <ShoppingCartIcon className="icon" />
-              <span className="cart-badge">{cartItems.length}</span>
+      <div className="navbar-shell">
+        <div className="navbar-top-row">
+          <div className="navbar-logo">
+            <Link className="Navbar-button navbar-brand-link" to="/" onClick={closeMenus}>
+              {settings?.logo ? (
+                <img
+                  src={settings.logo}
+                  alt={settings?.storeName || CONFIG.appName}
+                  className="navbar-brand-logo"
+                />
+              ) : null}
+              <span>{settings?.storeName || t("navbar.brand")}</span>
             </Link>
           </div>
 
-          {isAuthenticated ? (
-            isTinyScreen ? (
-              <div>
-                <div className={`overlay ${isProfileMenuOpen ? "show" : ""}`} onClick={toggleProfileMenu}></div>
+          <div className="navbar-links desktop-links">
+            <ul>
+              <li><Link to="/" className="Navbar-button" onClick={closeMenus}>{t("navbar.home")}</Link></li>
+              <li><Link to="/products" className="Navbar-button" onClick={closeMenus}>{t("navbar.products")}</Link></li>
+              <li><Link to="/about-us" className="Navbar-button" onClick={closeMenus}>{t("navbar.aboutUs")}</Link></li>
+              <li><Link to="/contact-us" className="Navbar-button" onClick={closeMenus}>{t("navbar.contactUs")}</Link></li>
+            </ul>
+          </div>
+
+          <div className="navbar-icons">
+            <button
+              type="button"
+              className="lang-switch-btn"
+              onClick={toggleLanguage}
+              aria-label={t("navbar.language")}
+              title={t("navbar.language")}
+            >
+              {nextLanguage.toUpperCase()}
+            </button>
+
+            <div className="cart-container">
+              <Link to="/cart" onClick={closeMenus}>
+                <ShoppingCartIcon className="icon" />
+                <span className="cart-badge">{cartItems.length}</span>
+              </Link>
+            </div>
+
+            {isAuthenticated ? (
+              <div className="navbar-profile-menu" ref={profileMenuRef}>
                 <button
                   type="button"
-                  className="register-link"
+                  className="navbar-avatar-btn"
                   aria-label={t("navbar.openProfileMenu")}
-                  onClick={toggleProfileMenu}
-                  style={{ background: "transparent", padding: 0 }}
+                  onClick={() => setIsProfileMenuOpen((prev) => !prev)}
                 >
                   <img
                     src={user?.avatar?.url || "/images/profile.png"}
                     alt={user?.name || t("navbar.profileAlt")}
                     className="navbar-profile-avatar"
                   />
+                  <span className="navbar-profile-name">{user?.name || t("navbar.myProfile")}</span>
+                  <KeyboardArrowDownIcon className={`navbar-profile-caret ${isProfileMenuOpen ? "open" : ""}`} />
                 </button>
 
-                {isProfileMenuOpen && (
-                  <div className="menu-options">
-                    {user?.role === "admin" && <button type="button" className="menu-option-btn" onClick={() => goTo("/admin/dashboard")}>{t("navbar.adminDashboard")}</button>}
-                    <button type="button" className="menu-option-btn" onClick={() => goTo("/profile")}>{t("navbar.account")}</button>
-                    <button type="button" className="menu-option-btn" onClick={() => goTo("/orders/user")}>{t("navbar.orders")}</button>
-                    <button type="button" className="menu-option-btn" onClick={() => goTo("/track-order")}>Track Order</button>
-                    <button type="button" className={`menu-option-btn ${cartItems.length > 0 ? "cart-not-empty" : ""}`} onClick={() => goTo("/cart")}>{t("navbar.cart", { count: cartItems.length })}</button>
-                    <button type="button" className="menu-option-btn" onClick={logoutUser}>{t("navbar.logout")}</button>
-                  </div>
-                )}
+                <div className={`menu-options ${isProfileMenuOpen ? "show" : ""}`}>
+                  {user?.role === "admin" && <button type="button" className="menu-option-btn" onClick={() => goTo("/admin/dashboard")}>{t("navbar.adminDashboard")}</button>}
+                  <button type="button" className="menu-option-btn" onClick={() => goTo("/profile")}>{t("navbar.account")}</button>
+                  <button type="button" className="menu-option-btn" onClick={() => goTo("/orders/user")}>{t("navbar.orders")}</button>
+                  <button type="button" className="menu-option-btn" onClick={() => goTo("/track-order")}>Track Order</button>
+                  <button type="button" className={`menu-option-btn ${cartItems.length > 0 ? "cart-not-empty" : ""}`} onClick={() => goTo("/cart")}>{t("navbar.cart", { count: cartItems.length })}</button>
+                  <button type="button" className="menu-option-btn" onClick={logoutUser}>{t("navbar.logout")}</button>
+                </div>
               </div>
             ) : (
-              <Link to="/profile" className="profile-link" aria-label={t("navbar.myProfile")}>
-                <img
-                  src={user?.avatar?.url || "/images/profile.png"}
-                  alt={user?.name || t("navbar.profileAlt")}
-                  className="navbar-profile-avatar"
-                />
-                <span className="navbar-profile-name">{user?.name || t("navbar.myProfile")}</span>
+              <Link to="/register" className="register-link" onClick={closeMenus}>
+                <PersonAddIcon className="icon" />
               </Link>
-            )
-          ) : (
-            <Link to="/register" className="register-link">
-              <PersonAddIcon className="icon" />
-            </Link>
-          )}
+            )}
 
-          <div className="navbar-hamburger" onClick={toggleMenu}>
-            {isMenuOpen ? <CloseIcon className="icon" /> : <MenuIcon className="icon" />}
+            <button type="button" className="navbar-hamburger" onClick={() => setIsMenuOpen((prev) => !prev)} aria-label="Toggle menu">
+              {isMenuOpen ? <CloseIcon className="icon" /> : <MenuIcon className="icon" />}
+            </button>
+          </div>
+        </div>
+
+        <div className="navbar-search-row">
+          <form className="search-form navbar-search-form" onSubmit={handleSearchSubmit}>
+            <input
+              type="text"
+              className="search-input"
+              placeholder={t("navbar.searchPlaceholder")}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button type="submit" className="search-button2" aria-label="Search">
+              <SearchIcon focusable="false" className="search-icon" />
+            </button>
+          </form>
+        </div>
+
+        <div ref={menuRef} className={`navbar-mobile-panel ${isMenuOpen ? "show" : ""}`}>
+          <div className="navbar-links mobile-links">
+            <ul>
+              <li><Link to="/" className="Navbar-button" onClick={closeMenus}>{t("navbar.home")}</Link></li>
+              <li><Link to="/products" className="Navbar-button" onClick={closeMenus}>{t("navbar.products")}</Link></li>
+              <li><Link to="/about-us" className="Navbar-button" onClick={closeMenus}>{t("navbar.aboutUs")}</Link></li>
+              <li><Link to="/contact-us" className="Navbar-button" onClick={closeMenus}>{t("navbar.contactUs")}</Link></li>
+            </ul>
           </div>
         </div>
       </div>

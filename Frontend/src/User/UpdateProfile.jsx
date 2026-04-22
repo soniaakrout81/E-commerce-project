@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../UserStyles/Form.css";
 import { useSelector, useDispatch } from "react-redux";
-import { updateProfile, removeSuccess } from "../features/user/userSlice";
+import { updateProfile } from "../features/user/userSlice";
 import { toast } from "react-toastify";
 import imageCompression from "browser-image-compression";
 import Loader from "../components/Loader";
@@ -32,55 +32,42 @@ function UpdateProfile() {
 
       setAvatar(base64);
       setAvatarPreview(base64);
-      
-    } catch (err) {
-      
+    } catch {
       toast.error(t("user.updateProfile.avatarProcessFailed"), { position: "top-center", autoClose: 3000 });
-
     }
   };
 
-const updateSubmit = (e) => {
-  e.preventDefault();
+  const updateSubmit = (e) => {
+    e.preventDefault();
 
-  if (!name || !email) {
-    toast.error(t("user.common.fillRequired"), { position: "top-center", autoClose: 3000 });
-    return;
-  }
+    if (!name || !email) {
+      toast.error(t("user.common.fillRequired"), { position: "top-center", autoClose: 3000 });
+      return;
+    }
 
-  if (name.length < 3) {
-    toast.error(t("user.common.nameMin"), { position: "top-center", autoClose: 3000 });
-    return;
-  }
+    if (name.length < 3) {
+      toast.error(t("user.common.nameMin"), { position: "top-center", autoClose: 3000 });
+      return;
+    }
 
-  const formData = { name, email, avatar };
+    const formData = { name, email, avatar };
 
-  dispatch(updateProfile(formData))
-    .unwrap()
-    .then(() => {
-      toast.success(t("user.updateProfile.success"), { position: "top-center", autoClose: 3000 });
-      navigate("/profile");
-      dispatch(removeSuccess());
-    })
-    .catch(() => {
-      toast.error(t("user.updateProfile.failed"), { position: "top-center", autoClose: 3000 });
-    });
-};
-
-
-
-  useEffect(() => {
-
-    dispatch(removeSuccess());
-
-  }, [dispatch]);
+    dispatch(updateProfile(formData))
+      .unwrap()
+      .then(() => {
+        toast.success(t("user.updateProfile.success"), { position: "top-center", autoClose: 3000 });
+        navigate("/profile");
+      })
+      .catch(() => {
+        toast.error(t("user.updateProfile.failed"), { position: "top-center", autoClose: 3000 });
+      });
+  };
 
   return (
     <>
       <Navbar />
       {loading && <Loader />}
       <div className="container-group-update">
-        
         <div className="container2">
           <div className="form-content">
             <form className="form" onSubmit={updateSubmit}>
@@ -105,25 +92,17 @@ const updateSubmit = (e) => {
               </div>
 
               <div className="file-input-wrapper">
-
                 <input type="file" id="file" onChange={handleAvatarChange} />
                 <label htmlFor="file" className="file-input-label">{t("user.common.chooseProfilePicture")}</label>
-
               </div>
               <div className="input-group">
-
                 <img src={avatarPreview || "/images/profile.png"} alt={t("user.updateProfile.avatarPreview")} className="avatar" />
-
               </div>
-
-              
-              
 
               <button type="submit" className="authBtn">{loading ? t("user.updateProfile.updating") : t("user.updateProfile.updateBtn")}</button>
             </form>
           </div>
         </div>
-
       </div>
       <Footer />
     </>

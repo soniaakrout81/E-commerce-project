@@ -17,16 +17,28 @@ function About() {
       <PageTitle title={t("template.static.about")} />
       <MetaTags
         title={`${t("template.static.about")} | ${settings?.storeName || "Store"}`}
-        description={settings?.footerAbout || settings?.tagline}
+        description={settings?.aboutIntro || settings?.footerAbout || settings?.tagline}
         keywords="about us, brand, store"
       />
 
       <main className="static-page-shell">
-        <section className="static-page-card">
+        <section className="static-page-card static-page-hero">
           <p className="static-kicker">{t("template.static.about")}</p>
-          <h1>{settings?.storeName || t("template.static.ourStore")}</h1>
-          <p>{settings?.footerAbout || "This store is built to deliver a premium branded shopping experience with reusable storefront sections and a polished admin workflow."}</p>
-          <p>{settings?.tagline || "Premium products curated for modern shoppers."}</p>
+          <h1>{settings?.aboutTitle || settings?.storeName || t("template.static.ourStore")}</h1>
+          <p>{settings?.aboutIntro || settings?.footerAbout}</p>
+        </section>
+
+        <section className="static-page-card static-page-stack">
+          <article className="static-page-block">
+            <h2>{settings?.storeName || t("template.static.ourStore")}</h2>
+            <p>{settings?.aboutBody || settings?.tagline}</p>
+          </article>
+
+          <article className="static-page-block static-page-highlight">
+            <h3>{t("template.static.getInTouch")}</h3>
+            <p>{settings?.contactEmail || "hello@example.com"}</p>
+            <p>{settings?.contactPhone || "+000 000 000"}</p>
+          </article>
         </section>
       </main>
 
