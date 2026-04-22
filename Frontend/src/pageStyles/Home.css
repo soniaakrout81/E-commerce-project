@@ -1,4 +1,6 @@
 .home-container {
+  margin-top: 0;
+  padding-top: 0;
   padding: 3rem 2rem;
   color: var(--text-primary);
   display: flex;
@@ -221,7 +223,8 @@
 
 @media (max-width: 450px) {
   .home-container {
-    padding: 1rem 0.65rem;
+    margin-top: 0;
+    padding: 1rem 0.65rem 1rem;
     gap: 1.2rem;
   }
 

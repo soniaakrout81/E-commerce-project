@@ -33,6 +33,7 @@ function Navbar() {
   const currentLanguageIndex = languageCycle.indexOf(normalizedLanguage);
   const nextLanguage = languageCycle[(currentLanguageIndex + 1 + languageCycle.length) % languageCycle.length];
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isHomeRoute = location.pathname === "/";
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -73,12 +74,16 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
-    document.body.style.paddingTop = isAdminRoute ? "88px" : "136px";
+    if (isHomeRoute) {
+      document.body.style.paddingTop = "0";
+    } else {
+      document.body.style.paddingTop = isAdminRoute ? "88px" : "136px";
+    }
 
     return () => {
       document.body.style.paddingTop = "";
     };
-  }, [isAdminRoute]);
+  }, [isAdminRoute, isHomeRoute]);
 
   const closeMenus = () => {
     setIsMenuOpen(false);
