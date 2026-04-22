@@ -19,6 +19,8 @@ function About() {
         title={`${t("template.static.about")} | ${settings?.storeName || "Store"}`}
         description={settings?.aboutIntro || settings?.footerAbout || settings?.tagline}
         keywords="about us, brand, store"
+        image={settings?.heroImage || settings?.logo}
+        path="/about-us"
       />
 
       <main className="static-page-shell">

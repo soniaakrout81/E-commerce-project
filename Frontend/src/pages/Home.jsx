@@ -29,6 +29,18 @@ function Home() {
         title={settings?.storeName || t("home.pageTitle")}
         description={settings?.heroSubtitle || settings?.tagline}
         keywords="ecommerce, online store, premium storefront, white label template"
+        image={settings?.heroImage || settings?.logo}
+        path="/"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: settings?.storeName,
+          email: settings?.contactEmail,
+          telephone: settings?.contactPhone,
+          address: settings?.address,
+          logo: settings?.logo,
+          sameAs: Object.values(settings?.socialLinks || {}).filter(Boolean),
+        }}
       />
       <ImageSlider />
 

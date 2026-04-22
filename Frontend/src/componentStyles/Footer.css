@@ -54,6 +54,22 @@
   flex-wrap: wrap;
 }
 
+.footer-quick-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.footer-quick-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-quick-links a:hover {
+  color: var(--text-light);
+}
+
 .social-icon {
   font-size: 2rem;
   color: var(--primary-dark);

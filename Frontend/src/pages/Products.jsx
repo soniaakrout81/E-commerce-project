@@ -14,6 +14,7 @@ import Pagination from "../components/Pagination.jsx";
 
 function Products() {
   const { loading, error, products } = useSelector((state) => state.product);
+  const { settings } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const location = useLocation();
@@ -53,9 +54,17 @@ function Products() {
     <>
       <PageTitle title={t("products.pageTitle")} />
       <MetaTags
-        title={`${t("products.pageTitle")} | Store`}
+        title={`${t("products.pageTitle")} | ${settings?.storeName || "Store"}`}
         description={keyword ? `Browse products matching ${keyword}` : "Browse the full product catalog."}
         keywords={keyword ? `${keyword}, products, catalog` : "products, catalog, ecommerce"}
+        image={settings?.heroImage || settings?.logo}
+        path={`/products${location.search}`}
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: `${settings?.storeName || "Store"} product catalog`,
+          description: keyword ? `Browse products matching ${keyword}` : "Browse the full product catalog.",
+        }}
       />
       <Navbar />
       {loading ? (

@@ -19,6 +19,8 @@ function Contact() {
         title={`${t("navbar.contactUs")} | ${settings?.storeName || "Store"}`}
         description={settings?.contactIntro || settings?.newsletterText || settings?.tagline}
         keywords="contact, support, email, phone"
+        image={settings?.heroImage || settings?.logo}
+        path="/contact-us"
       />
 
       <main className="static-page-shell">

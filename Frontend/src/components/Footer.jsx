@@ -1,5 +1,6 @@
 import React from "react";
 import { Phone, Mail, Instagram, Facebook, MusicNote, X } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import "../componentStyles/Footer.css";
@@ -39,6 +40,17 @@ function Footer() {
         <div className="footer-section about">
           <h3>{t("footer.aboutUs")}</h3>
           <p>{settings?.footerAbout || t("footer.sellingProducts")}</p>
+        </div>
+
+        <div className="footer-section footer-links-section">
+          <h3>Quick Links</h3>
+          <div className="footer-quick-links">
+            <Link to="/about-us">{t("navbar.aboutUs")}</Link>
+            <Link to="/contact-us">{t("navbar.contactUs")}</Link>
+            <Link to="/faq">FAQ</Link>
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <Link to="/terms-and-conditions">Terms & Conditions</Link>
+          </div>
         </div>
       </div>
 

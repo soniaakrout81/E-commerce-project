@@ -118,9 +118,33 @@ function ProductDetails() {
     <>
       <PageTitle title={`${product?.name} - ${t("productDetails.pageSuffix")}`} />
       <MetaTags
-        title={`${product?.name} | Store`}
+        title={`${product?.name} | ${product?.storeName || "Store"}`}
         description={product?.description}
         keywords={product?.keywords || product?.name}
+        image={selectedImage || product?.image?.[0]?.url}
+        path={`/product/${id}`}
+        type="product"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: product?.name,
+          description: product?.description,
+          image: product?.image?.map((item) => item.url),
+          sku: product?._id,
+          offers: {
+            "@type": "Offer",
+            priceCurrency: "USD",
+            price: product?.price,
+            availability: product?.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+          },
+          aggregateRating: product?.numOfReviews
+            ? {
+                "@type": "AggregateRating",
+                ratingValue: product?.ratings || 0,
+                reviewCount: product?.numOfReviews || 0,
+              }
+            : undefined,
+        }}
       />
       <Navbar />
 
