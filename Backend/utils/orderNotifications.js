@@ -61,16 +61,17 @@ const sendWhatsAppMessage = async ({ to, body }) => {
 
 export const sendOrderNotifications = async ({ order, user, type }) => {
   const settings = await SiteSettings.findOne();
-  const customerName = user?.name || "Customer";
+  const customerName = user?.name || order?.shippingInfo?.fullName || "Customer";
+  const customerEmail = user?.email || order?.shippingInfo?.email || "";
   const whatsappTarget = order?.shippingInfo?.phoneNumber || settings?.whatsappPhone || "";
   const message = buildOrderMessage({ type, order, customerName });
   const results = [];
 
-  if (settings?.enableEmailNotifications && user?.email) {
+  if (settings?.enableEmailNotifications && customerEmail) {
     try {
       await withTimeout(
         sendEmail({
-          email: user.email,
+          email: customerEmail,
           subject: `Order update - ${order._id}`,
           message,
         }),
@@ -82,14 +83,14 @@ export const sendOrderNotifications = async ({ order, user, type }) => {
         channel: "email",
         type,
         status: "sent",
-        recipient: user.email,
+        recipient: customerEmail,
       });
     } catch (error) {
       results.push({
         channel: "email",
         type,
         status: "failed",
-        recipient: user.email,
+        recipient: customerEmail,
         error: error.message,
       });
     }
@@ -98,7 +99,7 @@ export const sendOrderNotifications = async ({ order, user, type }) => {
       channel: "email",
       type,
       status: "skipped",
-      recipient: user?.email || "",
+      recipient: customerEmail,
       error: "Email notifications disabled or recipient missing",
     });
   }

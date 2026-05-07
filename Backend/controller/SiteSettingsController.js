@@ -88,6 +88,8 @@ export const updateSiteSettings = HandleAsyncError(async (req, res) => {
     "enableWhatsAppNotifications",
     "manualPaymentInstructions",
     "newsletterText",
+    "announcementText",
+    "announcementEnabled",
     "footerAbout",
     "aboutTitle",
     "aboutIntro",

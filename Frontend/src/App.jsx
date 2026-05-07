@@ -107,12 +107,12 @@ function App() {
           <Route path="/password/forgot" element={<ForgotPassword />} />
           <Route path="/reset/:token" element={<ResetPassword />} />
 
-          <Route path="/cart" element={<ProtectedRoute element={<Cart />} />} />
-          <Route path="/shipping" element={<ProtectedRoute element={<Shipping />} />} />
-          <Route path="/order/confirm" element={<ProtectedRoute element={<OrderConfirm />} />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/shipping" element={<Shipping />} />
+          <Route path="/order/confirm" element={<OrderConfirm />} />
           <Route path="/orders/user" element={<ProtectedRoute element={<MyOrders />} />} />
-          <Route path="/order/:id" element={<ProtectedRoute element={<OrderDetails />} />} />
-          <Route path="/track-order" element={<ProtectedRoute element={<OrderTracking />} />} />
+          <Route path="/order/:id" element={<OrderDetails />} />
+          <Route path="/track-order" element={<OrderTracking />} />
 
           <Route path="/admin/dashboard" element={<ProtectedRoute element={<Dashboard />} adminOnly />} />
           <Route path="/admin/products" element={<ProtectedRoute element={<ProductsList />} adminOnly />} />

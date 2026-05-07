@@ -47,6 +47,8 @@ const defaultSettings = {
     { state: "Sfax", cities: ["Sfax City", "Sakiet Ezzit", "Agareb"], rate: 8, estimatedDays: "2-3 business days" },
   ],
   newsletterText: "Subscribe for launches, limited offers, and product drops.",
+  announcementText: "Fast delivery, premium quality, and trusted service for every order.",
+  announcementEnabled: true,
   footerAbout: "A reusable white-label e-commerce template built for fast premium delivery.",
   aboutTitle: "Built for brands that want to feel premium from day one.",
   aboutIntro: "Use this page to introduce the store, explain the value behind the products, and build trust with new shoppers.",

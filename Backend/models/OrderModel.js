@@ -86,6 +86,14 @@ const orderSchema = new mongoose.Schema({
             required: true
 
         },
+        fullName: {
+            type: String,
+            default: ""
+        },
+        email: {
+            type: String,
+            default: ""
+        },
 
 
 
@@ -180,7 +188,7 @@ const orderSchema = new mongoose.Schema({
 
         type: mongoose.Schema.ObjectId,
         ref: "User",
-        required: true
+        default: null
 
     },
     itemPrice: {

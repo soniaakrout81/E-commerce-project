@@ -48,7 +48,7 @@ function Home() {
         <section className="home-intro-card">
           <p className="home-kicker">{settings?.tagline}</p>
           <h2 className="home-heading">{t("home.trendingNow")}</h2>
-          <p className="home-supporting-copy">{settings?.newsletterText}</p>
+          <p className="home-supporting-copy">{settings?.heroSubtitle || settings?.tagline}</p>
         </section>
 
         <h2 className="home-heading">{t("home.trendingNow")}</h2>
@@ -102,18 +102,6 @@ function Home() {
             <p>{t("template.home.testimonialThreeQuote")}</p>
             <strong>{t("template.home.testimonialThreeAuthor")}</strong>
           </article>
-        </section>
-
-        <section className="home-newsletter-card">
-          <div>
-            <p className="home-kicker">{t("template.home.newsletterLabel")}</p>
-            <h3>{t("template.home.newsletterTitle")}</h3>
-            <p className="home-supporting-copy">{settings?.newsletterText}</p>
-          </div>
-          <form className="home-newsletter-form">
-            <input type="email" placeholder={t("template.home.newsletterPlaceholder")} />
-            <button type="button">{t("template.home.subscribe")}</button>
-          </form>
         </section>
 
         <section className="home-contact-strip">

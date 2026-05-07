@@ -91,7 +91,6 @@
 }
 
 .home-featured-strip,
-.home-newsletter-card,
 .home-contact-strip {
   width: 100%;
   max-width: 1200px;
@@ -108,7 +107,6 @@
 }
 
 .home-featured-strip h3,
-.home-newsletter-card h3,
 .home-contact-strip h3 {
   margin: 0.35rem 0 0;
   font-size: 1.7rem;
@@ -157,37 +155,6 @@
   color: var(--heading-color);
 }
 
-.home-newsletter-card {
-  background: linear-gradient(135deg, var(--bg-secondary), var(--surface-soft-color));
-  align-items: center;
-}
-
-.home-newsletter-form {
-  display: flex;
-  gap: 0.8rem;
-  min-width: 360px;
-}
-
-.home-newsletter-form input {
-  flex: 1;
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  padding: 0.95rem 1rem;
-  font: inherit;
-  background: var(--surface-color);
-  color: var(--body-text-color);
-}
-
-.home-newsletter-form button {
-  border: none;
-  border-radius: 999px;
-  padding: 0 1.3rem;
-  background: var(--primary-dark);
-  color: var(--text-light);
-  font-weight: 700;
-  cursor: pointer;
-}
-
 .home-contact-strip {
   background: var(--surface-color);
   border: 1px solid var(--border-color);
@@ -207,7 +174,6 @@
   }
 
   .home-featured-strip,
-  .home-newsletter-card,
   .home-contact-strip {
     flex-direction: column;
   }
@@ -216,10 +182,6 @@
     grid-template-columns: 1fr;
   }
 
-  .home-newsletter-form {
-    min-width: 0;
-    width: 100%;
-  }
 }
 
 @media (max-width: 450px) {
@@ -258,19 +220,13 @@
   }
 
   .home-featured-strip,
-  .home-newsletter-card,
   .home-contact-strip {
     padding: 1.2rem;
   }
 
   .home-featured-strip h3,
-  .home-newsletter-card h3,
   .home-contact-strip h3 {
     font-size: 1.3rem;
-  }
-
-  .home-newsletter-form {
-    display: grid;
   }
 
   .home-testimonial-card {

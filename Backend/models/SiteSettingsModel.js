@@ -227,6 +227,15 @@ const siteSettingsSchema = new mongoose.Schema(
       default: "Subscribe for launches, limited offers, and product drops.",
       trim: true,
     },
+    announcementText: {
+      type: String,
+      default: "Fast delivery, premium quality, and trusted service for every order.",
+      trim: true,
+    },
+    announcementEnabled: {
+      type: Boolean,
+      default: true,
+    },
     footerAbout: {
       type: String,
       default: "A reusable white-label e-commerce template built for fast premium delivery.",

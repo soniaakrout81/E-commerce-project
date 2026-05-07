@@ -1,5 +1,5 @@
 import express from "express";
-import { roleBasedAccess, verifyUserAuth } from "../middleware/userAuth.js";
+import { roleBasedAccess, verifyUserAuth, verifyUserAuthOptional } from "../middleware/userAuth.js";
 import { allMyOrders, createNewOrder, deleteOrder, getAllOrders, getSingleOrder, updateOrderStatus } from "../controller/OrderController.js";
 
 
@@ -7,8 +7,8 @@ import { allMyOrders, createNewOrder, deleteOrder, getAllOrders, getSingleOrder,
 
 const router = express.Router();
 
-router.route("/new/order").post(verifyUserAuth, createNewOrder);
-router.route("/order/:id").get(verifyUserAuth, getSingleOrder);
+router.route("/new/order").post(verifyUserAuthOptional, createNewOrder);
+router.route("/order/:id").get(getSingleOrder);
 router.route("/admin/order/:id").get(verifyUserAuth,  roleBasedAccess("admin"), getSingleOrder);
 router.route("/admin/order/:id").put(verifyUserAuth, roleBasedAccess("admin"), updateOrderStatus);
 router.route("/orders/user").get(verifyUserAuth, allMyOrders);

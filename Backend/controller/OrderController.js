@@ -127,7 +127,7 @@ export const createNewOrder = HandleAsyncError(async (req, res) => {
     orderStatus: "Pending",
     shippingStatus: "Pending",
     statusHistory: [{ status: "Pending", note: "Order created" }],
-    user: req.user._id,
+    user: req.user?._id || null,
   });
 
   const fullOrder = await Order.findById(order._id);

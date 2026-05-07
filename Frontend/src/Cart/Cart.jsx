@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../CartStyles/Cart.css";
 import PageTitle from "../components/PageTitle";
 import Navbar from "../components/Navbar";
@@ -15,17 +15,8 @@ function Cart() {
   const { t } = useTranslation();
 
   const { cartItems, loading } = useSelector((state) => state.cart);
-  const { isAuthenticated } = useSelector((state) => state.user);
-
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const shipping = 50;
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      toast.error(t("cart.mustLogin"), { position: "top-center", autoClose: 3000 });
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate, t]);
 
   if (loading) return <Loader />;
 
@@ -57,7 +48,7 @@ function Cart() {
               <div className="header-action item-total-heading">{t("cart.actions")}</div>
             </div>
 
-            {cartItems && cartItems.map((item) => <CartItem key={item.product} item={item} />)}
+            {cartItems && cartItems.map((item) => <CartItem key={item.cartKey || item.product} item={item} />)}
           </div>
 
           <div className="price-summary">

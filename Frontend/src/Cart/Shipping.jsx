@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 function Shipping() {
   const { shippingInfo } = useSelector((state) => state.cart);
   const { settings } = useSelector((state) => state.settings);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -23,6 +24,8 @@ function Shipping() {
   const [address, setAddress] = useState(shippingInfo.address || "");
   const [pincode, setPincode] = useState(shippingInfo.pincode || "");
   const [phoneNumber, setPhoneNumber] = useState(shippingInfo.phoneNumber || "");
+  const [fullName, setFullName] = useState(shippingInfo.fullName || user?.name || "");
+  const [email, setEmail] = useState(shippingInfo.email || user?.email || "");
 
   const shippingZones = settings?.shippingZones || [];
   const statesAndCities = shippingZones.reduce((acc, zone) => {
@@ -45,12 +48,12 @@ function Shipping() {
       return;
     }
 
-    if (!selectedState || !selectedCity || !address || !pincode) {
+    if (!selectedState || !selectedCity || !address || !pincode || !fullName || (!isAuthenticated && !email)) {
       toast.error(t("cart.fillRequired"), { position: "top-center", autoClose: 3000 });
       return;
     }
 
-    dispatch(saveShippingInfo({ address, pincode, phoneNumber, selectedState, selectedCity, country: "Tunisia" }));
+    dispatch(saveShippingInfo({ address, pincode, phoneNumber, selectedState, selectedCity, country: "Tunisia", fullName, email }));
     toast.success(t("cart.shippingSaved"), { position: "top-center", autoClose: 3000 });
     navigate("/order/confirm");
   };
@@ -71,6 +74,18 @@ function Shipping() {
         <h1 className="shipping-form-header">{t("cart.shippingDetails")}</h1>
         <form className="shipping-form" onSubmit={shippingInfoSubmit}>
           <div className="shipping-section">
+            <div className="shipping-form-group">
+              <label htmlFor="fullName">Full name</label>
+              <input type="text" required name="fullName" id="fullName" placeholder="Enter your full name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+            </div>
+
+            {!isAuthenticated && (
+              <div className="shipping-form-group">
+                <label htmlFor="guestEmail">Email</label>
+                <input type="email" required name="guestEmail" id="guestEmail" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              </div>
+            )}
+
             <div className="shipping-form-group">
               <label htmlFor="address">{t("cart.address")}</label>
               <input type="text" required name="address" id="address" placeholder={t("cart.enterAddress")} value={address} onChange={(e) => setAddress(e.target.value)} />

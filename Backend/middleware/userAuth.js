@@ -17,7 +17,25 @@ export const verifyUserAuth = HandleAsyncError(async (req, res, next) => {
     req.user = await User.findById(decodedData.id);
     next();
     
+    
+});
 
+export const verifyUserAuthOptional = HandleAsyncError(async (req, _res, next) => {
+    const { token } = req.cookies;
+
+    if (!token) {
+        req.user = null;
+        return next();
+    }
+
+    try {
+        const decodedData = jwt.verify(token, process.env.JWT_SECRET_KEY)
+        req.user = await User.findById(decodedData.id);
+    } catch (_error) {
+        req.user = null;
+    }
+
+    next();
 });
 export const roleBasedAccess = (requiredRole) => {
   return HandleAsyncError(async (req, res, next) => {

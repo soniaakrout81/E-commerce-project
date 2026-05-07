@@ -52,6 +52,8 @@ function AdminSettings() {
         warningColor: settings.warningColor || "#F59E0B",
         dangerColor: settings.dangerColor || "#EF4444",
         infoColor: settings.infoColor || "#3B82F6",
+        announcementText: settings.announcementText || "",
+        announcementEnabled: settings.announcementEnabled ?? true,
         contactEmail: settings.contactEmail || "",
         contactPhone: settings.contactPhone || "",
         whatsappPhone: settings.whatsappPhone || "",
@@ -114,7 +116,18 @@ function AdminSettings() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    dispatch(updateSiteSettings(formData))
+    const payload = {
+      ...formData,
+      bgSecondary: formData.bgSecondary || formData.bgPrimary,
+      surfaceColor: formData.surfaceColor || "#FFFFFF",
+      surfaceSoftColor: formData.surfaceSoftColor || formData.bgPrimary,
+      footerBackground: formData.footerBackground || formData.navbarBackground,
+      mutedTextColor: formData.mutedTextColor || formData.bodyTextColor,
+      textLightColor: formData.textLightColor || "#FFFFFF",
+      borderColor: formData.borderColor || formData.bodyTextColor,
+    };
+
+    dispatch(updateSiteSettings(payload))
       .unwrap()
       .then(() => {
         toast.success(t("template.settings.updated"), {
@@ -207,7 +220,7 @@ function AdminSettings() {
                 <Palette />
                 <div>
                   <h2>Theme Colors</h2>
-                  <p>{t("template.settings.themeDesc")}</p>
+                  <p>Keep the store look clean with only the main color controls.</p>
                 </div>
               </div>
 
@@ -217,11 +230,11 @@ function AdminSettings() {
                   <input type="color" value={formData.primaryColor} onChange={(e) => handleFieldChange("primaryColor", e.target.value)} />
                 </label>
                 <label>
-                  {t("template.settings.secondaryColor")}
+                  Accent color
                   <input type="color" value={formData.secondaryColor} onChange={(e) => handleFieldChange("secondaryColor", e.target.value)} />
                 </label>
                 <label>
-                  {t("template.settings.accentColor")}
+                  Button / dark accent
                   <input type="color" value={formData.accentColor} onChange={(e) => handleFieldChange("accentColor", e.target.value)} />
                 </label>
                 <label>
@@ -229,60 +242,20 @@ function AdminSettings() {
                   <input type="color" value={formData.bgPrimary} onChange={(e) => handleFieldChange("bgPrimary", e.target.value)} />
                 </label>
                 <label>
-                  Secondary background
-                  <input type="color" value={formData.bgSecondary} onChange={(e) => handleFieldChange("bgSecondary", e.target.value)} />
-                </label>
-                <label>
-                  Card surface
-                  <input type="color" value={formData.surfaceColor} onChange={(e) => handleFieldChange("surfaceColor", e.target.value)} />
-                </label>
-                <label>
-                  Soft surface
-                  <input type="color" value={formData.surfaceSoftColor} onChange={(e) => handleFieldChange("surfaceSoftColor", e.target.value)} />
-                </label>
-                <label>
                   Navbar background
                   <input type="color" value={formData.navbarBackground} onChange={(e) => handleFieldChange("navbarBackground", e.target.value)} />
-                </label>
-                <label>
-                  Footer background
-                  <input type="color" value={formData.footerBackground} onChange={(e) => handleFieldChange("footerBackground", e.target.value)} />
-                </label>
-                <label>
-                  Heading text
-                  <input type="color" value={formData.headingColor} onChange={(e) => handleFieldChange("headingColor", e.target.value)} />
                 </label>
                 <label>
                   Body text
                   <input type="color" value={formData.bodyTextColor} onChange={(e) => handleFieldChange("bodyTextColor", e.target.value)} />
                 </label>
                 <label>
-                  Muted text
-                  <input type="color" value={formData.mutedTextColor} onChange={(e) => handleFieldChange("mutedTextColor", e.target.value)} />
-                </label>
-                <label>
-                  Light text
-                  <input type="color" value={formData.textLightColor} onChange={(e) => handleFieldChange("textLightColor", e.target.value)} />
-                </label>
-                <label>
-                  Border color
-                  <input type="color" value={formData.borderColor} onChange={(e) => handleFieldChange("borderColor", e.target.value)} />
-                </label>
-                <label>
-                  Success color
+                  Success / in stock
                   <input type="color" value={formData.successColor} onChange={(e) => handleFieldChange("successColor", e.target.value)} />
                 </label>
                 <label>
-                  Warning color
-                  <input type="color" value={formData.warningColor} onChange={(e) => handleFieldChange("warningColor", e.target.value)} />
-                </label>
-                <label>
-                  Danger color
+                  Error / out of stock
                   <input type="color" value={formData.dangerColor} onChange={(e) => handleFieldChange("dangerColor", e.target.value)} />
-                </label>
-                <label>
-                  Info color
-                  <input type="color" value={formData.infoColor} onChange={(e) => handleFieldChange("infoColor", e.target.value)} />
                 </label>
               </div>
 
@@ -329,6 +302,17 @@ function AdminSettings() {
                 <label className="admin-settings-full">
                   {t("template.settings.newsletterText")}
                   <textarea rows="2" value={formData.newsletterText} onChange={(e) => handleFieldChange("newsletterText", e.target.value)} />
+                </label>
+                <label className="admin-settings-full">
+                  Announcement text
+                  <input value={formData.announcementText} onChange={(e) => handleFieldChange("announcementText", e.target.value)} />
+                </label>
+                <label>
+                  Announcement bar
+                  <select value={String(formData.announcementEnabled)} onChange={(e) => handleFieldChange("announcementEnabled", e.target.value === "true")}>
+                    <option value="true">Enabled</option>
+                    <option value="false">Disabled</option>
+                  </select>
                 </label>
                 <label>
                   Instagram

@@ -8,11 +8,6 @@ export const addItemsToCart = createAsyncThunk(
   "cart/AddItemsToCart",
   async ({ id, quantity, variantId = "" }, { getState, rejectWithValue }) => {
     try {
-      const { user } = getState();
-      if (!user?.isAuthenticated) {
-        return rejectWithValue({ message: tMessage("api.cart.signInRequired") });
-      }
-      
       const {data} = await axios.get(`/api/v1/product/${id}`);
       const selectedVariant = variantId
         ? data.product?.variants?.find((variant) => variant._id === variantId)

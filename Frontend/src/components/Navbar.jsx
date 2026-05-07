@@ -232,6 +232,15 @@ function Navbar() {
           </div>
         </div>
       </div>
+
+      {isHomeRoute && settings?.announcementEnabled && settings?.announcementText ? (
+        <div className="navbar-announcement-bar" aria-label="Store announcement">
+          <div className="navbar-announcement-track">
+            <span>{settings.announcementText}</span>
+            <span>{settings.announcementText}</span>
+          </div>
+        </div>
+      ) : null}
     </nav>
   );
 }

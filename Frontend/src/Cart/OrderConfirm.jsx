@@ -58,6 +58,8 @@ function OrderConfirm() {
     try {
       const orderData = {
         shippingInfo: {
+          fullName: shippingInfo.fullName,
+          email: shippingInfo.email || user?.email || "",
           address: shippingInfo.address,
           city: shippingInfo.selectedCity,
           state: shippingInfo.selectedState,
@@ -86,11 +88,11 @@ function OrderConfirm() {
 
       dispatch(createOrder(orderData))
         .unwrap()
-        .then(() => {
+        .then((response) => {
           toast.success(t("orderConfirm.success"), { position: "top-center", autoClose: 3000 });
           dispatch(clearCart());
           dispatch(removeSuccess());
-          navigate("/orders/user");
+          navigate(`/order/${response.order._id}`);
         })
         .catch(() => {
           toast.error(t("orderConfirm.createFailed"), { position: "top-center", autoClose: 3000 });
@@ -123,7 +125,7 @@ function OrderConfirm() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{user.name}</td>
+                    <td>{shippingInfo.fullName || user?.name || "-"}</td>
                     <td>{shippingInfo.phoneNumber}</td>
                     <td>{shippingInfo.address}, {shippingInfo.selectedCity}, {shippingInfo.selectedState}, {shippingInfo.pincode}</td>
                   </tr>
