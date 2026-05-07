@@ -44,7 +44,7 @@
   border: none !important;
 }
 .search-icon .MuiSvgIcon-root {
-  color: #fff;
+  color: var(--text-light);
   font-size: 1.5rem;
 
 }

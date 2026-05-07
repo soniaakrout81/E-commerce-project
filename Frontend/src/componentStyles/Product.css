@@ -189,7 +189,7 @@
   left: -30%;
   width: 40%;
   height: 320%;
-  background: rgba(255, 255, 255, 0.22);
+  background: color-mix(in srgb, var(--text-light) 22%, transparent);
   transform: rotate(25deg);
   transition: left 0.45s ease;
 }

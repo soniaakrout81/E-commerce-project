@@ -38,19 +38,19 @@
   background-color: var(--primary-dark); 
 }
 .cart-items {
-  background: #ffffff;
+  background: var(--surface-color);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--heading-color) 8%, transparent);
   padding: 1.5rem;
   min-height: 60vh;
 }
 
 .cart-items-heading {
   font-size: 1.5rem;
-  color: #1a1a1a;
+  color: var(--heading-color);
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid var(--border-color);
 }
 
 .cart-table {
@@ -61,11 +61,11 @@
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 0.8fr;
   padding: 1rem;
-  background-color: #f8f9fa;
+  background-color: var(--surface-soft-color);
   border-radius: 8px;
   margin-bottom: 1rem;
   font-weight: 600;
-  color: #4a4a4a;
+  color: var(--body-text-color);
 }
 
 .cart-item {
@@ -73,7 +73,7 @@
   grid-template-columns: 2fr 1fr 1fr 0.8fr;
   align-items: center;
   padding: 1.5rem 1rem;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border-color);
   gap: 1rem;
 }
 
@@ -99,12 +99,12 @@
 .item-name {
   font-size: 1rem;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--heading-color);
   margin: 0;
 }
 
 .item-price {
-  color: #666;
+  color: var(--muted-text-color);
   font-size: 0.9rem;
   margin: 0;
 }
@@ -119,8 +119,8 @@
   width: 32px;
   height: 32px;
   border-radius: 6px;
-  border: 1px solid #e0e0e0;
-  background: #fff;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -133,13 +133,13 @@
   width: 50px;
   height: 32px;
   text-align: center;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   border-radius: 6px;
 }
 
 .item-total {
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--heading-color);
 }
 
 .item-actions {
@@ -160,7 +160,7 @@
 
 .update-item-btn {
   background: var( --primary-dark);
-  color: white;
+  color: var(--text-light);
 }
 
 .remove-item-btn {
@@ -178,28 +178,28 @@
 }
 
 .price-summary {
-  background: #ffffff;
+  background: var(--surface-color);
   border-radius: 12px;
   padding: 1.5rem;
   height: fit-content;
   position: sticky;
   top: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--heading-color) 8%, transparent);
 }
 
 .price-summary-heading {
   font-size: 1.25rem;
-  color: #1a1a1a;
+  color: var(--heading-color);
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid var(--border-color);
 }
 
 .summary-item {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
-  color: #666;
+  color: var(--muted-text-color);
 }
 
 .summary-total {
@@ -207,9 +207,9 @@
   justify-content: space-between;
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 2px solid #f0f0f0;
+  border-top: 2px solid var(--border-color);
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--heading-color);
   font-size: 1.1rem;
 }
 
@@ -220,7 +220,7 @@
   padding: 1.15rem 2rem;
   margin: 1.75rem auto 0.25rem;
   background:var( --primary-dark);
-  color: white;
+  color: var(--text-light);
   border: none;
   border-radius: 999px;
   font-size: 1rem;
@@ -278,9 +278,9 @@
     grid-template-columns: 1fr;
     gap: 1rem;
     padding: 1.5rem;
-    background: #ffffff;
+    background: var(--surface-color);
     border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--heading-color) 10%, transparent);
     margin-bottom: 1rem;
     position: relative;
   }
@@ -312,7 +312,7 @@
 
   .item-price {
     font-size: 1rem;
-    color: #4a4a4a;
+    color: var(--body-text-color);
   }
 
   .quantity-controls {
@@ -320,7 +320,7 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.5rem;
-    background: #f8f9fa;
+    background: var(--surface-soft-color);
     border-radius: 8px;
     justify-content: flex-start;
     margin: 0.5rem 0;
@@ -343,20 +343,20 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 0;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--border-color);
     margin-top: 0.5rem;
   }
 
   .item-total::before {
     content: 'Item Total:';
     font-weight: normal;
-    color: #666;
+    color: var(--muted-text-color);
   }
 
   .item-total-price {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--heading-color);
   }
 
   .item-actions {

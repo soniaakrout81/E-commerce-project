@@ -11,10 +11,10 @@
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
-  background-color: rgb(246, 243, 243);
+  background-color: var(--surface-soft-color);
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 15px 30px color-mix(in srgb, var(--heading-color) 15%, transparent);
 }
 
 .form-title {
@@ -27,24 +27,24 @@
 .form-select {
   width: 100%;
   padding: 14px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 5px;
   font-size: 16px;
-  background-color: #fff;
+  background-color: var(--surface-color);
   transition: all 0.3s ease;
   box-sizing: border-box;
   margin-bottom: 15px;
 }
 
 .form-input::placeholder {
-  color: #999;
+  color: var(--muted-text-color);
 }
 
 .form-input:focus,
 .form-select:focus {
   outline: none;
   border-color: var(--primary-main);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--info-color) 25%, transparent);
 }
 
 .file-input-container {
@@ -91,7 +91,7 @@
   object-fit: cover;
   border-radius: 50%;
   border: 3px solid var(--primary-main);
-  background-color: #fff;
+  background-color: var(--surface-color);
   flex: 0 0 auto;
 }
 
@@ -113,11 +113,11 @@
 .submit-btn:hover {
   background: var(--primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px color-mix(in srgb, var(--heading-color) 20%, transparent);
 }
 
 .submit-btn:disabled {
-  background-color: #aaa;
+  background-color: var(--muted-text-color);
   cursor: not-allowed;
   box-shadow: none;
   transform: none;

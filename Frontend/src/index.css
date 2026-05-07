@@ -6,18 +6,29 @@
     --font-heading: 'Poppins', sans-serif;
     --font-body: 'Inter', sans-serif;
     
-    --bg-primary: #111827; 
-    --bg-secondary: #3B3B4F; 
+    --bg-primary: #F8FAFC; 
+    --bg-secondary: #EEF2FF; 
+    --surface-color: #FFFFFF;
+    --surface-soft-color: #F3F4F6;
+    --navbar-bg: #0F172A;
+    --footer-bg: #111827;
     
-    --text-primary: #EAE7E0; 
-    --text-secondary: #B9A7A0; 
+    --heading-color: #111827;
+    --body-text-color: #374151;
+    --muted-text-color: #6B7280;
+    --text-primary: #374151; 
+    --text-secondary: #6B7280; 
     --text-light: #FFFFFF; 
     
-    --border-color: #5C4A6F; 
+    --border-color: #D1D5DB; 
+    --success-color: #22C55E;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    --info-color: #3B82F6;
     
 
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2); 
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.15); 
+    --shadow-sm: 0 2px 8px color-mix(in srgb, var(--heading-color) 20%, transparent); 
+    --shadow-md: 0 4px 6px -1px color-mix(in srgb, var(--heading-color) 15%, transparent); 
 }
 *{
     margin:0;
@@ -27,6 +38,8 @@
 
 body {
     font-family: var(--font-body);
+    background: var(--bg-primary);
+    color: var(--body-text-color);
 }
 
 

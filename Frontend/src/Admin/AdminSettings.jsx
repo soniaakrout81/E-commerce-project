@@ -37,6 +37,21 @@ function AdminSettings() {
         primaryColor: settings.primaryColor || "#6C5B7B",
         secondaryColor: settings.secondaryColor || "#F4A261",
         accentColor: settings.accentColor || "#1F2937",
+        bgPrimary: settings.bgPrimary || "#F8FAFC",
+        bgSecondary: settings.bgSecondary || "#EEF2FF",
+        surfaceColor: settings.surfaceColor || "#FFFFFF",
+        surfaceSoftColor: settings.surfaceSoftColor || "#F3F4F6",
+        navbarBackground: settings.navbarBackground || "#0F172A",
+        footerBackground: settings.footerBackground || "#111827",
+        headingColor: settings.headingColor || "#111827",
+        bodyTextColor: settings.bodyTextColor || "#374151",
+        mutedTextColor: settings.mutedTextColor || "#6B7280",
+        textLightColor: settings.textLightColor || "#FFFFFF",
+        borderColor: settings.borderColor || "#D1D5DB",
+        successColor: settings.successColor || "#22C55E",
+        warningColor: settings.warningColor || "#F59E0B",
+        dangerColor: settings.dangerColor || "#EF4444",
+        infoColor: settings.infoColor || "#3B82F6",
         contactEmail: settings.contactEmail || "",
         contactPhone: settings.contactPhone || "",
         address: settings.address || "",
@@ -202,12 +217,75 @@ function AdminSettings() {
                   {t("template.settings.accentColor")}
                   <input type="color" value={formData.accentColor} onChange={(e) => handleFieldChange("accentColor", e.target.value)} />
                 </label>
+                <label>
+                  Page background
+                  <input type="color" value={formData.bgPrimary} onChange={(e) => handleFieldChange("bgPrimary", e.target.value)} />
+                </label>
+                <label>
+                  Secondary background
+                  <input type="color" value={formData.bgSecondary} onChange={(e) => handleFieldChange("bgSecondary", e.target.value)} />
+                </label>
+                <label>
+                  Card surface
+                  <input type="color" value={formData.surfaceColor} onChange={(e) => handleFieldChange("surfaceColor", e.target.value)} />
+                </label>
+                <label>
+                  Soft surface
+                  <input type="color" value={formData.surfaceSoftColor} onChange={(e) => handleFieldChange("surfaceSoftColor", e.target.value)} />
+                </label>
+                <label>
+                  Navbar background
+                  <input type="color" value={formData.navbarBackground} onChange={(e) => handleFieldChange("navbarBackground", e.target.value)} />
+                </label>
+                <label>
+                  Footer background
+                  <input type="color" value={formData.footerBackground} onChange={(e) => handleFieldChange("footerBackground", e.target.value)} />
+                </label>
+                <label>
+                  Heading text
+                  <input type="color" value={formData.headingColor} onChange={(e) => handleFieldChange("headingColor", e.target.value)} />
+                </label>
+                <label>
+                  Body text
+                  <input type="color" value={formData.bodyTextColor} onChange={(e) => handleFieldChange("bodyTextColor", e.target.value)} />
+                </label>
+                <label>
+                  Muted text
+                  <input type="color" value={formData.mutedTextColor} onChange={(e) => handleFieldChange("mutedTextColor", e.target.value)} />
+                </label>
+                <label>
+                  Light text
+                  <input type="color" value={formData.textLightColor} onChange={(e) => handleFieldChange("textLightColor", e.target.value)} />
+                </label>
+                <label>
+                  Border color
+                  <input type="color" value={formData.borderColor} onChange={(e) => handleFieldChange("borderColor", e.target.value)} />
+                </label>
+                <label>
+                  Success color
+                  <input type="color" value={formData.successColor} onChange={(e) => handleFieldChange("successColor", e.target.value)} />
+                </label>
+                <label>
+                  Warning color
+                  <input type="color" value={formData.warningColor} onChange={(e) => handleFieldChange("warningColor", e.target.value)} />
+                </label>
+                <label>
+                  Danger color
+                  <input type="color" value={formData.dangerColor} onChange={(e) => handleFieldChange("dangerColor", e.target.value)} />
+                </label>
+                <label>
+                  Info color
+                  <input type="color" value={formData.infoColor} onChange={(e) => handleFieldChange("infoColor", e.target.value)} />
+                </label>
               </div>
 
               <div className="admin-settings-preview">
                 <span style={{ background: formData.primaryColor }} />
                 <span style={{ background: formData.secondaryColor }} />
                 <span style={{ background: formData.accentColor }} />
+                <span style={{ background: formData.navbarBackground }} />
+                <span style={{ background: formData.surfaceColor }} />
+                <span style={{ background: formData.bgPrimary }} />
               </div>
             </section>
 

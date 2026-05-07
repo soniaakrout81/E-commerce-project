@@ -36,7 +36,7 @@
     -webkit-appearance: none;
     appearance: none;
     height: 2px;
-    background: #ddd;
+    background: var(--border-color);
     border-radius: 5px; 
     width: 100%;
   }

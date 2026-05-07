@@ -22,7 +22,7 @@
     max-height: 500px;
     object-fit: contain;
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface-color);
   }
   .product-thumbnails{
     margin-top: 20px;
@@ -41,7 +41,7 @@
   }
   
   .thumbnail-image.selected {
-    box-shadow: 0 0 2px black;
+    box-shadow: 0 0 2px color-mix(in srgb, var(--heading-color) 80%, transparent);
   }
   
   
@@ -57,7 +57,7 @@
   .product-info h2 {
     font-size: 24px;
     margin-bottom: 15px;
-    color: #0F1111;
+    color: var(--heading-color);
   }
   
   .rating {
@@ -85,8 +85,8 @@
   .quantity-button {
     width: 35px;
     height: 35px;
-    border: 1px solid #D5D9D9;
-    background: linear-gradient(to bottom, #F7F8FA, #E7E9EC);
+    border: 1px solid var(--border-color);
+    background: linear-gradient(to bottom, var(--surface-color), var(--surface-soft-color));
     cursor: pointer;
     font-size: 18px;
     border-radius: 4px;
@@ -97,7 +97,7 @@
     width: 50px;
     height: 35px;
     text-align: center;
-    border: 1px solid #D5D9D9;
+    border: 1px solid var(--border-color);
     margin: 0 5px;
     font-size: 16px;
   }
@@ -145,11 +145,11 @@
     grid-column: 1 / -1;
     margin-top: 40px;
     padding-top: 20px;
-    border-top: 1px solid #E7E7E7;
+    border-top: 1px solid var(--border-color);
   }
   
   .review-form {
-    background: #F8F8F8;
+    background: var(--surface-soft-color);
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 30px;
@@ -159,7 +159,7 @@
     width: 100%;
     min-height: 100px;
     padding: 10px;
-    border: 1px solid #D5D9D9;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     margin: 10px 0;
     resize: vertical;
@@ -167,7 +167,7 @@
   
   .submit-review-btn {
     background: var(--bg-primary);
-    color: white;
+    color: var(--text-light);
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -175,7 +175,7 @@
   }
   
   .submit-review-btn:hover {
-    background: #374759;
+    background: var(--primary-dark);
   }
   
 
@@ -185,12 +185,12 @@
   
   .review-item {
     padding: 20px 0;
-    border-bottom: 1px solid #E7E7E7;
+    border-bottom: 1px solid var(--border-color);
   }
   
   .review-comment,.reviewer-name {
     margin: 10px 0;
-    color: #333;
+    color: var(--heading-color);
     text-align: left;
     overflow-wrap: anywhere;
     word-break: break-word;
@@ -198,13 +198,13 @@
   
 
   .stock-status {
-    color: #007600;
+    color: var(--success-color);
     font-size: 16px;
     margin: 10px 0;
   }
   
   .out-of-stock {
-    color: #B12704;
+    color: var(--danger-color);
   }
   
 

@@ -1,6 +1,6 @@
 .footer {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--footer-bg);
+  color: var(--text-light);
   padding: 2.5rem 0;
   border-top: 1px solid var(--border-color);
   margin: 2rem 0 0 0;
@@ -24,7 +24,7 @@
 .footer-section h3 {
   font-size: 1.4rem;
   margin-bottom: 1rem;
-  color: var(--text-primary);
+  color: var(--text-light);
   font-weight: 600;
   font-family: var(--font-heading);
 }
@@ -72,12 +72,12 @@
 
 .social-icon {
   font-size: 2rem;
-  color: var(--primary-dark);
+  color: var(--text-light);
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .social-icon:hover {
-  color: var(--primary-main);
+  color: var(--primary-light);
   transform: scale(1.1);
 }
 

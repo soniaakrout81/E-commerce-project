@@ -5,7 +5,7 @@
   width: 100%;
   max-width: 750px; 
   border-radius: 15px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 15px color-mix(in srgb, var(--heading-color) 10%, transparent);
   overflow: hidden;
   padding: 20px;
   box-sizing: border-box;
@@ -38,11 +38,11 @@
   align-items: center;
   min-height: 300px;
   width: 400px;
-  background-color: rgb(246, 243, 243);
+  background-color: var(--surface-soft-color);
   padding: 20px;
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
   border-radius: 12px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 15px 30px color-mix(in srgb, var(--heading-color) 15%, transparent);
 }
 
 .form {
@@ -63,21 +63,21 @@
 
 .input-group input {
   padding: 14px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 5px;
   font-size: 16px;
-  background-color: #fff;
+  background-color: var(--surface-color);
   transition: all 0.3s ease;
 }
 
 .input-group input::placeholder {
-  color: #999;
+  color: var(--muted-text-color);
 }
 
 .input-group input:focus {
   outline: none;
   border-color: var(--primary-main);
-  box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--info-color) 25%, transparent);
 }
 
 /* =========================
@@ -92,7 +92,7 @@
 .file-input {
   padding: 8px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   font-size: 14px;
   width: 80%;
 }
@@ -132,7 +132,7 @@
   object-fit: cover;
   border-radius: 50%;
   border: 3px solid var(--primary-main);
-  background-color: #fff;
+  background-color: var(--surface-color);
   margin: 10px auto 0;
   display: block;
 }
@@ -161,7 +161,7 @@ button:hover {
 
 .authBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 20px color-mix(in srgb, var(--heading-color) 20%, transparent);
 }
 
 /* =========================
@@ -170,7 +170,7 @@ button:hover {
 .form-links {
   text-align: center;
   font-size: 14px;
-  color: #555;
+  color: var(--body-text-color);
   margin-top: 10px;
 }
 

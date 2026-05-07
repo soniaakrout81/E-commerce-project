@@ -173,7 +173,15 @@ function ProductDetails() {
             </div>
 
             <div className="stock-status">
-              <span className="in-stock" style={{ color: product.stock === 0 ? "#B12704" : "#02bf02" }}>
+              <span
+                className="in-stock"
+                style={{
+                  color:
+                    product.stock === 0
+                      ? "var(--danger-color)"
+                      : "var(--success-color)",
+                }}
+              >
                 {product.stock === 0 ? t("productDetails.outOfStockLabel") : t("productDetails.inStock", { count: product.stock })}
               </span>
             </div>

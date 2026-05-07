@@ -25,18 +25,18 @@
   }
   
   .payment-go-back {
-    color: #6c757d;
-    background-color: #f8f9fa;
-    border: 1px solid #6c757d;
+    color: var(--muted-text-color);
+    background-color: var(--surface-soft-color);
+    border: 1px solid var(--muted-text-color);
   }
   
   .payment-go-back:hover {
-    background-color: #6c757d;
-    color: white;
+    background-color: var(--muted-text-color);
+    color: var(--text-light);
   }
   
   .payment-btn {
-    color: white;
+    color: var(--text-light);
     background-color: var(--bg-secondary);
     border: none;
   }

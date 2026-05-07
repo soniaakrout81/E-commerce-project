@@ -71,6 +71,81 @@ const siteSettingsSchema = new mongoose.Schema(
       default: "#1F2937",
       trim: true,
     },
+    bgPrimary: {
+      type: String,
+      default: "#F8FAFC",
+      trim: true,
+    },
+    bgSecondary: {
+      type: String,
+      default: "#EEF2FF",
+      trim: true,
+    },
+    surfaceColor: {
+      type: String,
+      default: "#FFFFFF",
+      trim: true,
+    },
+    surfaceSoftColor: {
+      type: String,
+      default: "#F3F4F6",
+      trim: true,
+    },
+    navbarBackground: {
+      type: String,
+      default: "#0F172A",
+      trim: true,
+    },
+    footerBackground: {
+      type: String,
+      default: "#111827",
+      trim: true,
+    },
+    headingColor: {
+      type: String,
+      default: "#111827",
+      trim: true,
+    },
+    bodyTextColor: {
+      type: String,
+      default: "#374151",
+      trim: true,
+    },
+    mutedTextColor: {
+      type: String,
+      default: "#6B7280",
+      trim: true,
+    },
+    textLightColor: {
+      type: String,
+      default: "#FFFFFF",
+      trim: true,
+    },
+    borderColor: {
+      type: String,
+      default: "#D1D5DB",
+      trim: true,
+    },
+    successColor: {
+      type: String,
+      default: "#22C55E",
+      trim: true,
+    },
+    warningColor: {
+      type: String,
+      default: "#F59E0B",
+      trim: true,
+    },
+    dangerColor: {
+      type: String,
+      default: "#EF4444",
+      trim: true,
+    },
+    infoColor: {
+      type: String,
+      default: "#3B82F6",
+      trim: true,
+    },
     fontHeading: {
       type: String,
       default: "'Poppins', sans-serif",

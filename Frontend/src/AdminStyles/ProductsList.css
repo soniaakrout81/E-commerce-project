@@ -1,8 +1,8 @@
 .product-list-container {
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--surface-soft-color);
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px color-mix(in srgb, var(--heading-color) 10%, transparent);
     min-height: 100vh;
     margin-top:90px;
   }
@@ -10,7 +10,7 @@
 .product-list-title {
     font-size: 24px;
     margin-bottom: 20px;
-    color: #333;
+    color: var(--heading-color);
   }
 
   .product-list {
@@ -22,27 +22,27 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--surface-color);
+    box-shadow: 0 2px 4px color-mix(in srgb, var(--heading-color) 10%, transparent);
   }
   
   .product-table th,
   .product-table td {
     text-align: left;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
   }
   
   .product-table th {
     background-color: var(--bg-secondary);
-    color: #fff;
+    color: var(--text-light);
   }
   .admin-product-image{
     width:70px;
     height: 70px;;
   }
   .product-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: var(--surface-soft-color);
   }
 
   .action-link {
@@ -71,11 +71,11 @@
   }
   
   .edit-icon:hover {
-    background-color: rgba(0, 123, 255, 0.1);
+    background-color: color-mix(in srgb, var(--info-color) 10%, transparent);
   }
   
   .delete-icon {
-    color: #f7364a;
+    color: var(--danger-color);
     border: none;
     background-color: transparent;
     appearance: none;
@@ -83,18 +83,18 @@
   }
   
   .delete-icon:hover {
-    background-color: rgba(220, 53, 69, 0.1);
-    color: #f66675;
+    background-color: color-mix(in srgb, var(--danger-color) 10%, transparent);
+    color: var(--danger-color);
   }
   .no-admin-products{
     text-align: center;
     padding:30px;
-    background-color:#555; 
+    background-color: var(--body-text-color); 
   }
 
 .loading-message {
     font-size: 18px;
-    color: #555;
+    color: var(--body-text-color);
   }
 
   @media (max-width: 450px) {

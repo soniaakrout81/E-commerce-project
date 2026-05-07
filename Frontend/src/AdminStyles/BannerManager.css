@@ -1,7 +1,7 @@
 .banner-manager-shell {
   min-height: 100vh;
   display: flex;
-  background: #f4f7fb;
+  background: var(--bg-secondary);
   padding-top: 5rem;
 }
 
@@ -27,20 +27,20 @@
 
 .banner-manager-header h1 {
   margin: 0;
-  color: #111827;
+  color: var(--heading-color);
   font-family: var(--font-heading);
 }
 
 .banner-manager-header p {
   margin: 0.35rem 0 0;
-  color: #6b7280;
+  color: var(--muted-text-color);
 }
 
 .banner-manager-save {
   border: none;
   border-radius: 999px;
   background: var(--primary-main);
-  color: #fff;
+  color: var(--text-light);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -50,10 +50,10 @@
 }
 
 .banner-manager-add {
-  border: 1px solid rgba(17, 24, 39, 0.12);
+  border: 1px solid color-mix(in srgb, var(--heading-color) 12%, transparent);
   border-radius: 999px;
-  background: #fff;
-  color: #111827;
+  background: var(--surface-color);
+  color: var(--heading-color);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -69,10 +69,10 @@
 }
 
 .banner-slide-card {
-  background: #fff;
+  background: var(--surface-color);
   border-radius: 1.4rem;
   padding: 1.2rem;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--heading-color) 6%, transparent);
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
@@ -93,27 +93,27 @@
 
 .banner-slide-head h2 {
   margin: 0;
-  color: #111827;
+  color: var(--heading-color);
   font-size: 1.1rem;
 }
 
 .banner-slide-head p {
   margin: 0.2rem 0 0;
-  color: #6b7280;
+  color: var(--muted-text-color);
 }
 
 .banner-slide-card label {
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
-  color: #374151;
+  color: var(--body-text-color);
   font-size: 0.92rem;
   font-weight: 600;
 }
 
 .banner-slide-card input,
 .banner-slide-card textarea {
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-color);
   border-radius: 0.9rem;
   padding: 0.9rem 1rem;
   font: inherit;
@@ -132,9 +132,9 @@
 }
 
 .banner-remove-btn {
-  border: 1px solid rgba(239, 68, 68, 0.18);
-  background: rgba(239, 68, 68, 0.08);
-  color: #b91c1c;
+  border: 1px solid color-mix(in srgb, var(--danger-color) 18%, transparent);
+  background: color-mix(in srgb, var(--danger-color) 8%, transparent);
+  color: var(--danger-color);
   width: 38px;
   height: 38px;
   border-radius: 999px;

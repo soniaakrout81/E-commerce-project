@@ -1,8 +1,8 @@
 .usersList-container {
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--surface-soft-color);
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px color-mix(in srgb, var(--heading-color) 10%, transparent);
     min-height: 70vh;
     margin-top:80px;
   }
@@ -10,7 +10,7 @@
   .usersList-title {
     font-size: 24px;
     margin-bottom: 20px;
-    color: #333;
+    color: var(--heading-color);
   }
   
   .usersList-table-container {
@@ -23,24 +23,24 @@
     width: 100%;
     min-width: 720px;
     border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--surface-color);
+    box-shadow: 0 2px 4px color-mix(in srgb, var(--heading-color) 10%, transparent);
   }
   
   .usersList-table th,
   .usersList-table td {
     text-align: left;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
   }
   
   .usersList-table th {
     background-color: var(--bg-secondary);
-    color: #fff;
+    color: var(--text-light);
   }
   
   .usersList-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: var(--surface-soft-color);
   }
   
   .action-icon {
@@ -59,22 +59,22 @@
   }
   
   .edit-icon:hover {
-    background-color: rgba(0, 123, 255, 0.1);
+    background-color: color-mix(in srgb, var(--info-color) 10%, transparent);
   }
   
   .delete-icon {
-    color: #f7364a;
+    color: var(--danger-color);
     border:none;
   }
   
   .delete-icon:hover {
-    background-color: rgba(220, 53, 69, 0.1);
-    color:#f3253a;
+    background-color: color-mix(in srgb, var(--danger-color) 10%, transparent);
+    color: var(--danger-color);
   }
   
   .loading-message {
     font-size: 18px;
-    color: #555;
+    color: var(--body-text-color);
   }
   
   @media (max-width: 768px) {

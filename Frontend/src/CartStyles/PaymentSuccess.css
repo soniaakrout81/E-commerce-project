@@ -18,7 +18,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background-color: #28a745;
+    background-color: var(--success-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,7 +29,7 @@
   .checkmark {
     width: 20px;
     height: 40px;
-    border: solid white;
+    border: solid var(--text-light);
     border-width: 0 6px 6px 0;
     transform: rotate(45deg); 
     position: absolute;
@@ -39,13 +39,13 @@
   
   .success-content h1 {
     font-size: 2rem;
-    color: #28a745;
+    color: var(--success-color);
     margin-bottom: 0.5rem;
   }
   
   .success-para {
     font-size: 1rem;
-    color: #6c757d;
+    color: var(--muted-text-color);
     margin:2rem 0;
   }
   

@@ -16,19 +16,19 @@
   
   .no-products-icon {
     font-size: 3rem;
-    color: #666;
+    color: var(--muted-text-color);
     margin-bottom: 1rem;
   }
   
   .no-products-title {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #333;
+    color: var(--heading-color);
     margin-bottom: 0.5rem;
   }
   
 .no-products-message {
-    color: #666;
+    color: var(--muted-text-color);
     max-width: 400px;
   }
 

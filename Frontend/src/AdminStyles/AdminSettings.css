@@ -1,6 +1,6 @@
 .admin-settings-shell {
   min-height: 100vh;
-  background: #f4f7fb;
+  background: var(--bg-secondary);
   display: flex;
   padding-top: 5rem;
 }
@@ -9,10 +9,10 @@
   width: 100%;
   max-width: 900px;
   margin: 2rem auto;
-  background: #fff;
+  background: var(--surface-color);
   border-radius: 1.5rem;
   padding: 2rem;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--heading-color) 8%, transparent);
 }
 
 .admin-settings-main {
@@ -32,20 +32,20 @@
 .admin-settings-header h1 {
   margin: 0;
   font-size: 2rem;
-  color: #111827;
+  color: var(--heading-color);
   font-family: var(--font-heading);
 }
 
 .admin-settings-header p {
   margin: 0.35rem 0 0;
-  color: #6b7280;
+  color: var(--muted-text-color);
 }
 
 .admin-settings-save-btn {
   border: none;
   border-radius: 999px;
   background: var(--primary-main);
-  color: #fff;
+  color: var(--text-light);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -66,10 +66,10 @@
 }
 
 .admin-settings-card {
-  background: #fff;
+  background: var(--surface-color);
   border-radius: 1.5rem;
   padding: 1.5rem;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--heading-color) 6%, transparent);
 }
 
 .admin-settings-section-title {
@@ -81,13 +81,13 @@
 
 .admin-settings-section-title h2 {
   margin: 0;
-  color: #111827;
+  color: var(--heading-color);
   font-size: 1.2rem;
 }
 
 .admin-settings-section-title p {
   margin: 0.25rem 0 0;
-  color: #6b7280;
+  color: var(--muted-text-color);
 }
 
 .admin-settings-grid {
@@ -101,7 +101,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
-  color: #374151;
+  color: var(--body-text-color);
   font-size: 0.95rem;
   font-weight: 600;
 }
@@ -110,11 +110,11 @@
 .admin-settings-grid textarea,
 .admin-settings-slide-card input,
 .admin-settings-slide-card textarea {
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-color);
   border-radius: 0.9rem;
   padding: 0.9rem 1rem;
   font: inherit;
-  background: #fff;
+  background: var(--surface-color);
 }
 
 .admin-settings-grid input[type="color"] {
@@ -140,7 +140,7 @@
   width: 52px;
   height: 52px;
   border-radius: 1rem;
-  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--heading-color) 8%, transparent);
 }
 
 .admin-settings-slides {
@@ -150,7 +150,7 @@
 }
 
 .admin-settings-slide-card {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
   border-radius: 1.25rem;
   padding: 1rem;
   display: flex;
@@ -160,7 +160,7 @@
 
 .admin-settings-slide-card h3 {
   margin: 0;
-  color: #111827;
+  color: var(--heading-color);
 }
 
 @media (max-width: 1024px) {
