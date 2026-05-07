@@ -131,14 +131,21 @@ export const createNewOrder = HandleAsyncError(async (req, res) => {
   });
 
   const fullOrder = await Order.findById(order._id);
-  const notifications = await sendOrderNotifications({
-    order: fullOrder,
-    user: req.user,
-    type: "order_created",
-  });
+  try {
+    const notifications = await sendOrderNotifications({
+      order: fullOrder,
+      user: req.user,
+      type: "order_created",
+    });
 
-  fullOrder.notifications.push(...notifications);
-  await fullOrder.save({ validateBeforeSave: false });
+    fullOrder.notifications.push(...notifications);
+    await fullOrder.save({ validateBeforeSave: false });
+  } catch (notificationError) {
+    console.warn("[ORDER_CREATE] Notification step skipped", {
+      orderId: fullOrder._id.toString(),
+      error: notificationError.message,
+    });
+  }
 
   res.status(200).json({
     success: true,
@@ -233,14 +240,21 @@ export const updateOrderStatus = HandleAsyncError(async (req, res, next) => {
 
   await order.save({ validateBeforeSave: false });
 
-  const notifications = await sendOrderNotifications({
-    order,
-    user: order.user,
-    type: status === "Shipped" ? "order_shipped" : "status_updated",
-  });
+  try {
+    const notifications = await sendOrderNotifications({
+      order,
+      user: order.user,
+      type: status === "Shipped" ? "order_shipped" : "status_updated",
+    });
 
-  order.notifications.push(...notifications);
-  await order.save({ validateBeforeSave: false });
+    order.notifications.push(...notifications);
+    await order.save({ validateBeforeSave: false });
+  } catch (notificationError) {
+    console.warn("[ORDER_STATUS_UPDATE] Notification step skipped", {
+      orderId: order._id.toString(),
+      error: notificationError.message,
+    });
+  }
 
   res.status(200).json({
     success: true,

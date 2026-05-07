@@ -5,6 +5,14 @@ const WHATSAPP_API_URL = process.env.WHATSAPP_PHONE_NUMBER_ID
   ? `https://graph.facebook.com/v19.0/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`
   : "";
 
+const withTimeout = async (promise, timeoutMs = 6000, timeoutMessage = "Notification timed out") =>
+  Promise.race([
+    promise,
+    new Promise((_, reject) => {
+      setTimeout(() => reject(new Error(timeoutMessage)), timeoutMs);
+    }),
+  ]);
+
 const buildOrderMessage = ({ type, order, customerName }) => {
   const baseSummary = `Order #${order._id} is now ${order.orderStatus}. Total: ${order.totalPrice}.`;
 
@@ -60,11 +68,15 @@ export const sendOrderNotifications = async ({ order, user, type }) => {
 
   if (settings?.enableEmailNotifications && user?.email) {
     try {
-      await sendEmail({
-        email: user.email,
-        subject: `Order update - ${order._id}`,
-        message,
-      });
+      await withTimeout(
+        sendEmail({
+          email: user.email,
+          subject: `Order update - ${order._id}`,
+          message,
+        }),
+        6000,
+        "Email notification timed out"
+      );
 
       results.push({
         channel: "email",
@@ -92,7 +104,15 @@ export const sendOrderNotifications = async ({ order, user, type }) => {
   }
 
   if (settings?.enableWhatsAppNotifications) {
-    const whatsappResult = await sendWhatsAppMessage({ to: whatsappTarget, body: message });
+    const whatsappResult = await withTimeout(
+      sendWhatsAppMessage({ to: whatsappTarget, body: message }),
+      6000,
+      "WhatsApp notification timed out"
+    ).catch((error) => ({
+      status: "failed",
+      recipient: whatsappTarget,
+      error: error.message,
+    }));
     results.push({
       channel: "whatsapp",
       type,
