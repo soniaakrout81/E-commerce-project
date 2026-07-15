@@ -1,6 +1,5 @@
 name: Keep Render Backend Alive
-
-   on:
+on:
      schedule:
        - cron: '*/10 * * * *'
      workflow_dispatch:
