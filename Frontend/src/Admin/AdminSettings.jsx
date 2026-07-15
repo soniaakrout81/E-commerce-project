@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import PageTitle from "../components/PageTitle";
 import AdminSidebar from "../components/AdminSidebar";
 import { clearSettingsError, fetchSiteSettings, updateSiteSettings } from "../features/settings/siteSettingsSlice";
+import demoPresets from "../config/demoPresets";
 import "../AdminStyles/AdminSettings.css";
 
 const toDataUrl = (file) =>
@@ -111,6 +112,37 @@ function AdminSettings() {
 
     const dataUrl = await toDataUrl(file);
     handleFieldChange(target, dataUrl);
+  };
+
+  const applyThemePreset = (presetKey) => {
+    const preset = demoPresets[presetKey];
+    if (!preset) return;
+
+    setFormData((prev) => ({
+      ...prev,
+      themePreset: presetKey,
+      storeName: preset.storeName || prev.storeName,
+      tagline: preset.tagline || prev.tagline,
+      heroTitle: preset.heroTitle || prev.heroTitle,
+      heroSubtitle: preset.heroSubtitle || prev.heroSubtitle,
+      primaryColor: preset.primaryColor || prev.primaryColor,
+      secondaryColor: preset.secondaryColor || prev.secondaryColor,
+      accentColor: preset.accentColor || prev.accentColor,
+      bgPrimary: preset.bgPrimary || prev.bgPrimary,
+      bgSecondary: preset.bgSecondary || prev.bgSecondary,
+      surfaceColor: preset.surfaceColor || prev.surfaceColor,
+      surfaceSoftColor: preset.surfaceSoftColor || prev.surfaceSoftColor,
+      navbarBackground: preset.navbarBackground || prev.navbarBackground,
+      footerBackground: preset.footerBackground || prev.footerBackground,
+      headingColor: preset.headingColor || prev.headingColor,
+      bodyTextColor: preset.bodyTextColor || prev.bodyTextColor,
+      mutedTextColor: preset.mutedTextColor || prev.mutedTextColor,
+      borderColor: preset.borderColor || prev.borderColor,
+      successColor: preset.successColor || prev.successColor,
+      warningColor: preset.warningColor || prev.warningColor,
+      dangerColor: preset.dangerColor || prev.dangerColor,
+      infoColor: preset.infoColor || prev.infoColor,
+    }));
   };
 
   const handleSubmit = (event) => {
@@ -224,49 +256,33 @@ function AdminSettings() {
                 </div>
               </div>
 
-              <div className="admin-settings-grid admin-settings-colors">
-                <label>
-                  {t("template.settings.primaryColor")}
-                  <input type="color" value={formData.primaryColor} onChange={(e) => handleFieldChange("primaryColor", e.target.value)} />
-                </label>
-                <label>
-                  Accent color
-                  <input type="color" value={formData.secondaryColor} onChange={(e) => handleFieldChange("secondaryColor", e.target.value)} />
-                </label>
-                <label>
-                  Button / dark accent
-                  <input type="color" value={formData.accentColor} onChange={(e) => handleFieldChange("accentColor", e.target.value)} />
-                </label>
-                <label>
-                  Page background
-                  <input type="color" value={formData.bgPrimary} onChange={(e) => handleFieldChange("bgPrimary", e.target.value)} />
-                </label>
-                <label>
-                  Navbar background
-                  <input type="color" value={formData.navbarBackground} onChange={(e) => handleFieldChange("navbarBackground", e.target.value)} />
-                </label>
-                <label>
-                  Body text
-                  <input type="color" value={formData.bodyTextColor} onChange={(e) => handleFieldChange("bodyTextColor", e.target.value)} />
-                </label>
-                <label>
-                  Success / in stock
-                  <input type="color" value={formData.successColor} onChange={(e) => handleFieldChange("successColor", e.target.value)} />
-                </label>
-                <label>
-                  Error / out of stock
-                  <input type="color" value={formData.dangerColor} onChange={(e) => handleFieldChange("dangerColor", e.target.value)} />
-                </label>
-              </div>
+                <div className="theme-selector-grid">
+                  {Object.entries(demoPresets).map(([key, preset]) => (
+                    <button
+                      key={key}
+                      type="button"
+                      className={`theme-card ${formData.themePreset === key ? "active" : ""}`}
+                      onClick={() => applyThemePreset(key)}
+                    >
+                      <div className="theme-card-swatch-row">
+                        <span style={{ background: preset.primaryColor }} />
+                        <span style={{ background: preset.secondaryColor }} />
+                        <span style={{ background: preset.accentColor }} />
+                      </div>
+                      <h3>{preset.storeName}</h3>
+                      <p>{preset.tagline}</p>
+                    </button>
+                  ))}
+                </div>
 
-              <div className="admin-settings-preview">
-                <span style={{ background: formData.primaryColor }} />
-                <span style={{ background: formData.secondaryColor }} />
-                <span style={{ background: formData.accentColor }} />
-                <span style={{ background: formData.navbarBackground }} />
-                <span style={{ background: formData.surfaceColor }} />
-                <span style={{ background: formData.bgPrimary }} />
-              </div>
+                <div className="admin-settings-preview">
+                  <span style={{ background: formData.primaryColor }} />
+                  <span style={{ background: formData.secondaryColor }} />
+                  <span style={{ background: formData.accentColor }} />
+                  <span style={{ background: formData.navbarBackground }} />
+                  <span style={{ background: formData.surfaceColor }} />
+                  <span style={{ background: formData.bgPrimary }} />
+                </div>
             </section>
 
             <section className="admin-settings-card">

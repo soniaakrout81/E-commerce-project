@@ -122,7 +122,7 @@ const uploadImages = async (images = []) => {
 
 export const createProducts = async (req, res, next) => {
   try {
-    const { name, price, description, keywords, stock, image, category, variants } = req.body;
+    const { name, price, description, keywords, stock, image, category, variants, discount } = req.body;
     const normalizedVariants = parseVariants(variants);
 
     if (!image || image.length === 0) {
@@ -135,6 +135,7 @@ export const createProducts = async (req, res, next) => {
       name,
       slug: createSlug(name),
       price: getEffectivePrice(normalizedVariants, price),
+      discount: Number(discount) || 0,
       description,
       keywords: keywords || "",
       stock: getEffectiveStock(normalizedVariants, stock),

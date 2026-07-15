@@ -24,6 +24,33 @@ const couponSchema = new mongoose.Schema(
       default: 0,
       min: [0, "Minimum order amount cannot be negative"],
     },
+    maxDiscount: {
+      type: Number,
+      default: null,
+      min: [0, "Max discount cannot be negative"]
+    },
+    usageLimit: {
+      type: Number,
+      default: null
+    },
+    usedCount: {
+      type: Number,
+      default: 0
+    },
+    usedBy: [{
+      userId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User"
+      },
+      orderId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Order"
+      },
+      usedAt: {
+        type: Date,
+        default: Date.now
+      }
+    }],
     expiresAt: {
       type: Date,
       required: [true, "Coupon expiry date is required"],

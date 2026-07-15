@@ -5,13 +5,13 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Rating from "../components/Rating";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getProductDetails, createReview, removeSuccess, removeErrors } from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 import MetaTags from "../components/MetaTags";
-import { addItemsToCart, removeMessage, removeErrors as removeCartErrors } from "../features/cart/cartSlice";
+import { addItemsToCart, clearCart, removeMessage, removeErrors as removeCartErrors } from "../features/cart/cartSlice";
 
 function ProductDetails() {
   const [quantity, setQuantity] = useState(1);
@@ -26,6 +26,7 @@ function ProductDetails() {
 
   const { loading, error, product, reviewSuccess, reviewLoading } = useSelector((state) => state.product);
   const { loading: cartLoading, message, error: cartError } = useSelector((state) => state.cart);
+  const { isAuthenticated } = useSelector((state) => state.user);
 
   const selectedVariant = useMemo(
     () => product?.variants?.find((variant) => variant._id === selectedVariantId) || null,
@@ -33,6 +34,8 @@ function ProductDetails() {
   );
   const effectiveStock = selectedVariant?.stock ?? product?.stock ?? 0;
   const effectivePrice = selectedVariant?.price ?? product?.price ?? 0;
+  const discountAmount = Number(product?.discount || 0);
+  const discountedPrice = Math.max(0, effectivePrice - discountAmount);
 
   const increase = () => {
     if (quantity >= effectiveStock) {
@@ -73,6 +76,26 @@ function ProductDetails() {
     }
 
     dispatch(addItemsToCart({ id, quantity, variantId: selectedVariantId }));
+  };
+
+  const buyNow = async () => {
+    if (product?.variants?.length > 0 && !selectedVariantId) {
+      toast.error("Please select a variant", { position: "top-center", autoClose: 3000 });
+      return;
+    }
+
+    if (!product || effectiveStock === 0) {
+      toast.error(t("productDetails.outOfStock"), { position: "top-center", autoClose: 3000 });
+      return;
+    }
+
+    try {
+      dispatch(clearCart());
+      await dispatch(addItemsToCart({ id, quantity, variantId: selectedVariantId })).unwrap();
+      navigate("/shipping");
+    } catch (error) {
+      toast.error(t("productDetails.checkoutFailed"), { position: "top-center", autoClose: 3000 });
+    }
   };
 
   useEffect(() => {
@@ -185,7 +208,17 @@ function ProductDetails() {
           <div className="product-info">
             <h2>{product.name}</h2>
             <p className="product-description">{product.description}</p>
-            <p className="product-price">{t("product.price")} : {effectivePrice}</p>
+            <div className="price-row">
+              <span className="product-price">
+                {t("product.price")} : {discountAmount > 0 ? discountedPrice.toFixed(2) : effectivePrice.toFixed(2)}
+              </span>
+              {discountAmount > 0 && (
+                <span className="old-price">{effectivePrice.toFixed(2)}</span>
+              )}
+            </div>
+            {discountAmount > 0 && (
+              <div className="discount-tag">-{discountAmount.toFixed(2)} {t("productDetails.discount")}</div>
+            )}
 
             <div className="product-rating">
               <Rating value={product.ratings} disabled={true} />
@@ -225,14 +258,23 @@ function ProductDetails() {
               </div>
             )}
 
-            <button className="add-to-cart-btn" onClick={addToCart}>{t("product.addToCart")}</button>
+            <div className="action-buttons">
+              <button className="add-to-cart-btn" onClick={addToCart}>{t("product.addToCart")}</button>
+              <button type="button" className="buy-now-btn" onClick={buyNow}>{t("product.buyNow")}</button>
+            </div>
 
-            <form className="review-form" onSubmit={handleReviewSubmit}>
+            {isAuthenticated ? (
+              <form className="review-form" onSubmit={handleReviewSubmit}>
               <h3>{t("productDetails.writeReview")}</h3>
               <Rating value={userRating || 0} onRatingChange={handleRatingChange} disabled={false} />
               <textarea placeholder={t("productDetails.reviewPlaceholder")} required className="review-input" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
               <button className="submit-review-btn" disabled={reviewLoading}>{t("productDetails.submitReview")}</button>
             </form>
+            ) : (
+              <div className="review-login-note">
+                {t("productDetails.loginToReview")} <Link to="/login">{t("productDetails.login")}</Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

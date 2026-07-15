@@ -10,6 +10,16 @@ const orderStatusHistorySchema = new mongoose.Schema(
             type: String,
             default: ""
         },
+        changedBy: {
+            type: mongoose.Schema.ObjectId,
+            ref: "User",
+            default: null
+        },
+        changedByRole: {
+            type: String,
+            enum: ["user", "admin"],
+            default: "user"
+        },
         createdAt: {
             type: Date,
             default: Date.now
@@ -51,7 +61,12 @@ const orderNotificationSchema = new mongoose.Schema(
 );
 
 const orderSchema = new mongoose.Schema({
-
+    idempotencyKey: {
+        type: String,
+        unique: true,
+        sparse: true,
+        index: true
+    },
     shippingInfo: {
 
         address: {
@@ -162,15 +177,10 @@ const orderSchema = new mongoose.Schema({
 
     ],
     orderStatus:{
-
         type: String,
         required: true,
-        default: "Pending"
-
-    },
-    shippingStatus: {
-        type: String,
-        default: "Pending"
+        default: "Pending",
+        enum: ["Pending", "Confirmed", "Processing", "Shipped", "Delivered", "Cancelled"]
     },
     trackingNumber: {
         type: String,
@@ -227,6 +237,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    couponValidatedAt: {
+        type: Date,
+        default: null
+    },
     notes: {
         type: String,
         default: ""
@@ -238,6 +252,14 @@ const orderSchema = new mongoose.Schema({
     notifications: {
         type: [orderNotificationSchema],
         default: []
+    },
+    stockReserved: {
+        type: Boolean,
+        default: false
+    },
+    stockReservedAt: {
+        type: Date,
+        default: null
     },
     confirmedAt: Date,
     processedAt: Date,

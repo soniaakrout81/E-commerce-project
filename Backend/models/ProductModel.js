@@ -68,6 +68,11 @@ const productSchema = new mongoose.Schema({
         min: [0, "Product price cannot be negative"]
 
     },
+    discount: {
+        type: Number,
+        default: 0,
+        min: [0, "Discount cannot be negative"]
+    },
     slug: {
         type: String,
         unique: true,

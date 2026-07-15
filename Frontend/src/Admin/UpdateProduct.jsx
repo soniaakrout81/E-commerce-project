@@ -22,6 +22,7 @@ function UpdateProduct() {
   const [keywords, setKeywords] = useState("");
   const [stock, setStock] = useState("");
   const [category, setCategory] = useState("");
+  const [discount, setDiscount] = useState(0);
   const [variants, setVariants] = useState([{ label: "", size: "", color: "", price: "", stock: "" }]);
   const [image, setImage] = useState([]);
   const [imagePreview, setImagePreview] = useState([]);
@@ -39,6 +40,7 @@ function UpdateProduct() {
       setDescription(product.description || "");
       setKeywords(product.keywords || "");
       setStock(product.stock || "");
+        setDiscount(product.discount || 0);
       setCategory(product.category || "");
       setVariants(product.variants?.length ? product.variants.map((variant) => ({
         _id: variant._id,
@@ -93,6 +95,7 @@ function UpdateProduct() {
       keywords,
       stock,
       category,
+      discount,
       variants: variants.filter((variant) => variant.price || variant.stock || variant.size || variant.color || variant.label),
     };
 
@@ -125,6 +128,9 @@ function UpdateProduct() {
 
             <label htmlFor="price">{t("admin.products.productPrice")}</label>
             <input type="number" className="update-product-input" required id="price" name="price" value={price} onChange={(e) => setPrice(e.target.value)} />
+
+            <label htmlFor="discount">Discount amount</label>
+            <input type="number" className="update-product-input" id="discount" name="discount" min="0" value={discount} onChange={(e) => setDiscount(e.target.value)} />
 
             <label htmlFor="description">{t("admin.products.productDescription")}</label>
             <textarea className="update-product-textarea" required id="description" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />

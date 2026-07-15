@@ -12,7 +12,9 @@ export const addItemsToCart = createAsyncThunk(
       const selectedVariant = variantId
         ? data.product?.variants?.find((variant) => variant._id === variantId)
         : null;
-      const itemPrice = selectedVariant?.price ?? data.product.price;
+      const productDiscount = Number(data.product.discount || 0);
+      const variantPrice = selectedVariant?.price ?? data.product.price;
+      const itemPrice = Math.max(0, variantPrice - productDiscount);
       const itemStock = selectedVariant?.stock ?? data.product.stock;
       const cartKey = `${data.product._id}-${selectedVariant?._id || "default"}`;
       return{

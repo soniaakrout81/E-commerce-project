@@ -163,6 +163,45 @@
   color: var(--heading-color);
 }
 
+.theme-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.theme-card {
+  border: 1px solid var(--border-color);
+  border-radius: 1.4rem;
+  padding: 1rem;
+  background: var(--surface-color);
+  text-align: left;
+  cursor: pointer;
+  transition: box-shadow 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+}
+
+.theme-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 38px color-mix(in srgb, var(--heading-color) 10%, transparent);
+}
+
+.theme-card.active {
+  border-color: var(--primary-main);
+  box-shadow: 0 18px 40px color-mix(in srgb, var(--primary-main) 25%, transparent);
+}
+
+.theme-card-swatch-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.theme-card-swatch-row span {
+  width: 100%;
+  min-height: 40px;
+  border-radius: 0.85rem;
+}
+
 @media (max-width: 1024px) {
   .admin-settings-shell {
     flex-direction: column;

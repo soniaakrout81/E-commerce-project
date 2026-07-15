@@ -82,3 +82,71 @@ export const validateCoupon = HandleAsyncError(async (req, res, next) => {
     ...result,
   });
 });
+
+export const validateCouponForOrder = HandleAsyncError(async (req, res, next) => {
+  const { code, orderAmount } = req.body;
+  const userId = req.user?._id || null;
+
+  // ============ VALIDATION ============
+  if (!code || code.trim() === "") {
+    return res.status(200).json({
+      success: true,
+      discountAmount: 0,
+      coupon: null,
+      message: "No coupon applied"
+    });
+  }
+
+  const coupon = await Coupon.findOne({
+    code: code.trim().toUpperCase(),
+    isActive: true
+  });
+
+  if (!coupon) {
+    return next(new HandelError("Invalid coupon code", 400));
+  }
+
+  // Check expiration
+  if (new Date() > new Date(coupon.expiresAt)) {
+    return next(new HandelError("Coupon has expired", 400));
+  }
+
+  // Check minimum order amount
+  if (Number(orderAmount) < Number(coupon.minOrderAmount)) {
+    return next(new HandelError(`Minimum order amount is ${coupon.minOrderAmount}`, 400));
+  }
+
+  // Check usage limit
+  if (coupon.usageLimit && coupon.usedCount >= coupon.usageLimit) {
+    return next(new HandelError("Coupon usage limit exceeded", 400));
+  }
+
+  // Check if user already used this coupon
+  if (userId) {
+    const alreadyUsed = coupon.usedBy?.some(use => use.userId?.toString() === userId.toString());
+    if (alreadyUsed) {
+      return next(new HandelError("You have already used this coupon", 400));
+    }
+  }
+
+  // Calculate discount
+  let discountAmount = 0;
+  if (coupon.type === "percent") {
+    discountAmount = (Number(orderAmount) * Number(coupon.value)) / 100;
+    if (coupon.maxDiscount) {
+      discountAmount = Math.min(discountAmount, coupon.maxDiscount);
+    }
+  } else {
+    discountAmount = Number(coupon.value);
+  }
+
+  res.status(200).json({
+    success: true,
+    discountAmount: Number(discountAmount.toFixed(2)),
+    coupon: {
+      code: coupon.code,
+      type: coupon.type,
+      value: coupon.value
+    }
+  });
+});

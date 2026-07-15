@@ -18,6 +18,7 @@ function CreateProduct() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  const [discount, setDiscount] = useState(0);
   const [keywords, setKeywords] = useState("");
   const [stock, setStock] = useState("");
   const [category, setCategory] = useState("");
@@ -32,6 +33,7 @@ function CreateProduct() {
     setDescription("");
     setKeywords("");
     setCategory("");
+    setDiscount(0);
     setVariants([{ label: "", size: "", color: "", price: "", stock: "" }]);
     setImage([]);
     setImagePreview([]);
@@ -42,7 +44,7 @@ function CreateProduct() {
     const activeVariants = variants.filter((variant) => variant.price || variant.stock || variant.size || variant.color || variant.label);
 
     try {
-      await dispatch(createProduct({ name, price, description, keywords, stock, category, image, variants: activeVariants })).unwrap();
+      await dispatch(createProduct({ name, price, description, keywords, stock, category, discount, image, variants: activeVariants })).unwrap();
       toast.success(t("admin.products.created"), { position: "top-center", autoClose: 3000 });
       resetForm();
       navigate("/admin/products");
@@ -103,6 +105,7 @@ function CreateProduct() {
           <input type="text" className="form-input" name="description" placeholder={t("admin.products.enterDescription")} required value={description} onChange={(e) => setDescription(e.target.value)} />
           <input type="text" className="form-input" name="keywords" placeholder={t("admin.products.productKeywords")} value={keywords} onChange={(e) => setKeywords(e.target.value)} />
           <input type="text" className="form-input" name="category" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} />
+          <input type="number" className="form-input" name="discount" placeholder="Discount amount" value={discount} min="0" onChange={(e) => setDiscount(e.target.value)} />
           <input type="number" className="form-input" name="stock" placeholder={t("admin.products.enterStock")} required value={stock} onChange={(e) => setStock(e.target.value)} />
 
           <div className="variant-editor">

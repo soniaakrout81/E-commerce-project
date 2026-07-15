@@ -81,6 +81,11 @@ const siteSettingsSchema = new mongoose.Schema(
       default: "#1F2937",
       trim: true,
     },
+    themePreset: {
+      type: String,
+      default: "fashion",
+      trim: true,
+    },
     bgPrimary: {
       type: String,
       default: "#F8FAFC",

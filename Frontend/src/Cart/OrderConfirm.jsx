@@ -12,6 +12,15 @@ import axios from "axios";
 import { createOrder, removeSuccess } from "../features/Order/orderSlice";
 import { clearCart } from "../features/cart/cartSlice";
 
+// Generate UUID for idempotency
+const generateIdempotencyKey = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0;
+    var v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
+
 function OrderConfirm() {
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
@@ -20,10 +29,13 @@ function OrderConfirm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  
   const [couponCode, setCouponCode] = React.useState("");
   const [discount, setDiscount] = React.useState(0);
   const [appliedCoupon, setAppliedCoupon] = React.useState(null);
   const [couponLoading, setCouponLoading] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [idempotencyKey, setIdempotencyKey] = React.useState(() => generateIdempotencyKey());
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const matchedZone = settings?.shippingZones?.find((zone) => zone.state === shippingInfo?.selectedState);
@@ -41,7 +53,12 @@ function OrderConfirm() {
 
     try {
       setCouponLoading(true);
-      const { data } = await axios.get(`/api/v1/coupon/${couponCode.trim()}?orderAmount=${subtotal + shipping}`);
+      // ============ VALIDATE COUPON IN BACKEND ============
+      const { data } = await axios.post(`/api/v1/coupon/validate`, {
+        code: couponCode.trim(),
+        orderAmount: subtotal + shipping
+      });
+      
       setDiscount(data.discountAmount || 0);
       setAppliedCoupon(data.coupon);
       toast.success(t("template.coupons.applied"), { position: "top-center", autoClose: 2500 });
@@ -54,7 +71,41 @@ function OrderConfirm() {
     }
   };
 
-  const confirmOrder = () => {
+  const validateOrderData = () => {
+    // Check if cart has items
+    if (!cartItems || cartItems.length === 0) {
+      toast.error(t("cart.empty"), { position: "top-center", autoClose: 3000 });
+      return false;
+    }
+
+    // Check shipping info
+    if (!shippingInfo?.fullName || !shippingInfo?.address || !shippingInfo?.selectedCity || !shippingInfo?.selectedState) {
+      toast.error(t("cart.fillRequired"), { position: "top-center", autoClose: 3000 });
+      return false;
+    }
+
+    // Check phone number format
+    if (!shippingInfo?.phoneNumber || shippingInfo.phoneNumber.length !== 8) {
+      toast.error(t("cart.invalidPhone"), { position: "top-center", autoClose: 3000 });
+      return false;
+    }
+
+    return true;
+  };
+
+  const confirmOrder = async () => {
+    // ============ PREVENT DOUBLE SUBMIT ============
+    if (isSubmitting || loading) {
+      toast.warning("Order is being processed, please wait...", { position: "top-center", autoClose: 2500 });
+      return;
+    }
+
+    if (!validateOrderData()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
     try {
       const orderData = {
         shippingInfo: {
@@ -84,23 +135,140 @@ function OrderConfirm() {
         discountPrice: discount,
         totalPrice: total,
         couponCode: appliedCoupon?.code || "",
+        idempotencyKey  // ============ SEND IDEMPOTENCY KEY ============
       };
 
-      dispatch(createOrder(orderData))
-        .unwrap()
-        .then((response) => {
-          toast.success(t("orderConfirm.success"), { position: "top-center", autoClose: 3000 });
-          dispatch(clearCart());
-          dispatch(removeSuccess());
-          navigate(`/order/${response.order._id}`);
-        })
-        .catch(() => {
-          toast.error(t("orderConfirm.createFailed"), { position: "top-center", autoClose: 3000 });
-        });
+      const response = await dispatch(createOrder(orderData)).unwrap();
+      
+      if (response.isDuplicate) {
+        toast.info("This order was already created", { position: "top-center", autoClose: 3000 });
+      } else {
+        toast.success(t("orderConfirm.success"), { position: "top-center", autoClose: 3000 });
+      }
+      
+      dispatch(clearCart());
+      dispatch(removeSuccess());
+      navigate(`/order/${response.order._id}`);
     } catch (error) {
-      toast.error(t("orderConfirm.confirmFailed"), { position: "top-center", autoClose: 3000 });
+      console.error("Order creation error:", error);
+      const errorMessage = error.message || t("orderConfirm.createFailed");
+      toast.error(errorMessage, { position: "top-center", autoClose: 3000 });
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
+  return (
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <Navbar />
+          <PageTitle title={t("orderConfirm.pageTitle")} />
+
+          <div className="confirm-container">
+            <h1 className="confirm-header">{t("orderConfirm.title")}</h1>
+            <div className="confirm-table-container">
+              <table className="confirm-table">
+                <caption>{t("orderConfirm.shippingDetails")}</caption>
+                <thead>
+                  <tr>
+                    <th>{t("user.common.name")}</th>
+                    <th>{t("cart.phoneNumber")}</th>
+                    <th>{t("cart.address")}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{shippingInfo.fullName || user?.name || "-"}</td>
+                    <td>{shippingInfo.phoneNumber}</td>
+                    <td>{shippingInfo.address}, {shippingInfo.selectedCity}, {shippingInfo.selectedState}, {shippingInfo.pincode}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table className="confirm-table">
+                <caption>{t("orderConfirm.cartItems")}</caption>
+                <thead>
+                  <tr>
+                    <th>{t("orderConfirm.image")}</th>
+                    <th>{t("cart.product")}</th>
+                    <th>{t("product.price")}</th>
+                    <th>{t("cart.quantity")}</th>
+                    <th>{t("orderConfirm.totalPrice")}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cartItems.map((item) => (
+                    <tr key={item.cartKey || item.product}>
+                      <td><img src={item.image} alt={item.name} className="order-product-image" /></td>
+                      <td>{item.name}{item.variantLabel ? ` (${item.variantLabel})` : ""}</td>
+                      <td>{item.price}</td>
+                      <td>{item.quantity}</td>
+                      <td>{item.quantity * item.price}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <table className="confirm-table">
+                <caption>{t("orderConfirm.orderSummary")}</caption>
+                <thead>
+                  <tr>
+                    <th>{t("cart.subtotal")}</th>
+                    <th>{t("orderConfirm.shippingCharges")}</th>
+                    <th>{t("template.coupons.discount")}</th>
+                    <th>{t("cart.total")}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{subtotal}</td>
+                    <td>{shipping}</td>
+                    <td>{discount}</td>
+                    <td>{total}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div className="coupon-box">
+                <input
+                  type="text"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                  placeholder={t("template.coupons.enterCode")}
+                  disabled={couponLoading}
+                />
+                <button 
+                  type="button" 
+                  className="proceed-button" 
+                  onClick={applyCoupon}
+                  disabled={couponLoading}
+                >
+                  {couponLoading ? t("template.coupons.applying") : t("template.coupons.apply")}
+                </button>
+              </div>
+            </div>
+
+            <button 
+              className="proceed-button" 
+              onClick={confirmOrder}
+              disabled={isSubmitting || loading}
+              style={{ opacity: isSubmitting || loading ? 0.6 : 1, cursor: isSubmitting || loading ? 'not-allowed' : 'pointer' }}
+            >
+              {isSubmitting || loading ? "Processing..." : t("orderConfirm.confirmOrder")}
+            </button>
+          </div>
+
+          <Footer />
+        </>
+      )}
+    </>
+  );
+}
+
+export default OrderConfirm;
 
   return (
     <>

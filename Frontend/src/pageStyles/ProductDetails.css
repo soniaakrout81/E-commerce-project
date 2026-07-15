@@ -147,6 +147,66 @@
     transform: scale(0.97);
   }
 
+  .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .buy-now-btn {
+    width: fit-content;
+    min-width: 220px;
+    padding: 14px 22px;
+    background: var(--primary-main);
+    border: none;
+    border-radius: 999px;
+    font-size: 16px;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    box-shadow: 0 18px 34px color-mix(in srgb, var(--primary-main) 40%, transparent);
+  }
+
+  .buy-now-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin: 1rem 0 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .old-price {
+    color: var(--muted-text-color);
+    text-decoration: line-through;
+  }
+
+  .discount-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(239, 68, 68, 0.12);
+    color: var(--danger-color);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .review-login-note {
+    background: var(--surface-color);
+    padding: 18px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    color: var(--body-text-color);
+    margin-top: 1rem;
+  }
+
   @keyframes detailButtonFloat {
     0%, 100% {
       transform: translateY(0) scale(1);
