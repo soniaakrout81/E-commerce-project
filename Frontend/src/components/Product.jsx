@@ -18,44 +18,40 @@ function Product({product}) {
     }
 
   return (
-    <Link to={`/product/${product._id}`} className = "product_id">
     <div className="product-card">
-
-        <Link to={`/product/${product._id}`} className="product_id">
-        <img src={product.image[0]?.url || "/images/default.jpg"} alt={product.name} />
+      <Link to={`/product/${product._id}`} className="product_id">
+        <div className="product-media">
+          <img src={product.image[0]?.url || "/images/default.jpg"} alt={product.name} className="product-image-card" />
+        </div>
 
         <div className="product-details">
-        <h3 className="product-title">{product.name}</h3>
+          <h3 className="product-title">{product.name}</h3>
 
-        <p className="product-price">
+          <p className="product-price">
             <strong>{t("product.price")}: {product.price}</strong>
-        </p>
+          </p>
 
-        <div className="rating-container">
+          <div className="rating-container">
             <Rating
-            value={product.ratings}
-            onRatingChange={handleRatingChange}
-            disabled={true}
+              value={product.ratings}
+              onRatingChange={handleRatingChange}
+              disabled={true}
             />
-        </div>
+          </div>
 
-        <span className="productCardSpan">
+          <span className="productCardSpan">
             ({product.numOfReviews}){" "}
             {product.numOfReviews == 1
-            ? t("product.review")
-            : t("product.reviews")}
-        </span>
+              ? t("product.review")
+              : t("product.reviews")}
+          </span>
         </div>
-        </Link>
+      </Link>
 
-
-        <button className="add-to-cart">
-            {t("product.addToCart")}
-        </button>
-
+      <button className="add-to-cart">
+        {t("product.addToCart")}
+      </button>
     </div>
-    </Link>
-
   )
 }
 
