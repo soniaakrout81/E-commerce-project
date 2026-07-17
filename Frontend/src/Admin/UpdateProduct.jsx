@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import Loader from "../components/Loader";
 import { removeSuccess, updateProduct } from "../features/admin/adminSlice";
 import { toast } from "react-toastify";
+import imageCompression from "browser-image-compression";
 
 function UpdateProduct() {
   const dispatch = useDispatch();
@@ -68,22 +69,36 @@ function UpdateProduct() {
     setVariants((current) => current.filter((_, variantIndex) => variantIndex !== index));
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const files = Array.from(e.target.files);
+    if (!files.length) return;
+
     setImage([]);
     setImagePreview([]);
     setOldImages([]);
 
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagePreview((old) => [...old, reader.result]);
-          setImage((old) => [...old, reader.result]);
-        }
+    try {
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 800,
+        useWebWorker: true,
       };
-      reader.readAsDataURL(file);
-    });
+
+      const processedImages = [];
+      const processedPreviews = [];
+
+      for (const file of files) {
+        const compressedFile = await imageCompression(file, options);
+        const base64 = await imageCompression.getDataUrlFromFile(compressedFile);
+        processedImages.push(base64);
+        processedPreviews.push(base64);
+      }
+
+      setImage(processedImages);
+      setImagePreview(processedPreviews);
+    } catch {
+      toast.error(t("user.updateProfile.avatarProcessFailed"), { position: "top-center", autoClose: 3000 });
+    }
   };
 
   const handleProductSubmit = async (e) => {
