@@ -17,7 +17,11 @@
     "logoutSuccess": "تم تسجيل الخروج بنجاح",
     "logoutFailed": "فشل تسجيل الخروج. حاول مرة أخرى.",
     "language": "اللغة",
-    "switchLanguage": "EN"
+    "switchLanguage": "EN",
+    "trackOrder": "تتبع الطلب",
+    "toggleMenu": "فتح أو إغلاق القائمة",
+    "search": "بحث",
+    "storeAnnouncement": "إعلان المتجر"
   },
   "home": {
     "pageTitle": "الرئيسية",
@@ -173,7 +177,11 @@
     "submitReview": "إرسال المراجعة",
     "customerReviews": "مراجعات العملاء",
     "comment": "التعليق",
-    "noReviews": "لا توجد مراجعات بعد. كن أول من يراجع هذا المنتج!"
+    "noReviews": "لا توجد مراجعات بعد. كن أول من يراجع هذا المنتج!",
+    "selectVariant": "يرجى اختيار الخيار المطلوب",
+    "variant": "الخيار",
+    "reviewLoginPrompt": "أنشئ حسابًا لتتمكن من كتابة مراجعة",
+    "login": "تسجيل الدخول"
   },
   "cart": {
     "pageTitle": "سلتك",
@@ -208,7 +216,10 @@
     "selectStateFirst": "اختر الولاية أولاً",
     "invalidPhone": "رقم الهاتف غير صالح",
     "fillRequired": "يرجى ملء جميع الحقول المطلوبة",
-    "shippingSaved": "تم حفظ معلومات الشحن بنجاح"
+    "shippingSaved": "تم حفظ معلومات الشحن بنجاح",
+    "fullName": "الاسم الكامل",
+    "enterFullName": "أدخل اسمك الكامل",
+    "enterEmail": "أدخل بريدك الإلكتروني"
   },
   "checkout": {
     "shippingDetails": "تفاصيل الشحن",
@@ -226,7 +237,9 @@
     "confirmOrder": "تأكيد الطلب",
     "success": "تم تقديم الطلب بنجاح",
     "createFailed": "فشل إنشاء الطلب. حاول مرة أخرى.",
-    "confirmFailed": "فشل تأكيد الطلب. حاول مرة أخرى."
+    "confirmFailed": "فشل تأكيد الطلب. حاول مرة أخرى.",
+    "processing": "جارٍ معالجة طلبك، يرجى الانتظار...",
+    "alreadyCreated": "تم إنشاء هذا الطلب مسبقًا"
   },
   "orders": {
     "pageTitle": "طلباتي",
@@ -297,7 +310,18 @@
       "preview": "معاينة المنتج",
       "chooseImages": "اختر صور المنتج",
       "newPreview": "معاينة صورة جديدة",
-      "oldImage": "صورة قديمة"
+      "oldImage": "صورة قديمة",
+      "category": "التصنيف",
+      "discountAmount": "قيمة الخصم",
+      "variantLabel": "اسم الخيار",
+      "size": "المقاس",
+      "color": "اللون",
+      "variantPrice": "سعر الخيار",
+      "variantStock": "مخزون الخيار",
+      "removeVariant": "حذف الخيار",
+      "addVariant": "إضافة خيار",
+      "importSuccess": "تم استيراد المنتجات بنجاح",
+      "importFailed": "تعذر استيراد ملف المنتجات"
     },
     "users": {
       "section": "المستخدمون",

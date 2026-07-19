@@ -76,13 +76,13 @@ function Shipping() {
           <div className="shipping-section">
             <div className="shipping-form-group">
               <label htmlFor="fullName">Full name</label>
-              <input type="text" required name="fullName" id="fullName" placeholder="Enter your full name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+              <input type="text" required name="fullName" id="fullName" placeholder={t("cart.enterFullName")} value={fullName} onChange={(e) => setFullName(e.target.value)} />
             </div>
 
             {!isAuthenticated && (
               <div className="shipping-form-group">
                 <label htmlFor="guestEmail">Email</label>
-                <input type="email" required name="guestEmail" id="guestEmail" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="email" required name="guestEmail" id="guestEmail" placeholder={t("cart.enterEmail")} value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
             )}
 

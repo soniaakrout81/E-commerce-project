@@ -67,7 +67,7 @@ function ProductDetails() {
 
   const addToCart = () => {
     if (product?.variants?.length > 0 && !selectedVariantId) {
-      toast.error("Please select a variant", { position: "top-center", autoClose: 3000 });
+      toast.error(t("productDetails.selectVariant"), { position: "top-center", autoClose: 3000 });
       return;
     }
 
@@ -102,7 +102,7 @@ function ProductDetails() {
 
   const buyNow = () => {
     if (product?.variants?.length > 0 && !selectedVariantId) {
-      toast.error("Please select a variant", { position: "top-center", autoClose: 3000 });
+      toast.error(t("productDetails.selectVariant"), { position: "top-center", autoClose: 3000 });
       return;
     }
 
@@ -255,7 +255,7 @@ function ProductDetails() {
 
             {product.variants?.length > 0 && (
               <div className="variant-selector">
-                <span className="quantity-label">Variant:</span>
+                <span className="quantity-label">{t("productDetails.variant")}:</span>
                 <select value={selectedVariantId} onChange={(e) => { setSelectedVariantId(e.target.value); setQuantity(1); }}>
                   {product.variants.map((variant) => (
                     <option key={variant._id} value={variant._id}>
@@ -289,7 +289,7 @@ function ProductDetails() {
             </form>
             ) : (
               <div className="review-login-note">
-                {t("productDetails.loginToReview")} <Link to="/login">{t("productDetails.login")}</Link>
+                {t("productDetails.reviewLoginPrompt")} <Link to="/login">{t("productDetails.login")}</Link>
               </div>
             )}
           </div>

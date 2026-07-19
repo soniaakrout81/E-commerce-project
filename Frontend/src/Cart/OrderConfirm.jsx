@@ -97,7 +97,7 @@ function OrderConfirm() {
   const confirmOrder = async () => {
     // ============ PREVENT DOUBLE SUBMIT ============
     if (isSubmitting || loading) {
-      toast.warning("Order is being processed, please wait...", { position: "top-center", autoClose: 2500 });
+      toast.warning(t("orderConfirm.processing"), { position: "top-center", autoClose: 2500 });
       return;
     }
 
@@ -142,7 +142,7 @@ function OrderConfirm() {
       const response = await dispatch(createOrder(orderData)).unwrap();
       
       if (response.isDuplicate) {
-        toast.info("This order was already created", { position: "top-center", autoClose: 3000 });
+        toast.info(t("orderConfirm.alreadyCreated"), { position: "top-center", autoClose: 3000 });
       } else {
         toast.success(t("orderConfirm.success"), { position: "top-center", autoClose: 3000 });
       }

@@ -17,7 +17,11 @@
     "logoutSuccess": "Deconnexion reussie",
     "logoutFailed": "Echec de la deconnexion. Veuillez reessayer.",
     "language": "Langue",
-    "switchLanguage": "AR"
+    "switchLanguage": "AR",
+    "trackOrder": "Suivre la commande",
+    "toggleMenu": "Ouvrir ou fermer le menu",
+    "search": "Rechercher",
+    "storeAnnouncement": "Annonce de la boutique"
   },
   "home": {
     "pageTitle": "Accueil",
@@ -173,7 +177,11 @@
     "submitReview": "Envoyer l'avis",
     "customerReviews": "Avis clients",
     "comment": "Commentaire",
-    "noReviews": "Pas encore d'avis. Soyez le premier a evaluer ce produit !"
+    "noReviews": "Pas encore d'avis. Soyez le premier a evaluer ce produit !",
+    "selectVariant": "Veuillez choisir une option",
+    "variant": "Option",
+    "reviewLoginPrompt": "Creez un compte pour ecrire un avis",
+    "login": "Se connecter"
   },
   "cart": {
     "pageTitle": "Votre panier",
@@ -208,7 +216,10 @@
     "selectStateFirst": "Selectionnez d'abord une region",
     "invalidPhone": "Numero de telephone invalide",
     "fillRequired": "Veuillez remplir tous les champs obligatoires",
-    "shippingSaved": "Informations de livraison enregistrees avec succes"
+    "shippingSaved": "Informations de livraison enregistrees avec succes",
+    "fullName": "Nom complet",
+    "enterFullName": "Saisissez votre nom complet",
+    "enterEmail": "Saisissez votre e-mail"
   },
   "checkout": {
     "shippingDetails": "Details de livraison",
@@ -226,7 +237,9 @@
     "confirmOrder": "Confirmer la commande",
     "success": "Commande passee avec succes",
     "createFailed": "Echec de la creation de la commande. Veuillez reessayer.",
-    "confirmFailed": "Echec de la confirmation de commande. Veuillez reessayer."
+    "confirmFailed": "Echec de la confirmation de commande. Veuillez reessayer.",
+    "processing": "Votre commande est en cours de traitement. Veuillez patienter...",
+    "alreadyCreated": "Cette commande a deja ete creee"
   },
   "orders": {
     "pageTitle": "Mes commandes",
@@ -297,7 +310,18 @@
       "preview": "Apercu produit",
       "chooseImages": "Choisir les images du produit",
       "newPreview": "Nouvel apercu produit",
-      "oldImage": "Ancienne image"
+      "oldImage": "Ancienne image",
+      "category": "Categorie",
+      "discountAmount": "Montant de la reduction",
+      "variantLabel": "Nom de l'option",
+      "size": "Taille",
+      "color": "Couleur",
+      "variantPrice": "Prix de l'option",
+      "variantStock": "Stock de l'option",
+      "removeVariant": "Supprimer l'option",
+      "addVariant": "Ajouter une option",
+      "importSuccess": "Produits importes avec succes",
+      "importFailed": "Impossible d'importer le fichier de produits"
     },
     "users": {
       "section": "Utilisateurs",

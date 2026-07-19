@@ -24,10 +24,10 @@ function ProductsList() {
       const csvText = await file.text();
       await dispatch(importProductsCsv({ csvText })).unwrap();
       setCsvFileName(file.name);
-      toast.success("CSV products imported successfully", { position: "top-center" });
+      toast.success(t("admin.products.importSuccess"), { position: "top-center" });
       dispatch(fetchAdminProducts());
     } catch (importError) {
-      toast.error(importError || "Failed to import CSV file", { position: "top-center" });
+      toast.error(importError || t("admin.products.importFailed"), { position: "top-center" });
     } finally {
       event.target.value = "";
     }

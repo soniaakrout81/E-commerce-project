@@ -187,7 +187,7 @@ function Navbar() {
                   {user?.role === "admin" && <button type="button" className="menu-option-btn" onClick={() => goTo("/admin/dashboard")}>{t("navbar.adminDashboard")}</button>}
                   <button type="button" className="menu-option-btn" onClick={() => goTo("/profile")}>{t("navbar.account")}</button>
                   <button type="button" className="menu-option-btn" onClick={() => goTo("/orders/user")}>{t("navbar.orders")}</button>
-                  <button type="button" className="menu-option-btn" onClick={() => goTo("/track-order")}>Track Order</button>
+                  <button type="button" className="menu-option-btn" onClick={() => goTo("/track-order")}>{t("navbar.trackOrder")}</button>
                   <button type="button" className={`menu-option-btn ${cartItems.length > 0 ? "cart-not-empty" : ""}`} onClick={() => goTo("/cart")}>{t("navbar.cart", { count: cartItems.length })}</button>
                   <button type="button" className="menu-option-btn" onClick={logoutUser}>{t("navbar.logout")}</button>
                 </div>
@@ -198,7 +198,7 @@ function Navbar() {
               </Link>
             )}
 
-            <button type="button" className="navbar-hamburger" onClick={() => setIsMenuOpen((prev) => !prev)} aria-label="Toggle menu">
+            <button type="button" className="navbar-hamburger" onClick={() => setIsMenuOpen((prev) => !prev)} aria-label={t("navbar.toggleMenu")}>
               {isMenuOpen ? <CloseIcon className="icon" /> : <MenuIcon className="icon" />}
             </button>
           </div>
@@ -214,7 +214,7 @@ function Navbar() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button type="submit" className="search-button2" aria-label="Search">
+              <button type="submit" className="search-button2" aria-label={t("navbar.search")}>
                 <SearchIcon focusable="false" className="search-icon" />
               </button>
             </form>
@@ -234,7 +234,7 @@ function Navbar() {
       </div>
 
       {isHomeRoute && settings?.announcementEnabled && settings?.announcementText ? (
-        <div className="navbar-announcement-bar" aria-label="Store announcement">
+        <div className="navbar-announcement-bar" aria-label={t("navbar.storeAnnouncement")}>
           <div className="navbar-announcement-track">
             <span>{settings.announcementText}</span>
             <span>{settings.announcementText}</span>

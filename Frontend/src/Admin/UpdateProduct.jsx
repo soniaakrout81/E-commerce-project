@@ -163,15 +163,15 @@ function UpdateProduct() {
               <h3>Variants</h3>
               {variants.map((variant, index) => (
                 <div key={variant._id || index} className="variant-row">
-                  <input type="text" className="update-product-input" placeholder="Label" value={variant.label} onChange={(e) => updateVariantField(index, "label", e.target.value)} />
-                  <input type="text" className="update-product-input" placeholder="Size" value={variant.size} onChange={(e) => updateVariantField(index, "size", e.target.value)} />
-                  <input type="text" className="update-product-input" placeholder="Color" value={variant.color} onChange={(e) => updateVariantField(index, "color", e.target.value)} />
-                  <input type="number" className="update-product-input" placeholder="Variant price" value={variant.price} onChange={(e) => updateVariantField(index, "price", e.target.value)} />
-                  <input type="number" className="update-product-input" placeholder="Variant stock" value={variant.stock} onChange={(e) => updateVariantField(index, "stock", e.target.value)} />
-                  {variants.length > 1 ? <button type="button" className="update-product-submit-btn" onClick={() => removeVariantRow(index)}>Remove</button> : null}
+                  <input type="text" className="update-product-input" placeholder={t("admin.products.variantLabel")} value={variant.label} onChange={(e) => updateVariantField(index, "label", e.target.value)} />
+                  <input type="text" className="update-product-input" placeholder={t("admin.products.size")} value={variant.size} onChange={(e) => updateVariantField(index, "size", e.target.value)} />
+                  <input type="text" className="update-product-input" placeholder={t("admin.products.color")} value={variant.color} onChange={(e) => updateVariantField(index, "color", e.target.value)} />
+                  <input type="number" className="update-product-input" placeholder={t("admin.products.variantPrice")} value={variant.price} onChange={(e) => updateVariantField(index, "price", e.target.value)} />
+                  <input type="number" className="update-product-input" placeholder={t("admin.products.variantStock")} value={variant.stock} onChange={(e) => updateVariantField(index, "stock", e.target.value)} />
+                  {variants.length > 1 ? <button type="button" className="update-product-submit-btn" onClick={() => removeVariantRow(index)}>{t("admin.products.removeVariant")}</button> : null}
                 </div>
               ))}
-              <button type="button" className="update-product-submit-btn" onClick={addVariantRow}>Add variant</button>
+              <button type="button" className="update-product-submit-btn" onClick={addVariantRow}>{t("admin.products.addVariant")}</button>
             </div>
 
             <div className="file-input-wrapper">

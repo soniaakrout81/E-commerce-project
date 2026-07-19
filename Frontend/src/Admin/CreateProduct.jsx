@@ -119,23 +119,23 @@ function CreateProduct() {
           <input type="number" className="form-input" name="price" placeholder={t("admin.products.enterPrice")} required value={price} onChange={(e) => setPrice(e.target.value)} />
           <input type="text" className="form-input" name="description" placeholder={t("admin.products.enterDescription")} required value={description} onChange={(e) => setDescription(e.target.value)} />
           <input type="text" className="form-input" name="keywords" placeholder={t("admin.products.productKeywords")} value={keywords} onChange={(e) => setKeywords(e.target.value)} />
-          <input type="text" className="form-input" name="category" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} />
-          <input type="number" className="form-input" name="discount" placeholder="Discount amount" value={discount} min="0" onChange={(e) => setDiscount(e.target.value)} />
+          <input type="text" className="form-input" name="category" placeholder={t("admin.products.category")} value={category} onChange={(e) => setCategory(e.target.value)} />
+          <input type="number" className="form-input" name="discount" placeholder={t("admin.products.discountAmount")} value={discount} min="0" onChange={(e) => setDiscount(e.target.value)} />
           <input type="number" className="form-input" name="stock" placeholder={t("admin.products.enterStock")} required value={stock} onChange={(e) => setStock(e.target.value)} />
 
           <div className="variant-editor">
             <h3>Variants</h3>
             {variants.map((variant, index) => (
               <div key={index} className="variant-row">
-                <input type="text" className="form-input" placeholder="Label" value={variant.label} onChange={(e) => updateVariantField(index, "label", e.target.value)} />
-                <input type="text" className="form-input" placeholder="Size" value={variant.size} onChange={(e) => updateVariantField(index, "size", e.target.value)} />
-                <input type="text" className="form-input" placeholder="Color" value={variant.color} onChange={(e) => updateVariantField(index, "color", e.target.value)} />
-                <input type="number" className="form-input" placeholder="Variant price" value={variant.price} onChange={(e) => updateVariantField(index, "price", e.target.value)} />
-                <input type="number" className="form-input" placeholder="Variant stock" value={variant.stock} onChange={(e) => updateVariantField(index, "stock", e.target.value)} />
-                {variants.length > 1 ? <button type="button" className="submit-btn" onClick={() => removeVariantRow(index)}>Remove</button> : null}
+                <input type="text" className="form-input" placeholder={t("admin.products.variantLabel")} value={variant.label} onChange={(e) => updateVariantField(index, "label", e.target.value)} />
+                <input type="text" className="form-input" placeholder={t("admin.products.size")} value={variant.size} onChange={(e) => updateVariantField(index, "size", e.target.value)} />
+                <input type="text" className="form-input" placeholder={t("admin.products.color")} value={variant.color} onChange={(e) => updateVariantField(index, "color", e.target.value)} />
+                <input type="number" className="form-input" placeholder={t("admin.products.variantPrice")} value={variant.price} onChange={(e) => updateVariantField(index, "price", e.target.value)} />
+                <input type="number" className="form-input" placeholder={t("admin.products.variantStock")} value={variant.stock} onChange={(e) => updateVariantField(index, "stock", e.target.value)} />
+                {variants.length > 1 ? <button type="button" className="submit-btn" onClick={() => removeVariantRow(index)}>{t("admin.products.removeVariant")}</button> : null}
               </div>
             ))}
-            <button type="button" className="submit-btn" onClick={addVariantRow}>Add variant</button>
+            <button type="button" className="submit-btn" onClick={addVariantRow}>{t("admin.products.addVariant")}</button>
           </div>
 
           <div className="file-input-container">

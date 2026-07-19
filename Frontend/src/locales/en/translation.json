@@ -17,7 +17,11 @@
     "logoutSuccess": "Logout success",
     "logoutFailed": "Logout failed. Please try again.",
     "language": "Language",
-    "switchLanguage": "AR"
+    "switchLanguage": "AR",
+    "trackOrder": "Track order",
+    "toggleMenu": "Open or close menu",
+    "search": "Search",
+    "storeAnnouncement": "Store announcement"
   },
   "home": {
     "pageTitle": "Home",
@@ -173,7 +177,11 @@
     "submitReview": "Submit Review",
     "customerReviews": "Customers Reviews",
     "comment": "Comment",
-    "noReviews": "No reviews yet. Be the first to review this product!"
+    "noReviews": "No reviews yet. Be the first to review this product!",
+    "selectVariant": "Please select an option",
+    "variant": "Option",
+    "reviewLoginPrompt": "Create an account to write a review",
+    "login": "Log in"
   },
   "cart": {
     "pageTitle": "Your Cart",
@@ -208,7 +216,10 @@
     "selectStateFirst": "Select a state first",
     "invalidPhone": "Invalid phone number",
     "fillRequired": "Please fill all required fields",
-    "shippingSaved": "Shipping info submitted successfully"
+    "shippingSaved": "Shipping info submitted successfully",
+    "fullName": "Full name",
+    "enterFullName": "Enter your full name",
+    "enterEmail": "Enter your email"
   },
   "checkout": {
     "shippingDetails": "Shipping Details",
@@ -226,7 +237,9 @@
     "confirmOrder": "Confirm Order",
     "success": "Order placed successfully",
     "createFailed": "Order creation failed. Please try again.",
-    "confirmFailed": "Order confirmation failed. Please try again."
+    "confirmFailed": "Order confirmation failed. Please try again.",
+    "processing": "Your order is being processed. Please wait...",
+    "alreadyCreated": "This order has already been created"
   },
   "orders": {
     "pageTitle": "My Orders",
@@ -297,7 +310,18 @@
       "preview": "Product Preview",
       "chooseImages": "Choose Product Images",
       "newPreview": "New Product Preview",
-      "oldImage": "Old Product"
+      "oldImage": "Old Product",
+      "category": "Category",
+      "discountAmount": "Discount amount",
+      "variantLabel": "Option name",
+      "size": "Size",
+      "color": "Color",
+      "variantPrice": "Option price",
+      "variantStock": "Option stock",
+      "removeVariant": "Remove option",
+      "addVariant": "Add option",
+      "importSuccess": "Products imported successfully",
+      "importFailed": "Unable to import the products file"
     },
     "users": {
       "section": "Users",
