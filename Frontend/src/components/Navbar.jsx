@@ -236,8 +236,12 @@ function Navbar() {
       {isHomeRoute && settings?.announcementEnabled && settings?.announcementText ? (
         <div className="navbar-announcement-bar" aria-label={t("navbar.storeAnnouncement")}>
           <div className="navbar-announcement-track">
-            <span>{settings.announcementText}</span>
-            <span>{settings.announcementText}</span>
+            <div className="navbar-announcement-message">
+              <span>{settings.announcementText}</span>
+            </div>
+            <div className="navbar-announcement-message" aria-hidden="true">
+              <span>{settings.announcementText}</span>
+            </div>
           </div>
         </div>
       ) : null}

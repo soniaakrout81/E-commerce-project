@@ -304,21 +304,22 @@
 }
 
 .navbar-announcement-track {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 4rem;
-  min-width: max-content;
+  width: max-content;
   white-space: nowrap;
   color: var(--text-light);
   font-size: 0.9rem;
   font-weight: 600;
   animation: marqueeMove 22s linear infinite;
+  will-change: transform;
 }
 
-.navbar-announcement-track span {
+.navbar-announcement-message {
   display: inline-flex;
   align-items: center;
-  padding-inline-start: 2rem;
+  flex: 0 0 auto;
+  padding-inline: 2rem 4rem;
 }
 
 @keyframes marqueeMove {
@@ -384,7 +385,10 @@
 
   .navbar-announcement-track {
     font-size: 0.82rem;
-    gap: 2.5rem;
+  }
+
+  .navbar-announcement-message {
+    padding-inline: 1.5rem 2.5rem;
   }
 }
 

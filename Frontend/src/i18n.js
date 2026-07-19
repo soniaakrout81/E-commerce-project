@@ -28,7 +28,6 @@ i18n
     resources,
     supportedLngs: ["en", "ar", "fr"],
     fallbackLng: "fr",
-    lng: "fr",
     detection: {
       order: ["localStorage", "navigator", "htmlTag"],
       caches: ["localStorage"],
